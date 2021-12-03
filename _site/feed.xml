@@ -1,0 +1,2278 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2021-12-03T16:08:47+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Johan Blog</title><subtitle>Johan Blog
+</subtitle><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><entry><title type="html">Container Storage Interface（CSI)</title><link href="http://localhost:4000/2021/10/29/CSI.html" rel="alternate" type="text/html" title="Container Storage Interface（CSI)" /><published>2021-10-29T00:00:00+08:00</published><updated>2021-10-29T00:00:00+08:00</updated><id>http://localhost:4000/2021/10/29/CSI</id><content type="html" xml:base="http://localhost:4000/2021/10/29/CSI.html">&lt;p&gt;CSI是一套存储产品通用的RPC接口。对于容器编排平台(CO)，支持CSI接口就意味可以支持多种存储厂商/类型；对于存储厂商，支持CSI接口就可以支持多平台，减少研发投入的同时扩宽市场。
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;在正式介绍CSI之前，先对文中出现的一些专有名字或者缩写做说明。其含义如下表:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;词语&lt;/th&gt;
+      &lt;th&gt;含义&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Volume&lt;/td&gt;
+      &lt;td&gt;通过CSI，在Container内部可使用的一个存储单元&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Block Volume&lt;/td&gt;
+      &lt;td&gt;在Container内部，以Block设备形式出现的Volume&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CO&lt;/td&gt;
+      &lt;td&gt;Container Orchestration System, 通过CSI RPC服务与Plugin通信&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SP&lt;/td&gt;
+      &lt;td&gt;Storage Provider，一个CSI Plugin实现的厂商&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Plugin&lt;/td&gt;
+      &lt;td&gt;提供CSI定义的gRPC服务&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;部署结构&quot;&gt;部署结构&lt;/h2&gt;
+
+&lt;p&gt;CSI主要关注的是CO和Plugin之间的通信协议，它为不同的部署架构提供跨CO兼容的Plugin。下图展示了几种可能的部署方式：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                             CO &quot;Master&quot; Host
++-------------------------------------------+
+|                                           |
+|  +------------+           +------------+  |
+|  |     CO     |   gRPC    | Controller |  |
+|  |            +-----------&amp;gt;   Plugin   |  |
+|  +------------+           +------------+  |
+|                                           |
++-------------------------------------------+
+
+                            CO &quot;Node&quot; Host(s)
++-------------------------------------------+
+|                                           |
+|  +------------+           +------------+  |
+|  |     CO     |   gRPC    |    Node    |  |
+|  |            +-----------&amp;gt;   Plugin   |  |
+|  +------------+           +------------+  |
+|                                           |
++-------------------------------------------+
+Figure 1: Plugin运行在集群中的所有节点上: 一个集中式的Controller Plugin运行在CO master节点上，Node Plugin运行在所有的Node节点上。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                            CO &quot;Node&quot; Host(s)
++-------------------------------------------+
+|                                           |
+|  +------------+           +------------+  |
+|  |     CO     |   gRPC    | Controller |  |
+|  |            +--+--------&amp;gt;   Plugin   |  |
+|  +------------+  |        +------------+  |
+|                  |                        |
+|                  |                        |
+|                  |        +------------+  |
+|                  |        |    Node    |  |
+|                  +--------&amp;gt;   Plugin   |  |
+|                           +------------+  |
+|                                           |
++-------------------------------------------+
+Figure 2: 只有CO Node节点运行Plugins。plugin分成两个组件，分别负责Controller Service 和 Node Service。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                            CO &quot;Node&quot; Host(s)
++-------------------------------------------+
+|                                           |
+|  +------------+           +------------+  |
+|  |     CO     |   gRPC    | Controller |  |
+|  |            +-----------&amp;gt;    Node    |  |
+|  +------------+           |   Plugin   |  |
+|                           +------------+  |
+|                                           |
++-------------------------------------------+
+Figure 3: 只有CO Node节点运行Plugins. 一个统一的Plugin组件同时支持Controller Service 和 Node Service。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                            CO &quot;Node&quot; Host(s)
++-------------------------------------------+
+|                                           |
+|  +------------+           +------------+  |
+|  |     CO     |   gRPC    |    Node    |  |
+|  |            +-----------&amp;gt;   Plugin   |  |
+|  +------------+           +------------+  |
+|                                           |
++-------------------------------------------+
+Figure 4: 只有CO Node节点运行Plugins. Plugin组件只支持Node Service。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Plugin主要包括两个部分：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Controller Plugin：主要用来提供Controller Service&lt;/li&gt;
+  &lt;li&gt;Node Plugin：主要用来提供Node Service&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在某些情况，plugin可以只包含Node Plugin，如Figure 4所示。但如无必要，两种组件都要实现。&lt;/p&gt;
+
+&lt;h2 id=&quot;volume-lifecycle&quot;&gt;Volume LifeCycle&lt;/h2&gt;
+
+&lt;p&gt;下面是几种CO通过CSI管理Volume生命周期的示意图。Plugin支持的功能可以从ControllerGetCapabilities和NodeGetCapabilities这两个RPC接口中获取。不支持的RPC接口应该返回一个适当的错误码(CALL_NOT_IMPLEMENTED)通知调用方。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   CreateVolume +------------+ DeleteVolume
+ +-------------&amp;gt;|  CREATED   +--------------+
+ |              +---+----^---+              |
+ |       Controller |    | Controller       v
++++         Publish |    | Unpublish       +++
+|X|          Volume |    | Volume          | |
++-+             +---v----+---+             +-+
+                | NODE_READY |
+                +---+----^---+
+               Node |    | Node
+            Publish |    | Unpublish
+             Volume |    | Volume
+                +---v----+---+
+                | PUBLISHED  |
+                +------------+
+
+Figure 5: 一个动态provisioned volume从创建到销毁的生命周期。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   CreateVolume +------------+ DeleteVolume
+ +-------------&amp;gt;|  CREATED   +--------------+
+ |              +---+----^---+              |
+ |       Controller |    | Controller       v
++++         Publish |    | Unpublish       +++
+|X|          Volume |    | Volume          | |
++-+             +---v----+---+             +-+
+                | NODE_READY |
+                +---+----^---+
+               Node |    | Node
+              Stage |    | Unstage
+             Volume |    | Volume
+                +---v----+---+
+                |  VOL_READY |
+                +---+----^---+
+               Node |    | Node
+            Publish |    | Unpublish
+             Volume |    | Volume
+                +---v----+---+
+                | PUBLISHED  |
+                +------------+
+
+Figure 6: 当Node plugin具有STAGE_UNSTAGE_VOLUME能力时，一个动态provisioned volume从创建到销毁的生命周期。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    Controller                  Controller
+       Publish                  Unpublish
+        Volume  +------------+  Volume
+ +-------------&amp;gt;+ NODE_READY +--------------+
+ |              +---+----^---+              |
+ |             Node |    | Node             v
++++         Publish |    | Unpublish       +++
+|X| &amp;lt;-+      Volume |    | Volume          | |
++++   |         +---v----+---+             +-+
+ |    |         | PUBLISHED  |
+ |    |         +------------+
+ +----+
+   Validate
+   Volume
+   Capabilities
+
+Figure 7: 一个Pre-provisioned volume的生命周期。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;       +-+  +-+
+       |X|  | |
+       +++  +^+
+        |    |
+   Node |    | Node
+Publish |    | Unpublish
+ Volume |    | Volume
+    +---v----+---+
+    | PUBLISHED  |
+    +------------+
+
+Figure 8: Plugins通过capabilities API可以放弃其他的lifecycle steps，只留下`NodePublishVolume`和`NodeUnpublishVolume`两个步骤。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;rpc-interface&quot;&gt;RPC Interface&lt;/h2&gt;
+
+&lt;p&gt;CO通过RPC接口同Plugin通信，每个Storage Provider必须提供:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Node Plugin: RPC server，必须运行在将要publish provisioned volume的节点上。&lt;/li&gt;
+  &lt;li&gt;Controller Plugin: gRPC server，可以运行在任何位置。&lt;/li&gt;
+  &lt;li&gt;在一些情况下，一个plugin组件可以同时提供Node和Controller两种service。（Figure 3 in &lt;a href=&quot;#部署结构&quot;&gt;部署结构&lt;/a&gt;）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;RPC接口可以分为三类：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Identity Service: Node和Controller Plugin都必须提供此类RPC接口&lt;/li&gt;
+  &lt;li&gt;Controller Service: Controller Plugin必须提供此类RPC接口&lt;/li&gt;
+  &lt;li&gt;Node Service: Node Plugin必须提供提供此类RPC接口&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;点开查看Plugin RPC接口列表&lt;/summary&gt;
+  &lt;pre&gt;&lt;code&gt;
+service Identity {
+  rpc GetPluginInfo(GetPluginInfoRequest)
+    returns (GetPluginInfoResponse) {}
+
+  rpc GetPluginCapabilities(GetPluginCapabilitiesRequest)
+    returns (GetPluginCapabilitiesResponse) {}
+
+  rpc Probe (ProbeRequest)
+    returns (ProbeResponse) {}
+}
+
+service Controller {
+  rpc CreateVolume (CreateVolumeRequest)
+    returns (CreateVolumeResponse) {}
+
+  rpc DeleteVolume (DeleteVolumeRequest)
+    returns (DeleteVolumeResponse) {}
+
+  rpc ControllerPublishVolume (ControllerPublishVolumeRequest)
+    returns (ControllerPublishVolumeResponse) {}
+
+  rpc ControllerUnpublishVolume (ControllerUnpublishVolumeRequest)
+    returns (ControllerUnpublishVolumeResponse) {}
+
+  rpc ValidateVolumeCapabilities (ValidateVolumeCapabilitiesRequest)
+    returns (ValidateVolumeCapabilitiesResponse) {}
+
+  rpc ListVolumes (ListVolumesRequest)
+    returns (ListVolumesResponse) {}
+
+  rpc GetCapacity (GetCapacityRequest)
+    returns (GetCapacityResponse) {}
+
+  rpc ControllerGetCapabilities (ControllerGetCapabilitiesRequest)
+    returns (ControllerGetCapabilitiesResponse) {}
+
+  rpc CreateSnapshot (CreateSnapshotRequest)
+    returns (CreateSnapshotResponse) {}
+
+  rpc DeleteSnapshot (DeleteSnapshotRequest)
+    returns (DeleteSnapshotResponse) {}
+
+  rpc ListSnapshots (ListSnapshotsRequest)
+    returns (ListSnapshotsResponse) {}
+
+  rpc ControllerExpandVolume (ControllerExpandVolumeRequest)
+    returns (ControllerExpandVolumeResponse) {}
+
+  rpc ControllerGetVolume (ControllerGetVolumeRequest)
+    returns (ControllerGetVolumeResponse) {
+        option (alpha_method) = true;
+    }
+}
+
+service Node {
+  rpc NodeStageVolume (NodeStageVolumeRequest)
+    returns (NodeStageVolumeResponse) {}
+
+  rpc NodeUnstageVolume (NodeUnstageVolumeRequest)
+    returns (NodeUnstageVolumeResponse) {}
+
+  rpc NodePublishVolume (NodePublishVolumeRequest)
+    returns (NodePublishVolumeResponse) {}
+
+  rpc NodeUnpublishVolume (NodeUnpublishVolumeRequest)
+    returns (NodeUnpublishVolumeResponse) {}
+
+  rpc NodeGetVolumeStats (NodeGetVolumeStatsRequest)
+    returns (NodeGetVolumeStatsResponse) {}
+
+  rpc NodeExpandVolume(NodeExpandVolumeRequest)
+    returns (NodeExpandVolumeResponse) {}
+
+  rpc NodeGetCapabilities (NodeGetCapabilitiesRequest)
+    returns (NodeGetCapabilitiesResponse) {}
+
+  rpc NodeGetInfo (NodeGetInfoRequest)
+    returns (NodeGetInfoResponse) {}
+}
+  &lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+
+&lt;h3 id=&quot;并发性&quot;&gt;并发性&lt;/h3&gt;
+
+&lt;p&gt;通常，在给定时间内，CO需负责确保每个Volume的“进行中”调用不超过一个。但是在某些情况下CO可能会丢失掉状态信息（比如CO崩溃或者重启），此时CO有可能会对同一Volume同时发起多个调用，Plugin应该尽可能优雅的处理该情况，例如返回错误码&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ABORTED&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;超时与重试&quot;&gt;超时与重试&lt;/h3&gt;
+
+&lt;p&gt;RPC的调用可能超时或者失败。由CO决定超时时间的长短，重试时间的间隔和重试的次数。CSI接口的实现要求幂等，这样可以确保具有相同字段的重试调用在重试时从中断处继续处理。取消调用的唯一方法是发出“否定”调用（如果存在）。例如，发出ControllerUnpublishVolume调用以取消挂起的ControllerPublishVolume操作。在某些情况下，CO可能无法取消挂起的操作，因为它取决于挂起操作的结果以执行“否定”调用。例如，如果 CreateVolume调用永远不会完成，那么CO就会获取不到用于调用DeleteVolume的volume_id。&lt;/p&gt;
+
+&lt;h3 id=&quot;secrets&quot;&gt;Secrets&lt;/h3&gt;
+
+&lt;p&gt;调用Plugin的RPC可能需要传入Secrets，一个Secret是一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;map[string]string&lt;/code&gt;，其中key用来指定secret的名字（username或者password），value包含secret数据。SP应该在文档中公布其要求的secret格式。CO会携带该secret发起调用，其中CO可能会在所有的RPC调用中传入相同的secret，因此SP需要的key值在CSI操作中必须是唯一的。&lt;/p&gt;
+
+&lt;h3 id=&quot;identity-service-rpc&quot;&gt;Identity Service RPC&lt;/h3&gt;
+
+&lt;p&gt;Identity Service允许CO查询一个plugin所具有的功能，健康状态和其他的一些元数据。所有接口返回的错误消息内容与格式不在文中阐述，如有需要，可以参考&lt;a href=&quot;https://github.com/container-storage-interface/spec/blob/master/spec.md&quot;&gt;CSI Spec&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;getplugininfo&quot;&gt;GetPluginInfo&lt;/h4&gt;
+&lt;p&gt;调用该RPC接口可以获取Plugin的名字，版本号和一些其他相关信息。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message GetPluginInfoRequest {
+  // Intentionally empty.
+}
+message GetPluginInfoResponse {
+  // This field is REQUIRED.
+  string name = 1;
+
+  // This field is REQUIRED. Value of this field is opaque to the CO.
+  string vendor_version = 2;
+
+  // This field is OPTIONAL. Values are opaque to the CO.
+  map&amp;lt;string, string&amp;gt; manifest = 3;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;getplugincapabilities&quot;&gt;GetPluginCapabilities&lt;/h4&gt;
+&lt;p&gt;该RPC允许CO查询Plugin整体所支持的功能：它是Plugin的所有实例的所有功能的总和。无论Plugin实例部署在集群上的哪些位置还是Plugin实例服务于哪些RPC接口，相同版本的所有Plugin实例（请参阅 GetPluginInfoResponse 的 vendor_version）都应返回相同的功能集合。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message GetPluginCapabilitiesRequest {
+  // Intentionally empty.
+}
+
+message GetPluginCapabilitiesResponse {
+  // All the capabilities that the controller service supports. This field is OPTIONAL.
+  repeated PluginCapability capabilities = 1;
+}
+
+// Specifies a capability of the plugin.
+message PluginCapability {
+  message Service {
+    enum Type {
+      UNKNOWN = 0;
+      // CONTROLLER_SERVICE indicates that the Plugin provides RPCs for
+      // the ControllerService. Plugins SHOULD provide this capability.
+      // In rare cases certain plugins MAY wish to omit the
+      // ControllerService entirely from their implementation, but such
+      // SHOULD NOT be the common case.
+      // The presence of this capability determines whether the CO will
+      // attempt to invoke the REQUIRED ControllerService RPCs, as well
+      // as specific RPCs as indicated by ControllerGetCapabilities.
+      CONTROLLER_SERVICE = 1;
+
+      // VOLUME_ACCESSIBILITY_CONSTRAINTS indicates that the volumes for
+      // this plugin MAY NOT be equally accessible by all nodes in the
+      // cluster. The CO MUST use the topology information returned by
+      // CreateVolumeRequest along with the topology information
+      // returned by NodeGetInfo to ensure that a given volume is
+      // accessible from a given node when scheduling workloads.
+      VOLUME_ACCESSIBILITY_CONSTRAINTS = 2;
+    }
+    Type type = 1;
+  }
+
+  message VolumeExpansion {
+    enum Type {
+      UNKNOWN = 0;
+
+      // ONLINE indicates that volumes may be expanded when published to
+      // a node. When a Plugin implements this capability it MUST
+      // implement either the EXPAND_VOLUME controller capability or the
+      // EXPAND_VOLUME node capability or both. When a plugin supports
+      // ONLINE volume expansion and also has the EXPAND_VOLUME
+      // controller capability then the plugin MUST support expansion of
+      // volumes currently published and available on a node. When a
+      // plugin supports ONLINE volume expansion and also has the
+      // EXPAND_VOLUME node capability then the plugin MAY support
+      // expansion of node-published volume via NodeExpandVolume.
+      //
+      // Example 1: Given a shared filesystem volume (e.g. GlusterFs),
+      //   the Plugin may set the ONLINE volume expansion capability and
+      //   implement ControllerExpandVolume but not NodeExpandVolume.
+      //
+      // Example 2: Given a block storage volume type (e.g. EBS), the
+      //   Plugin may set the ONLINE volume expansion capability and
+      //   implement both ControllerExpandVolume and NodeExpandVolume.
+      //
+      // Example 3: Given a Plugin that supports volume expansion only
+      //   upon a node, the Plugin may set the ONLINE volume
+      //   expansion capability and implement NodeExpandVolume but not
+      //   ControllerExpandVolume.
+      ONLINE = 1;
+
+      // OFFLINE indicates that volumes currently published and
+      // available on a node SHALL NOT be expanded via
+      // ControllerExpandVolume. When a plugin supports OFFLINE volume
+      // expansion it MUST implement either the EXPAND_VOLUME controller
+      // capability or both the EXPAND_VOLUME controller capability and
+      // the EXPAND_VOLUME node capability.
+      //
+      // Example 1: Given a block storage volume type (e.g. Azure Disk)
+      //   that does not support expansion of &quot;node-attached&quot; (i.e.
+      //   controller-published) volumes, the Plugin may indicate
+      //   OFFLINE volume expansion support and implement both
+      //   ControllerExpandVolume and NodeExpandVolume.
+      OFFLINE = 2;
+    }
+    Type type = 1;
+  }
+
+  oneof type {
+    // Service that the plugin supports.
+    Service service = 1;
+    VolumeExpansion volume_expansion = 2;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;probe&quot;&gt;Probe&lt;/h4&gt;
+&lt;p&gt;该接口的主要目的就是验证Plugin的状态是否健康。如果状态为不健康，CO会采取一些操作以尝试将plugin的状态恢复至健康状态，可能的操作包括：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;重启plugin容器&lt;/li&gt;
+  &lt;li&gt;通知plugin管理员&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;CO可以在任何时刻以任意次数调用该RPC接口，但此类重复调用可能会产生资源开销。 SP应在文档中说明有关调用此接口的指南和已知限制。例如，SP可以记录应该调用它的Probe接口的最大频率。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ProbeRequest {
+  // Intentionally empty.
+}
+
+message ProbeResponse {
+  // Readiness allows a plugin to report its initialization status back
+  // to the CO. Initialization for some plugins MAY be time consuming
+  // and it is important for a CO to distinguish between the following
+  // cases:
+  //
+  // 1) The plugin is in an unhealthy state and MAY need restarting. In
+  //    this case a gRPC error code SHALL be returned.
+  // 2) The plugin is still initializing, but is otherwise perfectly
+  //    healthy. In this case a successful response SHALL be returned
+  //    with a readiness value of `false`. Calls to the plugin&apos;s
+  //    Controller and/or Node services MAY fail due to an incomplete
+  //    initialization state.
+  // 3) The plugin has finished initializing and is ready to service
+  //    calls to its Controller and/or Node services. A successful
+  //    response is returned with a readiness value of `true`.
+  //
+  // This field is OPTIONAL. If not present, the caller SHALL assume
+  // that the plugin is in a ready state and is accepting calls to its
+  // Controller and/or Node services (according to the plugin&apos;s reported
+  // capabilities).
+  .google.protobuf.BoolValue ready = 1;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;controller-service-rpc&quot;&gt;Controller Service RPC&lt;/h3&gt;
+
+&lt;p&gt;Controller Service RPC是Controller Plugin需要向外暴露的接口。&lt;/p&gt;
+
+&lt;h4 id=&quot;controllergetcapabilities&quot;&gt;ControllerGetCapabilities&lt;/h4&gt;
+
+&lt;p&gt;Controller Plugin必须实现此接口，该接口允许CO检查Controller Plugin所支持的功能。&lt;/p&gt;
+
+&lt;p&gt;各类功能和RPC接口的对应关系见下表：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Cpability&lt;/th&gt;
+      &lt;th&gt;RPCs&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MUST_IMPLEMENT&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ValidateVolumeCapabilities&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerGetCapabilities&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CREATE_DELETE_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CreateVolume&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DeleteVolume&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;LIST_VOLUMES&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ListVolumes&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GET_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerGetVolume&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CLONE_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CreateVolume&lt;/code&gt; from volume&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SINGLE_NODE_MULTI_WRITER&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CreateVolume&lt;/code&gt; with SINGLE_NODE_SINGLE_WRITER and/or SINGLE_NODE_MULTI_WRITER access modes.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;LIST_VOLUMES_PUBLISHED_NODES&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ListVolumes&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerGetVolume&lt;/code&gt; return published_node_ids&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;VOLUME_CONDITION&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerGetVolume&lt;/code&gt; return non-nil volume_condition&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CREATE_DELETE_SNAPSHOT&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CreateSnapshot&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DeleteSnapshot&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;LIST_SNAPSHOTS&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ListSnapshots&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;PUBLISH_UNPUBLISH_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerPublishVolume&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerUnpublishVolume&lt;/code&gt;,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeGetInfo&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;PUBLISH_READONLY&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerPublishVolume&lt;/code&gt; with readonly mode&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GET_CAPACITY&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetCapacity&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EXPAND_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerExpandVolume&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ControllerGetCapabilitiesRequest {
+  // Intentionally empty.
+}
+
+message ControllerGetCapabilitiesResponse {
+  // All the capabilities that the controller service supports. This
+  // field is OPTIONAL.
+  repeated ControllerServiceCapability capabilities = 1;
+}
+
+// Specifies a capability of the controller service.
+message ControllerServiceCapability {
+  message RPC {
+    enum Type {
+      UNKNOWN = 0;
+      CREATE_DELETE_VOLUME = 1;
+      PUBLISH_UNPUBLISH_VOLUME = 2;
+      LIST_VOLUMES = 3;
+      GET_CAPACITY = 4;
+      // Currently the only way to consume a snapshot is to create
+      // a volume from it. Therefore plugins supporting
+      // CREATE_DELETE_SNAPSHOT MUST support creating volume from
+      // snapshot.
+      CREATE_DELETE_SNAPSHOT = 5;
+      LIST_SNAPSHOTS = 6;
+
+      // Plugins supporting volume cloning at the storage level MAY
+      // report this capability. The source volume MUST be managed by
+      // the same plugin. Not all volume sources and parameters
+      // combinations MAY work.
+      CLONE_VOLUME = 7;
+
+      // Indicates the SP supports ControllerPublishVolume.readonly
+      // field.
+      PUBLISH_READONLY = 8;
+
+      // See VolumeExpansion for details.
+      EXPAND_VOLUME = 9;
+
+      // Indicates the SP supports the
+      // ListVolumesResponse.entry.published_node_ids field and the
+      // ControllerGetVolumeResponse.published_node_ids field.
+      // The SP MUST also support PUBLISH_UNPUBLISH_VOLUME.
+      LIST_VOLUMES_PUBLISHED_NODES = 10;
+
+      // Indicates that the Controller service can report volume
+      // conditions.
+      // An SP MAY implement `VolumeCondition` in only the Controller
+      // Plugin, only the Node Plugin, or both.
+      // If `VolumeCondition` is implemented in both the Controller and
+      // Node Plugins, it SHALL report from different perspectives.
+      // If for some reason Controller and Node Plugins report
+      // misaligned volume conditions, CO SHALL assume the worst case
+      // is the truth.
+      // Note that, for alpha, `VolumeCondition` is intended be
+      // informative for humans only, not for automation.
+      VOLUME_CONDITION = 11 [(alpha_enum_value) = true];
+
+      // Indicates the SP supports the ControllerGetVolume RPC.
+      // This enables COs to, for example, fetch per volume
+      // condition after a volume is provisioned.
+      GET_VOLUME = 12 [(alpha_enum_value) = true];
+
+      // Indicates the SP supports the SINGLE_NODE_SINGLE_WRITER and/or
+      // SINGLE_NODE_MULTI_WRITER access modes.
+      // These access modes are intended to replace the
+      // SINGLE_NODE_WRITER access mode to clarify the number of writers
+      // for a volume on a single node. Plugins MUST accept and allow
+      // use of the SINGLE_NODE_WRITER access mode when either
+      // SINGLE_NODE_SINGLE_WRITER and/or SINGLE_NODE_MULTI_WRITER are
+      // supported, in order to permit older COs to continue working.
+      SINGLE_NODE_MULTI_WRITER = 13 [(alpha_enum_value) = true];
+    }
+
+    Type type = 1;
+  }
+
+  oneof type {
+    // RPC that the controller supports.
+    RPC rpc = 1;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;createvolume&quot;&gt;CreateVolume&lt;/h4&gt;
+&lt;p&gt;CO会调用CreateVolume接口provision一个Volume。此接口必须是幂等的，假如已经存在同名的volume，并且属性兼容于创建的请求，则plugin需返回OK。&lt;/p&gt;
+
+&lt;p&gt;Plugin可以创建三种volume：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;空的volume。&lt;/li&gt;
+  &lt;li&gt;从snapshot中创建volume，但是plugin需支持&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CREATE_DELETE_SNAPSHOT&lt;/code&gt;的功能。&lt;/li&gt;
+  &lt;li&gt;从一个已有的volume中创建volume，plugin需要额外支持&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CLONE_VOLUME&lt;/code&gt;的功能。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;如果CO请求从现有的Snapshot或Volume创建Volume，并且请求的Volume大小大于原始Snapshot（或克隆Volume），则Plugin可以拒绝此类调用并返回带有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OUT_OF_RANGE&lt;/code&gt;错误，或者当此volume通过NodePublish调用呈现给工作负载时，必须提供一个具有有请求的大小并包含来自Snapshot（或原始Volume）的数据的volume。如果Volume具有MountVolume的VolumeCapability访问类型并且需要调整文件系统大小以提供请求的容量，则Plugin需要在 NodePublish 调用时（或之前）调整新创建Volume的文件系统大小。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message CreateVolumeRequest {
+  // The suggested name for the storage space. This field is REQUIRED.
+  // It serves two purposes:
+  // 1) Idempotency - This name is generated by the CO to achieve
+  //    idempotency.  The Plugin SHOULD ensure that multiple
+  //    `CreateVolume` calls for the same name do not result in more
+  //    than one piece of storage provisioned corresponding to that
+  //    name. If a Plugin is unable to enforce idempotency, the CO&apos;s
+  //    error recovery logic could result in multiple (unused) volumes
+  //    being provisioned.
+  //    In the case of error, the CO MUST handle the gRPC error codes
+  //    per the recovery behavior defined in the &quot;CreateVolume Errors&quot;
+  //    section below.
+  //    The CO is responsible for cleaning up volumes it provisioned
+  //    that it no longer needs. If the CO is uncertain whether a volume
+  //    was provisioned or not when a `CreateVolume` call fails, the CO
+  //    MAY call `CreateVolume` again, with the same name, to ensure the
+  //    volume exists and to retrieve the volume&apos;s `volume_id` (unless
+  //    otherwise prohibited by &quot;CreateVolume Errors&quot;).
+  // 2) Suggested name - Some storage systems allow callers to specify
+  //    an identifier by which to refer to the newly provisioned
+  //    storage. If a storage system supports this, it can optionally
+  //    use this name as the identifier for the new volume.
+  // Any Unicode string that conforms to the length limit is allowed
+  // except those containing the following banned characters:
+  // U+0000-U+0008, U+000B, U+000C, U+000E-U+001F, U+007F-U+009F.
+  // (These are control characters other than commonly used whitespace.)
+  string name = 1;
+
+  // This field is OPTIONAL. This allows the CO to specify the capacity
+  // requirement of the volume to be provisioned. If not specified, the
+  // Plugin MAY choose an implementation-defined capacity range. If
+  // specified it MUST always be honored, even when creating volumes
+  // from a source; which MAY force some backends to internally extend
+  // the volume after creating it.
+  CapacityRange capacity_range = 2;
+
+  // The capabilities that the provisioned volume MUST have. SP MUST
+  // provision a volume that will satisfy ALL of the capabilities
+  // specified in this list. Otherwise SP MUST return the appropriate
+  // gRPC error code.
+  // The Plugin MUST assume that the CO MAY use the provisioned volume
+  // with ANY of the capabilities specified in this list.
+  // For example, a CO MAY specify two volume capabilities: one with
+  // access mode SINGLE_NODE_WRITER and another with access mode
+  // MULTI_NODE_READER_ONLY. In this case, the SP MUST verify that the
+  // provisioned volume can be used in either mode.
+  // This also enables the CO to do early validation: If ANY of the
+  // specified volume capabilities are not supported by the SP, the call
+  // MUST return the appropriate gRPC error code.
+  // This field is REQUIRED.
+  repeated VolumeCapability volume_capabilities = 3;
+
+  // Plugin specific parameters passed in as opaque key-value pairs.
+  // This field is OPTIONAL. The Plugin is responsible for parsing and
+  // validating these parameters. COs will treat these as opaque.
+  map&amp;lt;string, string&amp;gt; parameters = 4;
+
+  // Secrets required by plugin to complete volume creation request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 5 [(csi_secret) = true];
+
+  // If specified, the new volume will be pre-populated with data from
+  // this source. This field is OPTIONAL.
+  VolumeContentSource volume_content_source = 6;
+
+  // Specifies where (regions, zones, racks, etc.) the provisioned
+  // volume MUST be accessible from.
+  // An SP SHALL advertise the requirements for topological
+  // accessibility information in documentation. COs SHALL only specify
+  // topological accessibility information supported by the SP.
+  // This field is OPTIONAL.
+  // This field SHALL NOT be specified unless the SP has the
+  // VOLUME_ACCESSIBILITY_CONSTRAINTS plugin capability.
+  // If this field is not specified and the SP has the
+  // VOLUME_ACCESSIBILITY_CONSTRAINTS plugin capability, the SP MAY
+  // choose where the provisioned volume is accessible from.
+  TopologyRequirement accessibility_requirements = 7;
+}
+
+// Specifies what source the volume will be created from. One of the
+// type fields MUST be specified.
+message VolumeContentSource {
+  message SnapshotSource {
+    // Contains identity information for the existing source snapshot.
+    // This field is REQUIRED. Plugin is REQUIRED to support creating
+    // volume from snapshot if it supports the capability
+    // CREATE_DELETE_SNAPSHOT.
+    string snapshot_id = 1;
+  }
+
+  message VolumeSource {
+    // Contains identity information for the existing source volume.
+    // This field is REQUIRED. Plugins reporting CLONE_VOLUME
+    // capability MUST support creating a volume from another volume.
+    string volume_id = 1;
+  }
+
+  oneof type {
+    SnapshotSource snapshot = 1;
+    VolumeSource volume = 2;
+  }
+}
+
+message CreateVolumeResponse {
+  // Contains all attributes of the newly created volume that are
+  // relevant to the CO along with information required by the Plugin
+  // to uniquely identify the volume. This field is REQUIRED.
+  Volume volume = 1;
+}
+
+// Specify a capability of a volume.
+message VolumeCapability {
+  // Indicate that the volume will be accessed via the block device API.
+  message BlockVolume {
+    // Intentionally empty, for now.
+  }
+
+  // Indicate that the volume will be accessed via the filesystem API.
+  message MountVolume {
+    // The filesystem type. This field is OPTIONAL.
+    // An empty string is equal to an unspecified field value.
+    string fs_type = 1;
+
+    // The mount options that can be used for the volume. This field is
+    // OPTIONAL. `mount_flags` MAY contain sensitive information.
+    // Therefore, the CO and the Plugin MUST NOT leak this information
+    // to untrusted entities. The total size of this repeated field
+    // SHALL NOT exceed 4 KiB.
+    repeated string mount_flags = 2;
+
+    // If SP has VOLUME_MOUNT_GROUP node capability and CO provides
+    // this field then SP MUST ensure that the volume_mount_group
+    // parameter is passed as the group identifier to the underlying
+    // operating system mount system call, with the understanding
+    // that the set of available mount call parameters and/or
+    // mount implementations may vary across operating systems.
+    // Additionally, new file and/or directory entries written to
+    // the underlying filesystem SHOULD be permission-labeled in such a
+    // manner, unless otherwise modified by a workload, that they are
+    // both readable and writable by said mount group identifier.
+    // This is an OPTIONAL field.
+    string volume_mount_group = 3 [(alpha_field) = true];
+  }
+
+  // Specify how a volume can be accessed.
+  message AccessMode {
+    enum Mode {
+      UNKNOWN = 0;
+
+      // Can only be published once as read/write on a single node, at
+      // any given time.
+      SINGLE_NODE_WRITER = 1;
+
+      // Can only be published once as readonly on a single node, at
+      // any given time.
+      SINGLE_NODE_READER_ONLY = 2;
+
+      // Can be published as readonly at multiple nodes simultaneously.
+      MULTI_NODE_READER_ONLY = 3;
+
+      // Can be published at multiple nodes simultaneously. Only one of
+      // the node can be used as read/write. The rest will be readonly.
+      MULTI_NODE_SINGLE_WRITER = 4;
+
+      // Can be published as read/write at multiple nodes
+      // simultaneously.
+      MULTI_NODE_MULTI_WRITER = 5;
+
+      // Can only be published once as read/write at a single workload
+      // on a single node, at any given time. SHOULD be used instead of
+      // SINGLE_NODE_WRITER for COs using the experimental
+      // SINGLE_NODE_MULTI_WRITER capability.
+      SINGLE_NODE_SINGLE_WRITER = 6 [(alpha_enum_value) = true];
+
+      // Can be published as read/write at multiple workloads on a
+      // single node simultaneously. SHOULD be used instead of
+      // SINGLE_NODE_WRITER for COs using the experimental
+      // SINGLE_NODE_MULTI_WRITER capability.
+      SINGLE_NODE_MULTI_WRITER = 7 [(alpha_enum_value) = true];
+    }
+
+    // This field is REQUIRED.
+    Mode mode = 1;
+  }
+
+  // Specifies what API the volume will be accessed using. One of the
+  // following fields MUST be specified.
+  oneof access_type {
+    BlockVolume block = 1;
+    MountVolume mount = 2;
+  }
+
+  // This is a REQUIRED field.
+  AccessMode access_mode = 3;
+}
+
+// The capacity of the storage space in bytes. To specify an exact size,
+// `required_bytes` and `limit_bytes` SHALL be set to the same value. At
+// least one of the these fields MUST be specified.
+message CapacityRange {
+  // Volume MUST be at least this big. This field is OPTIONAL.
+  // A value of 0 is equal to an unspecified field value.
+  // The value of this field MUST NOT be negative.
+  int64 required_bytes = 1;
+
+  // Volume MUST not be bigger than this. This field is OPTIONAL.
+  // A value of 0 is equal to an unspecified field value.
+  // The value of this field MUST NOT be negative.
+  int64 limit_bytes = 2;
+}
+
+// Information about a specific volume.
+message Volume {
+  // The capacity of the volume in bytes. This field is OPTIONAL. If not
+  // set (value of 0), it indicates that the capacity of the volume is
+  // unknown (e.g., NFS share).
+  // The value of this field MUST NOT be negative.
+  int64 capacity_bytes = 1;
+
+  // The identifier for this volume, generated by the plugin.
+  // This field is REQUIRED.
+  // This field MUST contain enough information to uniquely identify
+  // this specific volume vs all other volumes supported by this plugin.
+  // This field SHALL be used by the CO in subsequent calls to refer to
+  // this volume.
+  // The SP is NOT responsible for global uniqueness of volume_id across
+  // multiple SPs.
+  string volume_id = 2;
+
+  // Opaque static properties of the volume. SP MAY use this field to
+  // ensure subsequent volume validation and publishing calls have
+  // contextual information.
+  // The contents of this field SHALL be opaque to a CO.
+  // The contents of this field SHALL NOT be mutable.
+  // The contents of this field SHALL be safe for the CO to cache.
+  // The contents of this field SHOULD NOT contain sensitive
+  // information.
+  // The contents of this field SHOULD NOT be used for uniquely
+  // identifying a volume. The `volume_id` alone SHOULD be sufficient to
+  // identify the volume.
+  // A volume uniquely identified by `volume_id` SHALL always report the
+  // same volume_context.
+  // This field is OPTIONAL and when present MUST be passed to volume
+  // validation and publishing calls.
+  map&amp;lt;string, string&amp;gt; volume_context = 3;
+
+  // If specified, indicates that the volume is not empty and is
+  // pre-populated with data from the specified source.
+  // This field is OPTIONAL.
+  VolumeContentSource content_source = 4;
+
+  // Specifies where (regions, zones, racks, etc.) the provisioned
+  // volume is accessible from.
+  // A plugin that returns this field MUST also set the
+  // VOLUME_ACCESSIBILITY_CONSTRAINTS plugin capability.
+  // An SP MAY specify multiple topologies to indicate the volume is
+  // accessible from multiple locations.
+  // COs MAY use this information along with the topology information
+  // returned by NodeGetInfo to ensure that a given volume is accessible
+  // from a given node when scheduling workloads.
+  // This field is OPTIONAL. If it is not specified, the CO MAY assume
+  // the volume is equally accessible from all nodes in the cluster and
+  // MAY schedule workloads referencing the volume on any available
+  // node.
+  //
+  // Example 1:
+  //   accessible_topology = {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;}
+  // Indicates a volume accessible only from the &quot;region&quot; &quot;R1&quot; and the
+  // &quot;zone&quot; &quot;Z2&quot;.
+  //
+  // Example 2:
+  //   accessible_topology =
+  //     {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //     {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;}
+  // Indicates a volume accessible from both &quot;zone&quot; &quot;Z2&quot; and &quot;zone&quot; &quot;Z3&quot;
+  // in the &quot;region&quot; &quot;R1&quot;.
+  repeated Topology accessible_topology = 5;
+}
+
+message TopologyRequirement {
+  // Specifies the list of topologies the provisioned volume MUST be
+  // accessible from.
+  // This field is OPTIONAL. If TopologyRequirement is specified either
+  // requisite or preferred or both MUST be specified.
+  //
+  // If requisite is specified, the provisioned volume MUST be
+  // accessible from at least one of the requisite topologies.
+  //
+  // Given
+  //   x = number of topologies provisioned volume is accessible from
+  //   n = number of requisite topologies
+  // The CO MUST ensure n &amp;gt;= 1. The SP MUST ensure x &amp;gt;= 1
+  // If x==n, then the SP MUST make the provisioned volume available to
+  // all topologies from the list of requisite topologies. If it is
+  // unable to do so, the SP MUST fail the CreateVolume call.
+  // For example, if a volume should be accessible from a single zone,
+  // and requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;}
+  // then the provisioned volume MUST be accessible from the &quot;region&quot;
+  // &quot;R1&quot; and the &quot;zone&quot; &quot;Z2&quot;.
+  // Similarly, if a volume should be accessible from two zones, and
+  // requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;}
+  // then the provisioned volume MUST be accessible from the &quot;region&quot;
+  // &quot;R1&quot; and both &quot;zone&quot; &quot;Z2&quot; and &quot;zone&quot; &quot;Z3&quot;.
+  //
+  // If x&amp;lt;n, then the SP SHALL choose x unique topologies from the list
+  // of requisite topologies. If it is unable to do so, the SP MUST fail
+  // the CreateVolume call.
+  // For example, if a volume should be accessible from a single zone,
+  // and requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;}
+  // then the SP may choose to make the provisioned volume available in
+  // either the &quot;zone&quot; &quot;Z2&quot; or the &quot;zone&quot; &quot;Z3&quot; in the &quot;region&quot; &quot;R1&quot;.
+  // Similarly, if a volume should be accessible from two zones, and
+  // requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z4&quot;}
+  // then the provisioned volume MUST be accessible from any combination
+  // of two unique topologies: e.g. &quot;R1/Z2&quot; and &quot;R1/Z3&quot;, or &quot;R1/Z2&quot; and
+  //  &quot;R1/Z4&quot;, or &quot;R1/Z3&quot; and &quot;R1/Z4&quot;.
+  //
+  // If x&amp;gt;n, then the SP MUST make the provisioned volume available from
+  // all topologies from the list of requisite topologies and MAY choose
+  // the remaining x-n unique topologies from the list of all possible
+  // topologies. If it is unable to do so, the SP MUST fail the
+  // CreateVolume call.
+  // For example, if a volume should be accessible from two zones, and
+  // requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;}
+  // then the provisioned volume MUST be accessible from the &quot;region&quot;
+  // &quot;R1&quot; and the &quot;zone&quot; &quot;Z2&quot; and the SP may select the second zone
+  // independently, e.g. &quot;R1/Z4&quot;.
+  repeated Topology requisite = 1;
+
+  // Specifies the list of topologies the CO would prefer the volume to
+  // be provisioned in.
+  //
+  // This field is OPTIONAL. If TopologyRequirement is specified either
+  // requisite or preferred or both MUST be specified.
+  //
+  // An SP MUST attempt to make the provisioned volume available using
+  // the preferred topologies in order from first to last.
+  //
+  // If requisite is specified, all topologies in preferred list MUST
+  // also be present in the list of requisite topologies.
+  //
+  // If the SP is unable to to make the provisioned volume available
+  // from any of the preferred topologies, the SP MAY choose a topology
+  // from the list of requisite topologies.
+  // If the list of requisite topologies is not specified, then the SP
+  // MAY choose from the list of all possible topologies.
+  // If the list of requisite topologies is specified and the SP is
+  // unable to to make the provisioned volume available from any of the
+  // requisite topologies it MUST fail the CreateVolume call.
+  //
+  // Example 1:
+  // Given a volume should be accessible from a single zone, and
+  // requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;}
+  // preferred =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;}
+  // then the the SP SHOULD first attempt to make the provisioned volume
+  // available from &quot;zone&quot; &quot;Z3&quot; in the &quot;region&quot; &quot;R1&quot; and fall back to
+  // &quot;zone&quot; &quot;Z2&quot; in the &quot;region&quot; &quot;R1&quot; if that is not possible.
+  //
+  // Example 2:
+  // Given a volume should be accessible from a single zone, and
+  // requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z4&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z5&quot;}
+  // preferred =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z4&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;}
+  // then the the SP SHOULD first attempt to make the provisioned volume
+  // accessible from &quot;zone&quot; &quot;Z4&quot; in the &quot;region&quot; &quot;R1&quot; and fall back to
+  // &quot;zone&quot; &quot;Z2&quot; in the &quot;region&quot; &quot;R1&quot; if that is not possible. If that
+  // is not possible, the SP may choose between either the &quot;zone&quot;
+  // &quot;Z3&quot; or &quot;Z5&quot; in the &quot;region&quot; &quot;R1&quot;.
+  //
+  // Example 3:
+  // Given a volume should be accessible from TWO zones (because an
+  // opaque parameter in CreateVolumeRequest, for example, specifies
+  // the volume is accessible from two zones, aka synchronously
+  // replicated), and
+  // requisite =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z4&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z5&quot;}
+  // preferred =
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z5&quot;},
+  //   {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z3&quot;}
+  // then the the SP SHOULD first attempt to make the provisioned volume
+  // accessible from the combination of the two &quot;zones&quot; &quot;Z5&quot; and &quot;Z3&quot; in
+  // the &quot;region&quot; &quot;R1&quot;. If that&apos;s not possible, it should fall back to
+  // a combination of &quot;Z5&quot; and other possibilities from the list of
+  // requisite. If that&apos;s not possible, it should fall back  to a
+  // combination of &quot;Z3&quot; and other possibilities from the list of
+  // requisite. If that&apos;s not possible, it should fall back  to a
+  // combination of other possibilities from the list of requisite.
+  repeated Topology preferred = 2;
+}
+
+// Topology is a map of topological domains to topological segments.
+// A topological domain is a sub-division of a cluster, like &quot;region&quot;,
+// &quot;zone&quot;, &quot;rack&quot;, etc.
+// A topological segment is a specific instance of a topological domain,
+// like &quot;zone3&quot;, &quot;rack3&quot;, etc.
+// For example {&quot;com.company/zone&quot;: &quot;Z1&quot;, &quot;com.company/rack&quot;: &quot;R3&quot;}
+// Valid keys have two segments: an OPTIONAL prefix and name, separated
+// by a slash (/), for example: &quot;com.company.example/zone&quot;.
+// The key name segment is REQUIRED. The prefix is OPTIONAL.
+// The key name MUST be 63 characters or less, begin and end with an
+// alphanumeric character ([a-z0-9A-Z]), and contain only dashes (-),
+// underscores (_), dots (.), or alphanumerics in between, for example
+// &quot;zone&quot;.
+// The key prefix MUST be 63 characters or less, begin and end with a
+// lower-case alphanumeric character ([a-z0-9]), contain only
+// dashes (-), dots (.), or lower-case alphanumerics in between, and
+// follow domain name notation format
+// (https://tools.ietf.org/html/rfc1035#section-2.3.1).
+// The key prefix SHOULD include the plugin&apos;s host company name and/or
+// the plugin name, to minimize the possibility of collisions with keys
+// from other plugins.
+// If a key prefix is specified, it MUST be identical across all
+// topology keys returned by the SP (across all RPCs).
+// Keys MUST be case-insensitive. Meaning the keys &quot;Zone&quot; and &quot;zone&quot;
+// MUST not both exist.
+// Each value (topological segment) MUST contain 1 or more strings.
+// Each string MUST be 63 characters or less and begin and end with an
+// alphanumeric character with &apos;-&apos;, &apos;_&apos;, &apos;.&apos;, or alphanumerics in
+// between.
+message Topology {
+  map&amp;lt;string, string&amp;gt; segments = 1;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;deletevolume&quot;&gt;DeleteVolume&lt;/h4&gt;
+&lt;p&gt;此接口必须是幂等的，如果传入的volume_id已经不存在了，则plugin需返回OK。&lt;/p&gt;
+
+&lt;p&gt;Plugin应该独立的对待volume和snapshot。如果Plugin支持在不影响其现有Snapshot的情况下删除Volume，那么这些Snapshot必须仍然是完全可操作的，并且可以作为新Volume的来源，并且在Volume被删除后出现在 ListSnapshot 调用中。当Plugin不支持删除Volume而不影响其现有Snapshot时，则请求不得以任何方式更改Volume，并且操作必须返回 FAILED_PRECONDITION 错误代码。&lt;/p&gt;
+
+&lt;p&gt;在调用CreateVolume时假如发生了超时，则CO会拿不到volume_id。如果CO想要删除此volume，则可以采取以下行为：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;以相同的参数再次发起CreateVolume请求，一旦执行成功便可以拿到volume_id进行删除操作。&lt;/li&gt;
+  &lt;li&gt;执行ListVolumes获取volume_id进行删除操作。&lt;/li&gt;
+  &lt;li&gt;CO不做额外操作。由管理员做删除。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Plugin可以不支持&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LIST_VOLUME&lt;/code&gt;功能，CO在获取Plugin支持功能列表之后可以决定采取哪种方式处理上述情况。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message DeleteVolumeRequest {
+  // The ID of the volume to be deprovisioned.
+  // This field is REQUIRED.
+  string volume_id = 1;
+
+  // Secrets required by plugin to complete volume deletion request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 2 [(csi_secret) = true];
+}
+
+message DeleteVolumeResponse {
+  // Intentionally empty.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;listvolumes&quot;&gt;ListVolumes&lt;/h4&gt;
+
+&lt;p&gt;Plugin应返回有关它知道的所有Volume的信息。如果在CO对ListVolumes结果进行分页的同时创建或删除Volume，则列表中可能会出现重复的Volume，而不是获取现有的Volume，或两种情况都会发生。当通过多次调用ListVolumes翻阅Volume列表时，CO不应期望所有Volume的“视图”一致。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ListVolumesRequest {
+  // If specified (non-zero value), the Plugin MUST NOT return more
+  // entries than this number in the response. If the actual number of
+  // entries is more than this number, the Plugin MUST set `next_token`
+  // in the response which can be used to get the next page of entries
+  // in the subsequent `ListVolumes` call. This field is OPTIONAL. If
+  // not specified (zero value), it means there is no restriction on the
+  // number of entries that can be returned.
+  // The value of this field MUST NOT be negative.
+  int32 max_entries = 1;
+
+  // A token to specify where to start paginating. Set this field to
+  // `next_token` returned by a previous `ListVolumes` call to get the
+  // next page of entries. This field is OPTIONAL.
+  // An empty string is equal to an unspecified field value.
+  string starting_token = 2;
+}
+
+message ListVolumesResponse {
+  message VolumeStatus{
+    // A list of all `node_id` of nodes that the volume in this entry
+    // is controller published on.
+    // This field is OPTIONAL. If it is not specified and the SP has
+    // the LIST_VOLUMES_PUBLISHED_NODES controller capability, the CO
+    // MAY assume the volume is not controller published to any nodes.
+    // If the field is not specified and the SP does not have the
+    // LIST_VOLUMES_PUBLISHED_NODES controller capability, the CO MUST
+    // not interpret this field.
+    // published_node_ids MAY include nodes not published to or
+    // reported by the SP. The CO MUST be resilient to that.
+    repeated string published_node_ids = 1;
+
+    // Information about the current condition of the volume.
+    // This field is OPTIONAL.
+    // This field MUST be specified if the
+    // VOLUME_CONDITION controller capability is supported.
+    VolumeCondition volume_condition = 2 [(alpha_field) = true];
+  }
+
+  message Entry {
+    // This field is REQUIRED
+    Volume volume = 1;
+
+    // This field is OPTIONAL. This field MUST be specified if the
+    // LIST_VOLUMES_PUBLISHED_NODES controller capability is
+    // supported.
+    VolumeStatus status = 2;
+  }
+
+  repeated Entry entries = 1;
+
+  // This token allows you to get the next page of entries for
+  // `ListVolumes` request. If the number of entries is larger than
+  // `max_entries`, use the `next_token` as a value for the
+  // `starting_token` field in the next `ListVolumes` request. This
+  // field is OPTIONAL.
+  // An empty string is equal to an unspecified field value.
+  string next_token = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;controllergetvolume&quot;&gt;ControllerGetVolume&lt;/h4&gt;
+
+&lt;p&gt;CO调用此接口可以获取Volume的详细信息，如果volume不存在，则plugin需返回NOT_FOUND&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ControllerGetVolumeRequest {
+  option (alpha_message) = true;
+
+  // The ID of the volume to fetch current volume information for.
+  // This field is REQUIRED.
+  string volume_id = 1;
+}
+
+message ControllerGetVolumeResponse {
+  option (alpha_message) = true;
+
+  message VolumeStatus{
+    // A list of all the `node_id` of nodes that this volume is
+    // controller published on.
+    // This field is OPTIONAL.
+    // This field MUST be specified if the LIST_VOLUMES_PUBLISHED_NODES
+    // controller capability is supported.
+    // published_node_ids MAY include nodes not published to or
+    // reported by the SP. The CO MUST be resilient to that.
+    repeated string published_node_ids = 1;
+
+    // Information about the current condition of the volume.
+    // This field is OPTIONAL.
+    // This field MUST be specified if the
+    // VOLUME_CONDITION controller capability is supported.
+    VolumeCondition volume_condition = 2;
+  }
+
+  // This field is REQUIRED
+  Volume volume = 1;
+
+  // This field is REQUIRED.
+  VolumeStatus status = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;validatevolumecapabilities&quot;&gt;ValidateVolumeCapabilities&lt;/h4&gt;
+
+&lt;p&gt;Plugin必须提供此RPC接口，CO调用此接口确认一个pre-provisioned volume是否具有CO需要的所有功能。如果请求的所有的volume功能都被支持，则plugin只会返回confirmed。此操作必须是幂等的。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ValidateVolumeCapabilitiesRequest {
+  // The ID of the volume to check. This field is REQUIRED.
+  string volume_id = 1;
+
+  // Volume context as returned by SP in
+  // CreateVolumeResponse.Volume.volume_context.
+  // This field is OPTIONAL and MUST match the volume_context of the
+  // volume identified by `volume_id`.
+  map&amp;lt;string, string&amp;gt; volume_context = 2;
+
+  // The capabilities that the CO wants to check for the volume. This
+  // call SHALL return &quot;confirmed&quot; only if all the volume capabilities
+  // specified below are supported. This field is REQUIRED.
+  repeated VolumeCapability volume_capabilities = 3;
+
+  // See CreateVolumeRequest.parameters.
+  // This field is OPTIONAL.
+  map&amp;lt;string, string&amp;gt; parameters = 4;
+
+  // Secrets required by plugin to complete volume validation request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 5 [(csi_secret) = true];
+}
+
+message ValidateVolumeCapabilitiesResponse {
+  message Confirmed {
+    // Volume context validated by the plugin.
+    // This field is OPTIONAL.
+    map&amp;lt;string, string&amp;gt; volume_context = 1;
+
+    // Volume capabilities supported by the plugin.
+    // This field is REQUIRED.
+    repeated VolumeCapability volume_capabilities = 2;
+
+    // The volume creation parameters validated by the plugin.
+    // This field is OPTIONAL.
+    map&amp;lt;string, string&amp;gt; parameters = 3;
+  }
+
+  // Confirmed indicates to the CO the set of capabilities that the
+  // plugin has validated. This field SHALL only be set to a non-empty
+  // value for successful validation responses.
+  // For successful validation responses, the CO SHALL compare the
+  // fields of this message to the originally requested capabilities in
+  // order to guard against an older plugin reporting &quot;valid&quot; for newer
+  // capability fields that it does not yet understand.
+  // This field is OPTIONAL.
+  Confirmed confirmed = 1;
+
+  // Message to the CO if `confirmed` above is empty. This field is
+  // OPTIONAL.
+  // An empty string is equal to an unspecified field value.
+  string message = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;controllerpublishvolume&quot;&gt;ControllerPublishVolume&lt;/h4&gt;
+
+&lt;p&gt;当CO要将一个使用volume的workload放置到一个节点时，会调用此接口。plugin应该执行必要的操作使该volume在此节点上可用。Plugin不得假定此RPC在将使用Volume的节点上执行。此操作必须是幂等的。如果volume_id对应的volume已经在node_id对应的节点上发布过，并且兼容指定的volume_capability和readonly标志，则Plugin必须回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。如果操作失败或者CO不确定操作是否失败，它可以选择再次调用ControllerPublishVolume或选择调用ControllerUnpublishVolume。&lt;/p&gt;
+
+&lt;p&gt;如果Volume具有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MULTI_NODE&lt;/code&gt;功能(即MULTI_NODE_READER_ONLY、MULTI_NODE_SINGLE_WRITER或MULTI_NODE_MULTI_WRITER)，CO可以调用此RPC将Volume发布到多个节点。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ControllerPublishVolumeRequest {
+  // The ID of the volume to be used on a node.
+  // This field is REQUIRED.
+  string volume_id = 1;
+
+  // The ID of the node. This field is REQUIRED. The CO SHALL set this
+  // field to match the node ID returned by `NodeGetInfo`.
+  string node_id = 2;
+
+  // Volume capability describing how the CO intends to use this volume.
+  // SP MUST ensure the CO can use the published volume as described.
+  // Otherwise SP MUST return the appropriate gRPC error code.
+  // This is a REQUIRED field.
+  VolumeCapability volume_capability = 3;
+
+  // Indicates SP MUST publish the volume in readonly mode.
+  // CO MUST set this field to false if SP does not have the
+  // PUBLISH_READONLY controller capability.
+  // This is a REQUIRED field.
+  bool readonly = 4;
+
+  // Secrets required by plugin to complete controller publish volume
+  // request. This field is OPTIONAL. Refer to the
+  // `Secrets Requirements` section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 5 [(csi_secret) = true];
+
+  // Volume context as returned by SP in
+  // CreateVolumeResponse.Volume.volume_context.
+  // This field is OPTIONAL and MUST match the volume_context of the
+  // volume identified by `volume_id`.
+  map&amp;lt;string, string&amp;gt; volume_context = 6;
+}
+
+message ControllerPublishVolumeResponse {
+  // Opaque static publish properties of the volume. SP MAY use this
+  // field to ensure subsequent `NodeStageVolume` or `NodePublishVolume`
+  // calls calls have contextual information.
+  // The contents of this field SHALL be opaque to a CO.
+  // The contents of this field SHALL NOT be mutable.
+  // The contents of this field SHALL be safe for the CO to cache.
+  // The contents of this field SHOULD NOT contain sensitive
+  // information.
+  // The contents of this field SHOULD NOT be used for uniquely
+  // identifying a volume. The `volume_id` alone SHOULD be sufficient to
+  // identify the volume.
+  // This field is OPTIONAL and when present MUST be passed to
+  // subsequent `NodeStageVolume` or `NodePublishVolume` calls
+  map&amp;lt;string, string&amp;gt; publish_context = 1;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;controllerunpublishvolume&quot;&gt;ControllerUnPublishVolume&lt;/h4&gt;
+
+&lt;p&gt;当使用Volume的工作负载被移动到不同的节点，或者在节点上使用Volume的所有工作负载已经完成时，CO会调用此接口。Plugin应该执行使Volume准备好被不同节点使用所需的工作。Plugin不得假定此RPC在将要使用此Volume的节点上执行。此调用必须在成功调用NodeUnstageVolume和NodeUnpublishVolume之后调用。此操作必须是幂等的。如果 volume_id 对应的Volume没有附加到 node_id 对应的节点上，Plugin必须回复 0 OK。如果Plugin无法找到volume_id对应的Volume或node_id对应的节点，并且Volume可以视为安全地从节点ControllerUnpublished，则Plugin应该返回&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。如果此操作失败，或者 CO 不知道操作是否失败，它可以选择再次调用 ControllerUnpublishVolume。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ControllerUnpublishVolumeRequest {
+  // The ID of the volume. This field is REQUIRED.
+  string volume_id = 1;
+
+  // The ID of the node. This field is OPTIONAL. The CO SHOULD set this
+  // field to match the node ID returned by `NodeGetInfo` or leave it
+  // unset. If the value is set, the SP MUST unpublish the volume from
+  // the specified node. If the value is unset, the SP MUST unpublish
+  // the volume from all nodes it is published to.
+  string node_id = 2;
+
+  // Secrets required by plugin to complete controller unpublish volume
+  // request. This SHOULD be the same secrets passed to the
+  // ControllerPublishVolume call for the specified volume.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 3 [(csi_secret) = true];
+}
+
+message ControllerUnpublishVolumeResponse {
+  // Intentionally empty.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;createsnapshot&quot;&gt;CreateSnapshot&lt;/h4&gt;
+&lt;p&gt;CO调用此RPC从源Volume创建新Snapshot。此操作必须是幂等的。如果与指定Snapshot成功创建并准备好使用（意味着它可以在CreateVolumeRequest中指定为volume_content_source），则Plugin必须回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。如果在创建Snapshot之前发生错误，则CreateSnapshot应返回相应错误代码。&lt;/p&gt;
+
+&lt;p&gt;一些SP可能会在Snapshot剪切后“处理”Snapshot，例如，可能在Snapshot剪切后将Snapshot上传到某处。后期剪辑过程可能是一个漫长的过程，可能需要数小时。CO可以在拍摄Snapshot之前使用源Volume冻结应用程序。冻结的目的是保证应用数据处于一致状态。执行冻结时，容器会暂停，应用程序也会暂停。执行解冻后，容器和应用程序将再次开始运行。在Snapshot处理阶段，由于Snapshot已经被剪切，因此可以执行解冻操作，因此应用程序可以开始运行而无需等待该过程完成。该过程完成后，Snapshot的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready_to_use&lt;/code&gt;参数将变为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;。当Snapshot已经被创建但是仍在被处理时，CreateSnapshot应该返回&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;但是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready_to_use&lt;/code&gt;应该设置为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;false&lt;/code&gt;。然后，CO 应该定期重新发出相同的CreateSnapshotRequest，直到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready_to_use&lt;/code&gt;被设置为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;，此时的Snapshot已被处理并准备好用于创建新Volume。如果过程中发生错误，CreateSnapshot应该返回一个反映错误情况的错误代码。当发生错误时，CO应该明确删除Snapshot。&lt;/p&gt;
+
+&lt;p&gt;对于剪切后不做额外处理的 SP，在剪切Snapshot后&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready_to_use&lt;/code&gt;参数应该为真。在这种情况下，可以在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ready_to_use&lt;/code&gt;参数为真时完成解冻。&lt;/p&gt;
+
+&lt;p&gt;CO 可以向 CreateSnapshot 发出重复（幂等）调用、监控响应并做出决策。CreateSnapshot是一个同步调用，它必须阻塞直到Snapshot被成功创建。&lt;/p&gt;
+
+&lt;p&gt;Snapshot可以用作供应新Volume的源。CreateVolumeRequest消息可以指定一个可选的源Snapshot参数。从Snapshot中恢复数据（原始Volume中的数据被擦除并替换为Snapshot中的数据）是一项高级功能，并非每个存储系统都可以支持，因此目前超出范围。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message CreateSnapshotRequest {
+  // The ID of the source volume to be snapshotted.
+  // This field is REQUIRED.
+  string source_volume_id = 1;
+
+  // The suggested name for the snapshot. This field is REQUIRED for
+  // idempotency.
+  // Any Unicode string that conforms to the length limit is allowed
+  // except those containing the following banned characters:
+  // U+0000-U+0008, U+000B, U+000C, U+000E-U+001F, U+007F-U+009F.
+  // (These are control characters other than commonly used whitespace.)
+  string name = 2;
+
+  // Secrets required by plugin to complete snapshot creation request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 3 [(csi_secret) = true];
+
+  // Plugin specific parameters passed in as opaque key-value pairs.
+  // This field is OPTIONAL. The Plugin is responsible for parsing and
+  // validating these parameters. COs will treat these as opaque.
+  // Use cases for opaque parameters:
+  // - Specify a policy to automatically clean up the snapshot.
+  // - Specify an expiration date for the snapshot.
+  // - Specify whether the snapshot is readonly or read/write.
+  // - Specify if the snapshot should be replicated to some place.
+  // - Specify primary or secondary for replication systems that
+  //   support snapshotting only on primary.
+  map&amp;lt;string, string&amp;gt; parameters = 4;
+}
+
+message CreateSnapshotResponse {
+  // Contains all attributes of the newly created snapshot that are
+  // relevant to the CO along with information required by the Plugin
+  // to uniquely identify the snapshot. This field is REQUIRED.
+  Snapshot snapshot = 1;
+}
+
+// Information about a specific snapshot.
+message Snapshot {
+  // This is the complete size of the snapshot in bytes. The purpose of
+  // this field is to give CO guidance on how much space is needed to
+  // create a volume from this snapshot. The size of the volume MUST NOT
+  // be less than the size of the source snapshot. This field is
+  // OPTIONAL. If this field is not set, it indicates that this size is
+  // unknown. The value of this field MUST NOT be negative and a size of
+  // zero means it is unspecified.
+  int64 size_bytes = 1;
+
+  // The identifier for this snapshot, generated by the plugin.
+  // This field is REQUIRED.
+  // This field MUST contain enough information to uniquely identify
+  // this specific snapshot vs all other snapshots supported by this
+  // plugin.
+  // This field SHALL be used by the CO in subsequent calls to refer to
+  // this snapshot.
+  // The SP is NOT responsible for global uniqueness of snapshot_id
+  // across multiple SPs.
+  string snapshot_id = 2;
+
+  // Identity information for the source volume. Note that creating a
+  // snapshot from a snapshot is not supported here so the source has to
+  // be a volume. This field is REQUIRED.
+  string source_volume_id = 3;
+
+  // Timestamp when the point-in-time snapshot is taken on the storage
+  // system. This field is REQUIRED.
+  .google.protobuf.Timestamp creation_time = 4;
+
+  // Indicates if a snapshot is ready to use as a
+  // `volume_content_source` in a `CreateVolumeRequest`. The default
+  // value is false. This field is REQUIRED.
+  bool ready_to_use = 5;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;deletesnapshot&quot;&gt;DeleteSnapshot&lt;/h4&gt;
+&lt;p&gt;CO将调用此RPC删除Snapshot。此操作必须是幂等的。如果对应于指定snapshot_id的Snapshot不存在，Plugin必须回复 0 OK。
+当SnapShot被成功创建时，CreateSnapshot操作应该返回一个snapshot_id。如果CreateSnapshot操作在创建SnapShot之前超时，使CO没有获取snapshot_id，则CO可以选择以下之一路径将其删除：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;执行ListSnapshots以获得可用于执行DeleteSnapshot的SnapShot ID；成功后执行DeleteSnapshot。&lt;/li&gt;
+  &lt;li&gt;CO不对超时的RPC采取进一步行动，SnapShot可能会泄露，由操作员/用户进行清理。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message DeleteSnapshotRequest {
+  // The ID of the snapshot to be deleted.
+  // This field is REQUIRED.
+  string snapshot_id = 1;
+
+  // Secrets required by plugin to complete snapshot deletion request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 2 [(csi_secret) = true];
+}
+
+message DeleteSnapshotResponse {}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;listsnapshots&quot;&gt;ListSnapshots&lt;/h4&gt;
+
+&lt;p&gt;Plugin应在给定参数内返回有关存储系统上所有Snapshot的信息。ListSnapshots不应列出正在创建但尚未成功剪切的Snapshot。如果在CO分页ListSnapshots结果的同时创建或删除Snapshot，则CO可能在列表中发现重复的Snapshot，没有出现现有的Snapshot，或两者兼而有之。当Snapshot的后处理完成后，SnapShot的ready_to_use参数应变为true。调用ListSnapshots的缺点是，如果在处理过程中发生错误，ListSnapshots将不会返回错误代码。所以反复调用 CreateSnapshot 是检查处理是否完成的首选方式。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// List all snapshots on the storage system regardless of how they were
+// created.
+message ListSnapshotsRequest {
+  // If specified (non-zero value), the Plugin MUST NOT return more
+  // entries than this number in the response. If the actual number of
+  // entries is more than this number, the Plugin MUST set `next_token`
+  // in the response which can be used to get the next page of entries
+  // in the subsequent `ListSnapshots` call. This field is OPTIONAL. If
+  // not specified (zero value), it means there is no restriction on the
+  // number of entries that can be returned.
+  // The value of this field MUST NOT be negative.
+  int32 max_entries = 1;
+
+  // A token to specify where to start paginating. Set this field to
+  // `next_token` returned by a previous `ListSnapshots` call to get the
+  // next page of entries. This field is OPTIONAL.
+  // An empty string is equal to an unspecified field value.
+  string starting_token = 2;
+
+  // Identity information for the source volume. This field is OPTIONAL.
+  // It can be used to list snapshots by volume.
+  string source_volume_id = 3;
+
+  // Identity information for a specific snapshot. This field is
+  // OPTIONAL. It can be used to list only a specific snapshot.
+  // ListSnapshots will return with current snapshot information
+  // and will not block if the snapshot is being processed after
+  // it is cut.
+  string snapshot_id = 4;
+
+  // Secrets required by plugin to complete ListSnapshot request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 5 [(csi_secret) = true];
+}
+
+message ListSnapshotsResponse {
+  message Entry {
+    Snapshot snapshot = 1;
+  }
+
+  repeated Entry entries = 1;
+
+  // This token allows you to get the next page of entries for
+  // `ListSnapshots` request. If the number of entries is larger than
+  // `max_entries`, use the `next_token` as a value for the
+  // `starting_token` field in the next `ListSnapshots` request. This
+  // field is OPTIONAL.
+  // An empty string is equal to an unspecified field value.
+  string next_token = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;getcapacity&quot;&gt;GetCapacity&lt;/h4&gt;
+&lt;p&gt;该RPC允许CO查询Plugin提供Volume的Storage pool的容量。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message GetCapacityRequest {
+  // If specified, the Plugin SHALL report the capacity of the storage
+  // that can be used to provision volumes that satisfy ALL of the
+  // specified `volume_capabilities`. These are the same
+  // `volume_capabilities` the CO will use in `CreateVolumeRequest`.
+  // This field is OPTIONAL.
+  repeated VolumeCapability volume_capabilities = 1;
+
+  // If specified, the Plugin SHALL report the capacity of the storage
+  // that can be used to provision volumes with the given Plugin
+  // specific `parameters`. These are the same `parameters` the CO will
+  // use in `CreateVolumeRequest`. This field is OPTIONAL.
+  map&amp;lt;string, string&amp;gt; parameters = 2;
+
+  // If specified, the Plugin SHALL report the capacity of the storage
+  // that can be used to provision volumes that in the specified
+  // `accessible_topology`. This is the same as the
+  // `accessible_topology` the CO returns in a `CreateVolumeResponse`.
+  // This field is OPTIONAL. This field SHALL NOT be set unless the
+  // plugin advertises the VOLUME_ACCESSIBILITY_CONSTRAINTS capability.
+  Topology accessible_topology = 3;
+}
+
+message GetCapacityResponse {
+  // The available capacity, in bytes, of the storage that can be used
+  // to provision volumes. If `volume_capabilities` or `parameters` is
+  // specified in the request, the Plugin SHALL take those into
+  // consideration when calculating the available capacity of the
+  // storage. This field is REQUIRED.
+  // The value of this field MUST NOT be negative.
+  int64 available_capacity = 1;
+
+  // The largest size that may be used in a
+  // CreateVolumeRequest.capacity_range.required_bytes field
+  // to create a volume with the same parameters as those in
+  // GetCapacityRequest.
+  //
+  // If `volume_capabilities` or `parameters` is
+  // specified in the request, the Plugin SHALL take those into
+  // consideration when calculating the minimum volume size of the
+  // storage.
+  //
+  // This field is OPTIONAL. MUST NOT be negative.
+  // The Plugin SHOULD provide a value for this field if it has
+  // a maximum size for individual volumes and leave it unset
+  // otherwise. COs MAY use it to make decision about
+  // where to create volumes.
+  google.protobuf.Int64Value maximum_volume_size = 2
+    [(alpha_field) = true];
+
+  // The smallest size that may be used in a
+  // CreateVolumeRequest.capacity_range.limit_bytes field
+  // to create a volume with the same parameters as those in
+  // GetCapacityRequest.
+  //
+  // If `volume_capabilities` or `parameters` is
+  // specified in the request, the Plugin SHALL take those into
+  // consideration when calculating the maximum volume size of the
+  // storage.
+  //
+  // This field is OPTIONAL. MUST NOT be negative.
+  // The Plugin SHOULD provide a value for this field if it has
+  // a minimum size for individual volumes and leave it unset
+  // otherwise. COs MAY use it to make decision about
+  // where to create volumes.
+  google.protobuf.Int64Value minimum_volume_size = 3
+    [(alpha_field) = true];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;controllerexpandvolume&quot;&gt;ControllerExpandVolume&lt;/h4&gt;
+&lt;p&gt;此RPC允许CO扩展Volume的大小。该操作必须是幂等的。如果指定VolumeID对应的Volume已经大于或等于扩展请求的目标容量，则Plugin应该回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;如果Plugin具有VolumeExpansion.ONLINE功能，则CO可以在创建Volume后的任何时间调用此接口。如果Plugin具有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EXPAND_VOLUME&lt;/code&gt;的node capability，则必须在调用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerExpandVolume&lt;/code&gt;成功且ControllerExpandVolumeResponse中的node_expansion_required为true后调用 NodeExpandVolume。&lt;/p&gt;
+
+&lt;p&gt;如果在ControllerExpandVolumeRequest中指定了volume_capability，则其应该与CO在ControllerPublishVolumeRequest中传递的参数相同。&lt;/p&gt;
+
+&lt;p&gt;如果Plugin只有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VolumeExpansion.OFFLINE&lt;/code&gt;扩展功能并且Volume当前已发布或在节点上可用，则ControllerExpandVolume必须仅在以下任一情况后调用：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;该Plugin具有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUBLISH_UNPUBLISH_VOLUME&lt;/code&gt;功能并且&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerUnpublishVolume&lt;/code&gt;已成功调用。或者&lt;/li&gt;
+  &lt;li&gt;该Plugin没有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUBLISH_UNPUBLISH_VOLUME&lt;/code&gt;功能，但是Plugin具有Node &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;STAGE_UNSTAGE_VOLUME&lt;/code&gt;功能，并且&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeUnstageVolume&lt;/code&gt;已成功完成。或者&lt;/li&gt;
+  &lt;li&gt;该Plugin没有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUBLISH_UNPUBLISH_VOLUME&lt;/code&gt;功能，也没有Node &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;STAGE_UNSTAGE_VOLUME&lt;/code&gt;功能，并且&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeUnpublishVolume &lt;/code&gt;已成功完成。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message ControllerExpandVolumeRequest {
+  // The ID of the volume to expand. This field is REQUIRED.
+  string volume_id = 1;
+
+  // This allows CO to specify the capacity requirements of the volume
+  // after expansion. This field is REQUIRED.
+  CapacityRange capacity_range = 2;
+
+  // Secrets required by the plugin for expanding the volume.
+  // This field is OPTIONAL.
+  map&amp;lt;string, string&amp;gt; secrets = 3 [(csi_secret) = true];
+
+  // Volume capability describing how the CO intends to use this volume.
+  // This allows SP to determine if volume is being used as a block
+  // device or mounted file system. For example - if volume is
+  // being used as a block device - the SP MAY set
+  // node_expansion_required to false in ControllerExpandVolumeResponse
+  // to skip invocation of NodeExpandVolume on the node by the CO.
+  // This is an OPTIONAL field.
+  VolumeCapability volume_capability = 4;
+}
+
+message ControllerExpandVolumeResponse {
+  // Capacity of volume after expansion. This field is REQUIRED.
+  int64 capacity_bytes = 1;
+
+  // Whether node expansion is required for the volume. When true
+  // the CO MUST make NodeExpandVolume RPC call on the node. This field
+  // is REQUIRED.
+  bool node_expansion_required = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;node-service-rpc&quot;&gt;Node Service RPC&lt;/h3&gt;
+
+&lt;p&gt;Node Service RPC是Node Plugin需要向外暴露的接口。&lt;/p&gt;
+
+&lt;h4 id=&quot;nodegetcapabilities&quot;&gt;NodeGetCapabilities&lt;/h4&gt;
+&lt;p&gt;Node Plugin必须实现此接口，该接口允许CO检查Node Plugin所支持的功能。&lt;/p&gt;
+
+&lt;p&gt;各类功能和RPC接口的对应关系见下表：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Cpability&lt;/th&gt;
+      &lt;th&gt;RPCs&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MUST_IMPLEMENT&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodePublishVolume&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeUnpublishVolume&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeGetCapabilities&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;STAGE_UNSTAGE_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeStageVolume&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeUnstageVolume&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GET_VOLUME_STATS&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeGetVolumeStats&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EXPAND_VOLUME&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeExpandVolume&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;VOLUME_CONDITION&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeGetVolumeStats&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;SINGLE_NODE_MULTI_WRITER&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodePublishVolume&lt;/code&gt; support SINGLE_NODE_MULTI_WRITER access modes&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;VOLUME_MOUNT_GROUP&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodePublishVolume&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeStageVolume&lt;/code&gt; support mounting volumes with provided volume group identifier&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeGetCapabilitiesRequest {
+  // Intentionally empty.
+}
+
+message NodeGetCapabilitiesResponse {
+  // All the capabilities that the node service supports. This field
+  // is OPTIONAL.
+  repeated NodeServiceCapability capabilities = 1;
+}
+
+// Specifies a capability of the node service.
+message NodeServiceCapability {
+  message RPC {
+    enum Type {
+      UNKNOWN = 0;
+      STAGE_UNSTAGE_VOLUME = 1;
+      // If Plugin implements GET_VOLUME_STATS capability
+      // then it MUST implement NodeGetVolumeStats RPC
+      // call for fetching volume statistics.
+      GET_VOLUME_STATS = 2;
+      // See VolumeExpansion for details.
+      EXPAND_VOLUME = 3;
+      // Indicates that the Node service can report volume conditions.
+      // An SP MAY implement `VolumeCondition` in only the Node
+      // Plugin, only the Controller Plugin, or both.
+      // If `VolumeCondition` is implemented in both the Node and
+      // Controller Plugins, it SHALL report from different
+      // perspectives.
+      // If for some reason Node and Controller Plugins report
+      // misaligned volume conditions, CO SHALL assume the worst case
+      // is the truth.
+      // Note that, for alpha, `VolumeCondition` is intended to be
+      // informative for humans only, not for automation.
+      VOLUME_CONDITION = 4 [(alpha_enum_value) = true];
+
+      // Indicates the SP supports the SINGLE_NODE_SINGLE_WRITER and/or
+      // SINGLE_NODE_MULTI_WRITER access modes.
+      // These access modes are intended to replace the
+      // SINGLE_NODE_WRITER access mode to clarify the number of writers
+      // for a volume on a single node. Plugins MUST accept and allow
+      // use of the SINGLE_NODE_WRITER access mode (subject to the
+      // processing rules for NodePublishVolume), when either
+      // SINGLE_NODE_SINGLE_WRITER and/or SINGLE_NODE_MULTI_WRITER are
+      // supported, in order to permit older COs to continue working.
+      SINGLE_NODE_MULTI_WRITER = 5 [(alpha_enum_value) = true];
+
+      // Indicates that Node service supports mounting volumes
+      // with provided volume group identifier during node stage
+      // or node publish RPC calls.
+      VOLUME_MOUNT_GROUP = 6 [(alpha_enum_value) = true];
+    }
+
+    Type type = 1;
+  }
+
+  oneof type {
+    // RPC that the controller supports.
+    RPC rpc = 1;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;nodegetinfo&quot;&gt;NodeGetInfo&lt;/h4&gt;
+&lt;p&gt;当Plugin具有Controller &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUBLISH_UNPUBLISH_VOLUME&lt;/code&gt;功能是，plugin必须提供此RPC接口。Plugin可以假定调用发生在将要使用volume的节点上。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeGetInfoRequest {
+}
+
+message NodeGetInfoResponse {
+  // The identifier of the node as understood by the SP.
+  // This field is REQUIRED.
+  // This field MUST contain enough information to uniquely identify
+  // this specific node vs all other nodes supported by this plugin.
+  // This field SHALL be used by the CO in subsequent calls, including
+  // `ControllerPublishVolume`, to refer to this node.
+  // The SP is NOT responsible for global uniqueness of node_id across
+  // multiple SPs.
+  // This field overrides the general CSI size limit.
+  // The size of this field SHALL NOT exceed 256 bytes. The general
+  // CSI size limit, 128 byte, is RECOMMENDED for best backwards
+  // compatibility.
+  string node_id = 1;
+
+  // Maximum number of volumes that controller can publish to the node.
+  // If value is not set or zero CO SHALL decide how many volumes of
+  // this type can be published by the controller to the node. The
+  // plugin MUST NOT set negative values here.
+  // This field is OPTIONAL.
+  int64 max_volumes_per_node = 2;
+
+  // Specifies where (regions, zones, racks, etc.) the node is
+  // accessible from.
+  // A plugin that returns this field MUST also set the
+  // VOLUME_ACCESSIBILITY_CONSTRAINTS plugin capability.
+  // COs MAY use this information along with the topology information
+  // returned in CreateVolumeResponse to ensure that a given volume is
+  // accessible from a given node when scheduling workloads.
+  // This field is OPTIONAL. If it is not specified, the CO MAY assume
+  // the node is not subject to any topological constraint, and MAY
+  // schedule workloads that reference any volume V, such that there are
+  // no topological constraints declared for V.
+  //
+  // Example 1:
+  //   accessible_topology =
+  //     {&quot;region&quot;: &quot;R1&quot;, &quot;zone&quot;: &quot;Z2&quot;}
+  // Indicates the node exists within the &quot;region&quot; &quot;R1&quot; and the &quot;zone&quot;
+  // &quot;Z2&quot;.
+  Topology accessible_topology = 3;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;nodestagevolume&quot;&gt;NodeStageVolume&lt;/h4&gt;
+&lt;p&gt;在调用NodePublishVolume接口使节点上的工作负载消费该卷之前，CO会调用此RPC。Plugin应假定此RPC将在将使用卷的节点上执行。当想要使用指定卷的工作负载第一次调度到该节点上，或者指定卷的NodeUnstageVolume成功调用之后再次调度到该节点时，CO应该调用此接口。&lt;/p&gt;
+
+&lt;p&gt;如果对应的Controller Plugin具有PUBLISH_UNPUBLISH_VOLUME能力并且Node Plugin具有STAGE_UNSTAGE_VOLUME能力，那么CO必须保证在为给定节点上的给定卷调用ControllerPublishVolume并返回成功后调用此RPC。CO还必须保证在为给定节点上的给定卷调用任何NodePublishVolume之前成功调用此RPC。&lt;/p&gt;
+
+&lt;p&gt;此操作必须是幂等的。如果对应于 volume_id的卷已经上演到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;staging_target_path&lt;/code&gt;，并且与指定的volume_capability相同，则插件必须回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;如果这个RPC失败，或者CO不知道它是否失败，它可以选择再次调用NodeStageVolume，或者选择调用 NodeUnstageVolume。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeStageVolumeRequest {
+  // The ID of the volume to publish. This field is REQUIRED.
+  string volume_id = 1;
+
+  // The CO SHALL set this field to the value returned by
+  // `ControllerPublishVolume` if the corresponding Controller Plugin
+  // has `PUBLISH_UNPUBLISH_VOLUME` controller capability, and SHALL be
+  // left unset if the corresponding Controller Plugin does not have
+  // this capability. This is an OPTIONAL field.
+  map&amp;lt;string, string&amp;gt; publish_context = 2;
+
+  // The path to which the volume MAY be staged. It MUST be an
+  // absolute path in the root filesystem of the process serving this
+  // request, and MUST be a directory. The CO SHALL ensure that there
+  // is only one `staging_target_path` per volume. The CO SHALL ensure
+  // that the path is directory and that the process serving the
+  // request has `read` and `write` permission to that directory. The
+  // CO SHALL be responsible for creating the directory if it does not
+  // exist.
+  // This is a REQUIRED field.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string staging_target_path = 3;
+
+  // Volume capability describing how the CO intends to use this volume.
+  // SP MUST ensure the CO can use the staged volume as described.
+  // Otherwise SP MUST return the appropriate gRPC error code.
+  // This is a REQUIRED field.
+  VolumeCapability volume_capability = 4;
+
+  // Secrets required by plugin to complete node stage volume request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 5 [(csi_secret) = true];
+
+  // Volume context as returned by SP in
+  // CreateVolumeResponse.Volume.volume_context.
+  // This field is OPTIONAL and MUST match the volume_context of the
+  // volume identified by `volume_id`.
+  map&amp;lt;string, string&amp;gt; volume_context = 6;
+}
+
+message NodeStageVolumeResponse {
+  // Intentionally empty.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;nodeunstagevolume&quot;&gt;NodeUnstageVolume&lt;/h4&gt;
+&lt;p&gt;此RPC是NodeStageVolume的逆向操作，其必须撤消相应 NodeStageVolume 的工作。对于通过NodeStageVolume成功设置的每个staging_target_path，CO都应调用此RPC一次。当使用卷的工作负载被移动到不同的节点时，或者使用节点上的卷的所有工作负载已经完成时，这个RPC可以被CO调用。此操作必须是幂等的,如果与volume_id对应的卷没有staged到staging_target_path，插件必须回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;如果相应的Plugin Controller具有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUBLISH_UNPUBLISH_VOLUME&lt;/code&gt;能力并且Node Plugin具有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;STAGE_UNSTAGE_VOLUME&lt;/code&gt;能力，则 CO必须保证在调用给定节点和给定卷的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ControllerUnpublishVolume&lt;/code&gt;之前成功调用此RPC。 CO还必须保证在所有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NodeUnpublishVolume&lt;/code&gt;都被成功调用之后调用此RPC。插件应假定此RPC将在使用卷的节点上执行。&lt;/p&gt;
+
+&lt;p&gt;如果这个RPC失败，或者CO不知道它是否失败，它可以选择再次调用NodeUnstageVolume。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeUnstageVolumeRequest {
+  // The ID of the volume. This field is REQUIRED.
+  string volume_id = 1;
+
+  // The path at which the volume was staged. It MUST be an absolute
+  // path in the root filesystem of the process serving this request.
+  // This is a REQUIRED field.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string staging_target_path = 2;
+}
+
+message NodeUnstageVolumeResponse {
+  // Intentionally empty.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;nodepublishvolume&quot;&gt;NodePublishVolume&lt;/h4&gt;
+&lt;p&gt;当要使用指定卷的工作负载已经调度在节点上时，CO会调用此RPC。插件应假定此RPC将在将使用卷的节点上执行。此操作必须是幂等的，如果volume_id对应的卷已经在指定的target_path上发布，并且与指定的volume_capability和readonly标志兼容，则插件必须回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;如果这个RPC失败，或者CO不知道它是否失败，它可以选择再次调用NodePublishVolume，或者选择调用NodeUnpublishVolume。&lt;/p&gt;
+
+&lt;p&gt;如果卷支持 MULTI_NODE_*或者SINGLE_NODE_MULTI_WRITER访问模式，则CO可以在同一节点上多次调用此RPC以使用不同的target_path或其他参数。CO不应使用不同的 volume_capability再次调用NodePublishVolume。如果发生这种情况，插件应该返回FAILED_PRECONDITION。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodePublishVolumeRequest {
+  // The ID of the volume to publish. This field is REQUIRED.
+  string volume_id = 1;
+
+  // The CO SHALL set this field to the value returned by
+  // `ControllerPublishVolume` if the corresponding Controller Plugin
+  // has `PUBLISH_UNPUBLISH_VOLUME` controller capability, and SHALL be
+  // left unset if the corresponding Controller Plugin does not have
+  // this capability. This is an OPTIONAL field.
+  map&amp;lt;string, string&amp;gt; publish_context = 2;
+
+  // The path to which the volume was staged by `NodeStageVolume`.
+  // It MUST be an absolute path in the root filesystem of the process
+  // serving this request.
+  // It MUST be set if the Node Plugin implements the
+  // `STAGE_UNSTAGE_VOLUME` node capability.
+  // This is an OPTIONAL field.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string staging_target_path = 3;
+
+  // The path to which the volume will be published. It MUST be an
+  // absolute path in the root filesystem of the process serving this
+  // request. The CO SHALL ensure uniqueness of target_path per volume.
+  // The CO SHALL ensure that the parent directory of this path exists
+  // and that the process serving the request has `read` and `write`
+  // permissions to that parent directory.
+  // For volumes with an access type of block, the SP SHALL place the
+  // block device at target_path.
+  // For volumes with an access type of mount, the SP SHALL place the
+  // mounted directory at target_path.
+  // Creation of target_path is the responsibility of the SP.
+  // This is a REQUIRED field.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string target_path = 4;
+
+  // Volume capability describing how the CO intends to use this volume.
+  // SP MUST ensure the CO can use the published volume as described.
+  // Otherwise SP MUST return the appropriate gRPC error code.
+  // This is a REQUIRED field.
+  VolumeCapability volume_capability = 5;
+
+  // Indicates SP MUST publish the volume in readonly mode.
+  // This field is REQUIRED.
+  bool readonly = 6;
+
+  // Secrets required by plugin to complete node publish volume request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 7 [(csi_secret) = true];
+
+  // Volume context as returned by SP in
+  // CreateVolumeResponse.Volume.volume_context.
+  // This field is OPTIONAL and MUST match the volume_context of the
+  // volume identified by `volume_id`.
+  map&amp;lt;string, string&amp;gt; volume_context = 8;
+}
+
+message NodePublishVolumeResponse {
+  // Intentionally empty.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;nodeunpublishvolume&quot;&gt;NodeUnpublishVolume&lt;/h4&gt;
+&lt;p&gt;这个RPC是NodePublishVolume的逆向操作。此RPC必须撤消相应NodePublishVolume的工作。对于通过NodePublishVolume成功设置的每个target_path，CO应至少调用一次该RPC。插件应假定此 RPC 将在使用卷的节点上执行。此操作必须是幂等的。如果这个RPC失败，或者CO不知道它是否失败，它可以选择再次调用NodeUnpublishVolume。&lt;/p&gt;
+
+&lt;p&gt;当使用卷的工作负载被移动到不同的节点，或者在节点上使用卷的所有工作负载已经完成时，这个RPC通常由CO调用。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeUnpublishVolumeRequest {
+  // The ID of the volume. This field is REQUIRED.
+  string volume_id = 1;
+
+  // The path at which the volume was published. It MUST be an absolute
+  // path in the root filesystem of the process serving this request.
+  // The SP MUST delete the file or directory it created at this path.
+  // This is a REQUIRED field.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string target_path = 2;
+}
+
+message NodeUnpublishVolumeResponse {
+  // Intentionally empty.
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;nodegetvolumestats&quot;&gt;NodeGetVolumeStats&lt;/h4&gt;
+&lt;p&gt;NodeGetVolumeStats调用返回卷可用的卷容量统计信息。如果卷在BlockVolume模式下使用，则used和available可以从NodeGetVolumeStatsResponse的使用字段中省略。类似地，当节点不可用时，节点信息可以从 NodeGetVolumeStatsResponse 中省略。&lt;/p&gt;
+
+&lt;p&gt;staging_target_path 字段不是必需的，为了向后兼容，但 CO 应该提供它。插件可以使用此字段来确定 volume_path 是否是发布或暂存卷的位置，并将此字段设置为非空允许插件在节点上存储较少状态的情况下运行。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeGetVolumeStatsRequest {
+  // The ID of the volume. This field is REQUIRED.
+  string volume_id = 1;
+
+  // It can be any valid path where volume was previously
+  // staged or published.
+  // It MUST be an absolute path in the root filesystem of
+  // the process serving this request.
+  // This is a REQUIRED field.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string volume_path = 2;
+
+  // The path where the volume is staged, if the plugin has the
+  // STAGE_UNSTAGE_VOLUME capability, otherwise empty.
+  // If not empty, it MUST be an absolute path in the root
+  // filesystem of the process serving this request.
+  // This field is OPTIONAL.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string staging_target_path = 3;
+}
+
+message NodeGetVolumeStatsResponse {
+  // This field is OPTIONAL.
+  repeated VolumeUsage usage = 1;
+  // Information about the current condition of the volume.
+  // This field is OPTIONAL.
+  // This field MUST be specified if the VOLUME_CONDITION node
+  // capability is supported.
+  VolumeCondition volume_condition = 2 [(alpha_field) = true];
+}
+
+message VolumeUsage {
+  enum Unit {
+    UNKNOWN = 0;
+    BYTES = 1;
+    INODES = 2;
+  }
+  // The available capacity in specified Unit. This field is OPTIONAL.
+  // The value of this field MUST NOT be negative.
+  int64 available = 1;
+
+  // The total capacity in specified Unit. This field is REQUIRED.
+  // The value of this field MUST NOT be negative.
+  int64 total = 2;
+
+  // The used capacity in specified Unit. This field is OPTIONAL.
+  // The value of this field MUST NOT be negative.
+  int64 used = 3;
+
+  // Units by which values are measured. This field is REQUIRED.
+  Unit unit = 4;
+}
+
+// VolumeCondition represents the current condition of a volume.
+message VolumeCondition {
+  option (alpha_message) = true;
+
+  // Normal volumes are available for use and operating optimally.
+  // An abnormal volume does not meet these criteria.
+  // This field is REQUIRED.
+  bool abnormal = 1;
+
+  // The message describing the condition of the volume.
+  // This field is REQUIRED.
+  string message = 2;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;nodeexpandvolume&quot;&gt;NodeExpandVolume&lt;/h4&gt;
+&lt;p&gt;此RPC调用允许CO扩展节点上的卷。此操作必须是幂等的。如果指定卷 ID对应的卷已经大于或等于扩展请求的目标容量，则插件应该回复&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 OK&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;NodeExpandVolume仅支持在给定的volume_path上扩展已经节点发布或节点暂存的卷。如果插件具有STAGE_UNSTAGE_VOLUME节点功能，则：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;NodeExpandVolume 必须在 NodeStageVolume 成功后调用。&lt;/li&gt;
+  &lt;li&gt;NodeExpandVolume 可以在 NodePublishVolume 之前或之后调用。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;否则必须在 NodePublishVolume 成功后调用 NodeExpandVolume。&lt;/p&gt;
+
+&lt;p&gt;如果插件只支持通过VolumeExpansion.OFFLINE功能扩展，那么卷必须首先脱机并通过ControllerExpandVolume扩展，然后在它可以在节点上扩展之前进行node-staged或 node-published通过 NodeExpandVolume。&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;message NodeExpandVolumeRequest {
+  // The ID of the volume. This field is REQUIRED.
+  string volume_id = 1;
+
+  // The path on which volume is available. This field is REQUIRED.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string volume_path = 2;
+
+  // This allows CO to specify the capacity requirements of the volume
+  // after expansion. If capacity_range is omitted then a plugin MAY
+  // inspect the file system of the volume to determine the maximum
+  // capacity to which the volume can be expanded. In such cases a
+  // plugin MAY expand the volume to its maximum capacity.
+  // This field is OPTIONAL.
+  CapacityRange capacity_range = 3;
+
+  // The path where the volume is staged, if the plugin has the
+  // STAGE_UNSTAGE_VOLUME capability, otherwise empty.
+  // If not empty, it MUST be an absolute path in the root
+  // filesystem of the process serving this request.
+  // This field is OPTIONAL.
+  // This field overrides the general CSI size limit.
+  // SP SHOULD support the maximum path length allowed by the operating
+  // system/filesystem, but, at a minimum, SP MUST accept a max path
+  // length of at least 128 bytes.
+  string staging_target_path = 4;
+
+  // Volume capability describing how the CO intends to use this volume.
+  // This allows SP to determine if volume is being used as a block
+  // device or mounted file system. For example - if volume is being
+  // used as a block device the SP MAY choose to skip expanding the
+  // filesystem in NodeExpandVolume implementation but still perform
+  // rest of the housekeeping needed for expanding the volume. If
+  // volume_capability is omitted the SP MAY determine
+  // access_type from given volume_path for the volume and perform
+  // node expansion. This is an OPTIONAL field.
+  VolumeCapability volume_capability = 5;
+
+  // Secrets required by plugin to complete node expand volume request.
+  // This field is OPTIONAL. Refer to the `Secrets Requirements`
+  // section on how to use this field.
+  map&amp;lt;string, string&amp;gt; secrets = 6
+    [(csi_secret) = true, (alpha_field) = true];
+}
+
+message NodeExpandVolumeResponse {
+  // The capacity of the volume in bytes. This field is OPTIONAL.
+  int64 capacity_bytes = 1;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;配置&quot;&gt;配置&lt;/h3&gt;
+
+&lt;p&gt;Plugin会从环境变量&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSI_ENDPOINT&lt;/code&gt;中获取需要监听的地址。CO也会从该变量中获取同Plugin通信的地址。一般流程如下：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Plugin获取已配置的环境变量&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CSI_ENDPOINT=unix:///path/to/unix/domain/socket.sock&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;CO从变量中获取同Plugin通信的sock &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unix:///path/to/unix/domain/socket.sock&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;CO监视该sock&lt;/li&gt;
+  &lt;li&gt;Plugin创建该sock，绑定和监听该sock&lt;/li&gt;
+  &lt;li&gt;CO观测到Sock已经存在，建立连接。调用接口&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GetPluginCapabilities&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Container" /><category term="Storage" /><category term="Kubernetes" /><category term="CSI" /><summary type="html">CSI是一套存储产品通用的RPC接口。对于容器编排平台(CO)，支持CSI接口就意味可以支持多种存储厂商/类型；对于存储厂商，支持CSI接口就可以支持多平台，减少研发投入的同时扩宽市场。</summary></entry><entry><title type="html">Data Protection</title><link href="http://localhost:4000/2021/09/29/data-protection.html" rel="alternate" type="text/html" title="Data Protection" /><published>2021-09-29T00:00:00+08:00</published><updated>2021-09-29T00:00:00+08:00</updated><id>http://localhost:4000/2021/09/29/data-protection</id><content type="html" xml:base="http://localhost:4000/2021/09/29/data-protection.html">&lt;p&gt;数据保护的本质就是对当前数据进行备份，防止设备损坏或者其他各种原因导致数据丢失/不可访问，降低对于业务的影响。一旦发生问题，可以将备份的数据重新恢复到生产环境上，降低业务损失。
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;从受保护的层级来说，数据保护可分为文件级保护和块级保护:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;文件级备份
+    &lt;blockquote&gt;
+
+      &lt;p&gt;文件级备份软件的基本机制，就是将数据以文件的形式读出，然后再将读出的文件存储在另外一个介质上。这些文件在原来的介质上，存放可以是不连续的，各个不连续的块之间的链关系由文件系统来管理。而如果备份软件将这些文件备份到新的空白介质上，那么这些文件很大程度上是连续存放的，不管是备份到磁带还是磁盘上。&lt;/p&gt;
+
+      &lt;p&gt;优点：&lt;/p&gt;
+      &lt;blockquote&gt;
+        &lt;ol&gt;
+          &lt;li&gt;备份之后的数据一般都是连续存放的，消除碎片。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;块级备份
+    &lt;blockquote&gt;
+
+      &lt;p&gt;所谓块级的备份，就是备份块设备上的每个块，不管这个块上有没有数据，或是这个块上的数据属于哪个文件。块级别的备份，不考虑也不用考虑文件系统层次的逻辑，原块设备有多少容量，就备份多少容量。块级的备份，是最底层的备份，它抛开了文件系统，直接对磁盘扇区进行读取，并将读取到的扇区写入新的磁盘对应的扇区。&lt;/p&gt;
+
+      &lt;p&gt;优点：&lt;/p&gt;
+      &lt;blockquote&gt;
+        &lt;ol&gt;
+          &lt;li&gt;无需操作系统接管，通过磁盘控制器直接读取磁盘。资源消耗小，速度快。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/blockquote&gt;
+
+      &lt;p&gt;缺点：&lt;/p&gt;
+      &lt;blockquote&gt;
+        &lt;ol&gt;
+          &lt;li&gt;僵尸扇区，需要备份的扇区数量多。&lt;/li&gt;
+          &lt;li&gt;备份/恢复的数据依旧是不连续储存的，碎片化严重。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;数据保护的方法&quot;&gt;数据保护的方法&lt;/h2&gt;
+
+&lt;p&gt;目前使用的数据保护方法基本有：远程文件复制、远程磁盘（卷）镜像、快照数据保护、卷Clone、CDP（Continue Data Protect）等。&lt;/p&gt;
+
+&lt;h3 id=&quot;远程文件复制&quot;&gt;远程文件复制&lt;/h3&gt;
+
+&lt;p&gt;远程文件复制方案，是把需要备份的文件，通过网络传输到异地容灾站点。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;优点：
+    &lt;ul&gt;
+      &lt;li&gt;可以只复制一个文件中变化过的内容，而不必整个文件都复制，这在同步大文件的时候非常管用。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;远程磁盘镜像&quot;&gt;远程磁盘镜像&lt;/h3&gt;
+
+&lt;p&gt;基于块的远程备份，即通过网络将备份的块数据传输到异地站点。具体可分为：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;同步复制
+    &lt;blockquote&gt;
+      &lt;p&gt;此方法需要等待远程备份写入成功之后才向上层返回结果。&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;优点：
+          &lt;ul&gt;
+            &lt;li&gt;可以保障数据一致性&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;缺点：
+          &lt;ul&gt;
+            &lt;li&gt;影响数据写入性能，对上层响应较慢&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;异步复制
+    &lt;blockquote&gt;
+      &lt;p&gt;此方法无需等待远程备份的写入结果，由后台向远程备份写入数据。&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;优点：
+          &lt;ul&gt;
+            &lt;li&gt;对上层响应较快&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;缺点：
+          &lt;ul&gt;
+            &lt;li&gt;不能保障数据一致性&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;快照数据保护&quot;&gt;快照数据保护&lt;/h3&gt;
+
+&lt;p&gt;数据在存储的过程中是不断在变化的，如果有办法能够将某一时刻所存储的数据留底，一旦数据污染，则可以将数据回滚至留底那一时刻的状态，从这一时间点重新来过，类似于游戏中的存档点。从快照的受体来说，快照技术可分为基于文件系统的快照和基于物理卷的快照。&lt;/p&gt;
+
+&lt;h4 id=&quot;基于文件系统的快照&quot;&gt;基于文件系统的快照&lt;/h4&gt;
+
+&lt;p&gt;快照，顾名思义需要在很短的时间内获取当前时刻的全部内容。对于保存在存储介质的上的数据来说，如何能在非常短的时间内创建一份快照呢？&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;只复制数据的元数据链&lt;/li&gt;
+  &lt;li&gt;通过RoFW（Redirect on First Write）或者CoFW（Copy on First Write）保证源数据的更改不会影响快照中的数据&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;基于物理卷的快照&quot;&gt;基于物理卷的快照&lt;/h4&gt;
+
+&lt;p&gt;类似于文件系统的快照，可以复制LUN的映射元数据链，使用RoFW或者CoFW保障原始数据的更改不会影响快照数据。&lt;/p&gt;
+
+&lt;h3 id=&quot;卷clone&quot;&gt;卷Clone&lt;/h3&gt;
+
+&lt;p&gt;不同于快照，clone是某一时间点数据的实体复制。可以先对数据做snapshot，在将snapshot中的数据复制出来到一个额外的存储空间。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;虚Clone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;本质上就是一个可写的snapshot，这份clone没有被更改的部分是与原数据共享的。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;实Clone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一份真实的数据实体。&lt;/p&gt;
+
+&lt;h3 id=&quot;continuous-data-protectcdp连续数据保护&quot;&gt;Continuous Data Protect（CDP，连续数据保护）&lt;/h3&gt;
+
+&lt;p&gt;CDP（持续数据保护）是一种在不影响主要数据运行的前提下，可以实现持续捕捉或跟踪目标数据所发生的任何改变，并且能够恢复到此前任意时间点的方法。CDP系统能够提供块级、文件级和应用级的备份。&lt;/p&gt;
+
+&lt;h4 id=&quot;应用级cdp&quot;&gt;应用级CDP&lt;/h4&gt;
+
+&lt;p&gt;CDP发生在应用程序中，应用程序自己对自己产生的数据加以连续的保护。其中典型的例子是各种数据库产品，数据库会对每一笔交易做日志记录，所有的操作都会打上时间戳并记录到日志中。当数据库发生问题的时候，利用归档的日志，可以将数据库的状态恢复至任意时间点。数据库会顺序读出库中的每一笔交易然后将其重放（Replay），对应的数据重新写入数据库文件。重放完成后，还需要进行Redo和Undo操作，即检查日志中最后一个CheckPoint一致点处，一致点之后发生的交易全部回退。回退完成后，数据库便处于一个一致的状态并且可用。&lt;/p&gt;
+
+&lt;h4 id=&quot;文件级cdp&quot;&gt;文件级CDP&lt;/h4&gt;
+
+&lt;p&gt;文件级CDP就是通过监视文件系统动作，文件的每一次变化（包括实际数据或者元数据的变化，比如重命名、删除、裁剪等属性的改变）以日志的形式被记录下来。CDP引擎分析应用对文件系统的IO数据流，然后计算出文件变化的部分，将其保存在CDP仓库设备（存放CDP数据的介质）中，可以针对每个文件生成单独的日志链。可以对一个文件，或者一个目录，甚至一个卷来监控。文件级的CDP方案，一般需要在生产主机上安装代理，用来监控文件系统IO，并将变化的数据信息传送到CDP仓库介质中，或者使用本地文件系统或者磁盘的某块额外空间来充当日志仓库。文件级的CDP，能够保证数据的一致性。因为它是作用于文件系统层次，捕获的是完整事务操作。所有的文件版本管理软件都可以算作是文件级CDP的实现。&lt;/p&gt;
+
+&lt;h4 id=&quot;块级cdp&quot;&gt;块级CDP&lt;/h4&gt;
+
+&lt;p&gt;块级的CDP，与应用级和文件级CDP实现思想相同，其实就是捕获底层卷的写IO变化，并将每次变化的块数据打入时间戳并且保存下来。&lt;/p&gt;
+
+&lt;h3 id=&quot;volume-shadow-copy-servicevss公共快照服务&quot;&gt;Volume Shadow Copy Service(VSS)公共快照服务&lt;/h3&gt;
+
+&lt;p&gt;为了保证Snapshot的一致性，几乎所有存储厂商都提供了自己开发的针对各种应用程序和文件系统的代理模块。而应用程序有无限多种，存储厂商也有多个，但是这些应用以及存储代理都运行在同一个操作系统中，与其每一个厂商为每一种应用程序都开发自己的代理，不如在操作系统中建立一个公共的Framework服务，往上适配各种应用程序，往下则适配各厂商的代理，做到统一控制调配，统一开发接口。微软在其Windows Server操作系统中就提供了这样一种公共服务模块。VSS为不同的应用和不同的快照代理提供了一个公共Framework，极大简化了系统的复杂性。&lt;/p&gt;
+
+&lt;h2 id=&quot;数据的一致性&quot;&gt;数据的一致性&lt;/h2&gt;
+
+&lt;p&gt;业界对备份一致性的定义包括如下三类：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不一致备份：文件或磁盘数据的备份，不在同一时间点产生。&lt;/li&gt;
+  &lt;li&gt;崩溃一致性备份：云服务器中文件或磁盘数据的备份，在同一时间点产生，但不会静默数据库等应用系统、不会备份内存数据，不保证应用系统备份的一致性。&lt;/li&gt;
+  &lt;li&gt;应用一致性备份：文件/磁盘数据在同一时间点，并静默数据库刷新内存数据，保证应用系统备份的一致性。&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Storage" /><category term="DataProtection" /><summary type="html">数据保护的本质就是对当前数据进行备份，防止设备损坏或者其他各种原因导致数据丢失/不可访问，降低对于业务的影响。一旦发生问题，可以将备份的数据重新恢复到生产环境上，降低业务损失。</summary></entry></feed>
