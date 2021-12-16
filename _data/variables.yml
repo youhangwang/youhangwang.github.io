@@ -12,7 +12,7 @@ default:
   mermaid: false
   chart: false
   toc:
-    selectors: 'h1,h2,h3,h4'
+    selectors: 'h1,h2,h3,h4,h5'
   sources: bootcdn
 
   page:

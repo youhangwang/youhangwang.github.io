@@ -1,1 +1,1 @@
-window.TEXT_SEARCH_DATA={'posts':[{'title':"Data Protection",'url':"/2021/09/29/data-protection.html"},{'title':"Container Storage Interface（CSI)",'url':"/2021/10/29/CSI.html"}]};
+window.TEXT_SEARCH_DATA={'posts':[{'title':"Kubernetes Patch and Update 机制",'url':"/2020/09/01/patch.html"},{'title':"Data Protection",'url':"/2021/09/29/data-protection.html"},{'title':"Container Storage Interface（CSI)",'url':"/2021/10/29/CSI.html"}]};
