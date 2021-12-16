@@ -1,5 +1,474 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2021-12-16T15:13:47+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Johan Blog</title><subtitle>Johan Blog
-</subtitle><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><entry><title type="html">Container Storage Interface（CSI)</title><link href="http://localhost:4000/2021/10/29/CSI.html" rel="alternate" type="text/html" title="Container Storage Interface（CSI)" /><published>2021-10-29T00:00:00+08:00</published><updated>2021-10-29T00:00:00+08:00</updated><id>http://localhost:4000/2021/10/29/CSI</id><content type="html" xml:base="http://localhost:4000/2021/10/29/CSI.html">&lt;p&gt;CSI是一套存储产品通用的RPC接口。对于容器编排平台(CO)，支持CSI接口就意味可以支持多种存储厂商/类型；对于存储厂商，支持CSI接口就可以支持多平台，减少研发投入的同时扩宽市场。
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2021-12-16T15:18:47+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Johan Blog</title><subtitle>Johan Blog
+</subtitle><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><entry><title type="html">Kubernetes Patch and Update 机制</title><link href="http://localhost:4000/2021/12/01/patch.html" rel="alternate" type="text/html" title="Kubernetes Patch and Update 机制" /><published>2021-12-01T00:00:00+08:00</published><updated>2021-12-01T00:00:00+08:00</updated><id>http://localhost:4000/2021/12/01/patch</id><content type="html" xml:base="http://localhost:4000/2021/12/01/patch.html">&lt;p&gt;Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;kubernetes-update-机制&quot;&gt;Kubernetes Update 机制&lt;/h2&gt;
+
+&lt;p&gt;在kubernetes中，每个资源都有一个&lt;a href=&quot;https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions&quot;&gt;resourceversion&lt;/a&gt;，针对该资源的每次修改都会导致resourceversion的变化。借助resourceversion，Kubernetes Apiserver 采用了类似乐观锁的方式实现Update机制。&lt;/p&gt;
+
+&lt;p&gt;当要对某个资源做Update操作时，需要带上该资源的resourceversion，Apiserver会检查请求中的resourceversion是否与server端保存的最新resourceversion一致：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;如果相同，则接受Update请求并改变server端该资源的的resourceversion&lt;/li&gt;
+  &lt;li&gt;如果不相同，则返回有冲突的错误，此时由客户端决定接下去的步骤，例如是将错误直接返回给用户还是获取最新的版本然后重新发起Update请求。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Kubernetes Client中使用Update：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Init kubernetes client here
+k8sClient.Get(context.TODO(), types.NamespacedName{
+	Namespace: &quot;default&quot;,
+	Name:      &quot;my-sample&quot;,
+}, object)
+
+// Make changes to the objec here
+k8sClient.Update(context.TODO(), object)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;kubernetes-patch-机制&quot;&gt;Kubernetes Patch 机制&lt;/h2&gt;
+
+&lt;p&gt;Update需要传输整个object到Apiserver，使用的是PUT方法。而Patch只需要传输变化的部分给Apiserver，Kubernetes 支持的Patch方式一共有四种：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;json patch&lt;/li&gt;
+  &lt;li&gt;json merge patch&lt;/li&gt;
+  &lt;li&gt;strategic merge patch&lt;/li&gt;
+  &lt;li&gt;apply patch
+    &lt;ul&gt;
+      &lt;li&gt;client-side apply patch&lt;/li&gt;
+      &lt;li&gt;server-side apply patch&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;json-patch&quot;&gt;Json Patch&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://datatracker.ietf.org/doc/html/rfc6902&quot;&gt;RFC6902&lt;/a&gt;定义了一种用于表示一系列对于目标Json操作的Json结构，它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/json-patch+json&lt;/code&gt; 用于标识此类Patch。&lt;/p&gt;
+
+&lt;p&gt;Json patch是一系列json对象组成的列表，每一个json对象表示一个对目标json文件的操作，例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[
+    { &quot;op&quot;: &quot;test&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: &quot;foo&quot; },
+    { &quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/a/b/c&quot; },
+    { &quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: [ &quot;foo&quot;, &quot;bar&quot; ] },
+    { &quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: 42 },
+    { &quot;op&quot;: &quot;move&quot;, &quot;from&quot;: &quot;/a/b/c&quot;, &quot;path&quot;: &quot;/a/b/d&quot; },
+    { &quot;op&quot;: &quot;copy&quot;, &quot;from&quot;: &quot;/a/b/d&quot;, &quot;path&quot;: &quot;/a/b/e&quot; }
+]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;操作按照它们在数组中出现的顺序依次生效。序列中的每个操作都应用于目标文档，生成的文档成为下一个操作的目标，直到成功应用所有操作或直到遇到错误条件。&lt;/p&gt;
+
+&lt;p&gt;可以使用的操作包括：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;add&lt;/li&gt;
+  &lt;li&gt;remove&lt;/li&gt;
+  &lt;li&gt;replace&lt;/li&gt;
+  &lt;li&gt;move&lt;/li&gt;
+  &lt;li&gt;copy&lt;/li&gt;
+  &lt;li&gt;test&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由于Json patch中只包含一系列的操作而没有version字段，所以Apiserver没办法对Json patch施加乐观锁。&lt;/p&gt;
+
+&lt;p&gt;为了方便演示Kubernetes Client的Patch功能，可以预先定义：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type JsonPatch []PatchOperation
+type PatchOperation struct {
+	Op    string      `json:&quot;op&quot;`
+	Path  string      `json:&quot;path&quot;`
+	From  string      `json:&quot;from,omitempty&quot;`
+	Value interface{} `json:&quot;value,omitempty&quot;`
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;add&quot;&gt;add&lt;/h4&gt;
+
+&lt;p&gt;Add操作的作用：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;如果path是一个array的index，则value会插入到array中的相应位置，当前及其后元素的位置向后顺延。如果需要添加元素的位置&amp;gt;len(arrays)，则会报错。&lt;/li&gt;
+  &lt;li&gt;如果path是一个不存在的object member，则新member会被加入。&lt;/li&gt;
+  &lt;li&gt;如果path是一个已经存在的object member，则该member的值会被改变。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;此操作的目的是添加元素到现有的对象和数组，其目标位置可能不存在。通常这会触发错误使用指针的报错，但Json patch中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;会忽略该错误并添加指定的值。但是，对象本身或包含它的数组必须要存在。例如，目标位置为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/a/b&lt;/code&gt;的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作作用于此文档：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;a&quot;: { &quot;foo&quot;: 1 } }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;尽管&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;中不存在member &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b&lt;/code&gt;，但这并不会导致错误，因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;存在，member &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b&lt;/code&gt;将被添加到其值中。&lt;/p&gt;
+
+&lt;p&gt;但如果作用于下面的这个json文档，会导致错误的发生：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;q&quot;: { &quot;bar&quot;: 2 } }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;不存在。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Add操作：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
+	PatchOperation{
+		Op:    &quot;add&quot;,
+		Path:  &quot;/metadata/annotations/provider-name&quot;,
+		Value: &quot;my-provider&quot;,
+	},
+}
+patchByte, err := json.Marshal(jsonPatch)
+clientset, err := kubernetes.NewForConfig(ctrl.GetConfigOrDie())
+
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;remove&quot;&gt;remove&lt;/h4&gt;
+
+&lt;p&gt;Remove操作会移除目标位置的元素。目标位置必须存在才能使操作成功。例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/a/b/c&quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果从数组中删除一个元素，则指定索引右面的任何元素都将向左移动一个位置。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Remove操作：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
+	PatchOperation{
+		Op:    &quot;remove&quot;,
+		Path:  &quot;/metadata/annotations/provider-name&quot;,
+		Value: &quot;my-provider&quot;,
+	},
+}
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;replace&quot;&gt;replace&lt;/h4&gt;
+
+&lt;p&gt;Replace操作会用新值替换目标位置处的值。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;成员用来指定替换值。目标位置必须存在才能使操作成功。例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: 42 }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Replace操作在功能上可以等效于对某个元素执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove&lt;/code&gt;操作，紧接着在与&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove&lt;/code&gt;操作相同的位置执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Remove操作：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
+	PatchOperation{
+		Op:    &quot;replace&quot;,
+		Path:  &quot;/metadata/annotations/provider-name&quot;,
+		Value: &quot;my-provider&quot;,
+	},
+}
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;move&quot;&gt;move&lt;/h4&gt;
+
+&lt;p&gt;Move操作移除指定位置的值并将其添加到目标位置。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;成员，该值引用目标文档中要从中移动值的位置。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置必须存在才能使操作成功。例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;move&quot;, &quot;from&quot;: &quot;/a/b/c&quot;, &quot;path&quot;: &quot;/a/b/d&quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;此操作在功能上可以等效于对某个元素执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove&lt;/code&gt;操作，紧接着在目标位置执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Move操作：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
+	PatchOperation{
+		Op:   &quot;move&quot;,
+		From: &quot;/metadata/annotations/provider-name&quot;,
+		Path: &quot;/metadata/labels/provider-name&quot;,
+	},
+}
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;copy&quot;&gt;copy&lt;/h4&gt;
+
+&lt;p&gt;Copy操作将指定位置的值复制到目标位置。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;成员，该值引用目标文档中要从中复制值的位置。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置必须存在才能使操作成功。例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;copy&quot;, &quot;from&quot;: &quot;/a/b/c&quot;, &quot;path&quot;: &quot;/a/b/e&quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;此操作在功能上可以等效于对目标位置执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置的值。&lt;/p&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Copy操作：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
+	PatchOperation{
+		Op:   &quot;copy&quot;,
+		Path: &quot;/metadata/annotations/provider-name&quot;,
+		From: &quot;/metadata/labels/provider-name&quot;,
+	},
+}
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;test&quot;&gt;test&lt;/h4&gt;
+
+&lt;p&gt;Test操作测试目标位置处的值是否等于指定值。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;成员，该成员表示要与目标位置的值进行比较的值。目标位置的值和json类型必须等于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;中指定的值和json类型：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;string: 包含相同数量的Unicode字符并且逐字节相等.&lt;/li&gt;
+  &lt;li&gt;number: 值在数字上相等。&lt;/li&gt;
+  &lt;li&gt;arrays: 包含相同数量的值，并且每个值都可以被认为等于另一个数组中相应位置的值&lt;/li&gt;
+  &lt;li&gt;objects: 包含相同数量的成员，并且较它们的键和它们的值都相等。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;test&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: &quot;foo&quot; }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Test操作：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
+	PatchOperation{
+		Op:    &quot;test&quot;,
+		Path:  &quot;/metadata/annotations/provider-name&quot;,
+		Value: &quot;my-provider&quot;,
+	},
+}
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;json-merge-patch&quot;&gt;Json Merge Patch&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://datatracker.ietf.org/doc/html/rfc7386&quot;&gt;RFC7386&lt;/a&gt;定义了JSON Merge Patch的格式和处理规则。它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;merge-patch+json&lt;/code&gt;用于标识此类Patch。&lt;/p&gt;
+
+&lt;p&gt;JSON Merge Patch文档描述了对目标 JSON 文档所做的更改，使用的语法与正在修改的文档非常相似。Merge Patch文档的接收者通过将所提供Patch的内容与目标文档的当前内容进行比较来确定所请求的确切更改集。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如果提供的Patch包含未出现在目标中的成员，则会添加这些成员。&lt;/li&gt;
+  &lt;li&gt;如果目标确实包含该成员，则替换该值。&lt;/li&gt;
+  &lt;li&gt;Patch中的null被赋予特殊含义以指示删除目标中的现有值。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;例如, 原始json文件的内容如下：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;a&quot;: &quot;b&quot;,
+    &quot;c&quot;: {
+        &quot;d&quot;: &quot;e&quot;,
+        &quot;f&quot;: &quot;g&quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;使用如下Merge Patch可以更改a的值并且删除元素f，其他元素保持不变:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+    &quot;a&quot;:&quot;z&quot;,
+    &quot;c&quot;: {
+       &quot;f&quot;: null
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;该方法有几点需要注意:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;如果Patch内容不是对象，则将用整个Patch替换目标。这导致无法仅替换数组中的某些值。&lt;/li&gt;
+  &lt;li&gt;仅适用于不使用显式Null的JSON文档的修改。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Kubernetes Client中使用Json Merge Patch：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+	&quot;metadata&quot;:{
+		&quot;annotations&quot;: {
+			&quot;provider-name&quot;: &quot;my-provider&quot;
+		}
+	}
+}
+`)
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.MergePatchType, jsonPatch, metav1.PatchOptions{})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;optimistic-lock&quot;&gt;Optimistic Lock&lt;/h4&gt;
+&lt;p&gt;Kubernetes Client 在json merge patch功能中支持乐观锁，但是需要在patch文件中指明resourceversion，例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+	&quot;metadata&quot;:{
+		&quot;annotations&quot;: {
+			&quot;provider-name&quot;: &quot;my-provider&quot;
+		},
+		&quot;resourceVersion&quot;: &quot;1501414&quot;
+	}
+}
+`)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;只有Merge Patch中的resourceversion与Apiserver中最新的resourceversion相同时，patch才会成功。如果不相同，则返回错误&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Operation cannot be fulfilled on deployments.apps &quot;my-deployment&quot;: the object has been modified; please apply your changes to the latest version and try again&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;apply-patch&quot;&gt;Apply Patch&lt;/h3&gt;
+
+&lt;p&gt;Apply Patch是一种声明式的Patch方式，主要分为Server-side和Client-side两种方式。&lt;/p&gt;
+
+&lt;h4 id=&quot;client-side-apply-patch&quot;&gt;Client Side Apply Patch&lt;/h4&gt;
+
+&lt;p&gt;在使用kubectl apply命令时，默认会采用Client Side Apply Patch的方式，如果想切换至Server Side Apply Patch则需要指定&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--server-side=true&lt;/code&gt;。Client Side Apply Patch默认使用Strategic Merge Patch。&lt;/p&gt;
+
+&lt;h5 id=&quot;last-applied-configuration&quot;&gt;Last Applied Configuration&lt;/h5&gt;
+&lt;p&gt;kubectl apply 命令将配置文件的内容写入到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl.kubernetes.io/last-applied-configuration&lt;/code&gt; annotaion中。 这些内容用来识别配置文件中已经移除的、因而也需要从Apiserver中保存的配置中删除的字段。 用来计算要删除或设置哪些字段的步骤如下：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;计算要删除的字段，即在 last-applied-configuration 中存在但在 配置文件中不再存在的字段。&lt;/li&gt;
+  &lt;li&gt;计算要添加或设置的字段，即在配置文件中存在但其取值与现时配置不同的字段。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;关于Client Side Apply Patch的使用，可以参考：&lt;a href=&quot;https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/&quot;&gt;declarative-config&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;server-side-apply-patch&quot;&gt;Server Side Apply Patch&lt;/h4&gt;
+
+&lt;p&gt;顾名思义，Server Side Apply Patch是在server端执行apply patch操作，它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/apply-patch+yaml&lt;/code&gt;用于标识此类Patch。&lt;/p&gt;
+
+&lt;h5 id=&quot;field-management&quot;&gt;Field Management&lt;/h5&gt;
+&lt;p&gt;相对于通过Client Side Apply Patch的last-applied，Server Side Apply Patch使用了一种更具声明式特点的方法： 它持续的跟踪用户的字段管理权，而不仅仅是最后一次的执行状态。这就意味着，需要向外暴露关于用哪一个字段管理器负责管理对象中的哪个字段的这类信息。&lt;/p&gt;
+
+&lt;p&gt;当使用Server Side Apply Patch尝试着去改变一个被其他人管理的字段，如果没有使用force参数的情况下会导致请求被拒绝。如果两个或以上的调用者均把同一个字段设置为相同值，他们将共享此字段的所有权。 后续任何改变共享字段值的尝试，不管由那个应用者发起，都会导致冲突。只需从配置文件中删除该字段即可放弃共享字段的所有权。字段管理的信息存储在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managedFields&lt;/code&gt;字段中，该字段是对象的 metadata 中的一部分。&lt;/p&gt;
+
+&lt;p&gt;Server Side Apply Patch创建的一个例子：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-cm
+  namespace: default
+  labels:
+    test-label: test
+  managedFields:
+  - manager: kubectl
+    operation: Apply
+    apiVersion: v1
+    time: &quot;2010-10-10T0:00:00Z&quot;
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          f:test-label: {}
+      f:data:
+        f:key: {}
+data:
+  key: some value
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;conflicts&quot;&gt;Conflicts&lt;/h5&gt;
+
+&lt;p&gt;当在执行 Apply 改变一个字段时，而恰巧该字段被其他用户声明过主权时，会导致冲突。这可以防止一个应用者不小心覆盖掉其他用户设置的值。冲突发生时，应用者有三种办法来解决它：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;覆盖前值，成为唯一的管理器：如果打算覆盖该值（或应用者是一个自动化部件，比如控制器），应用者应该设置参数 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;force&lt;/code&gt; 为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;，然后再发送一次请求。这将强制操作成功，改变字段的值，从所有其他管理器的 managedFields 条目中删除该字段。&lt;/li&gt;
+  &lt;li&gt;不覆盖前值，放弃管理权：如果应用者不再关注该字段的值，可以从配置文件中删掉该字段，再重新发送请求。&lt;/li&gt;
+  &lt;li&gt;不覆盖前值，成为共享的管理器：如果应用者仍然关注字段值，并不想覆盖它，他们可以在配置文件中把字段的值改为和服务器对象一样，再重新发送请求。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;需要注意的是：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;在冲突发生的时候，只有apply操作失败，而update 则不会。&lt;/li&gt;
+  &lt;li&gt;apply操作必须通过提供一个 fieldManager 查询参数来标识自身， 而此查询参数对于 update 操作则是可选的。&lt;/li&gt;
+  &lt;li&gt;当使用 apply 命令时，请求中的对象不能含有 managedFields字段。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;manager&quot;&gt;Manager&lt;/h5&gt;
+
+&lt;p&gt;在apply操作中，必须指定fieldManager参数，该参数的值会赋值给managedFields.manager，同时也用来做冲突检查。对于其他操作managedFields.manager字段值通常是从user-agent中计算出来的。kubectl操作产生的manager字段为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h5 id=&quot;example&quot;&gt;Example&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+	&quot;apiVersion&quot;: &quot;apps/v1&quot;,
+	&quot;kind&quot;: Deployment,
+	&quot;metadata&quot;:{
+		&quot;annotations&quot;: {
+			&quot;provider-name&quot;: &quot;my-provider&quot;
+		}
+	}
+}`)
+
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.ApplyPatchType, jsonPatch, metav1.PatchOptions{
+	FieldManager: &quot;test-controller&quot;,
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kc get deployment my-deployment -o yaml --show-managed-fields&lt;/code&gt; 查看&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managedFields&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;managedFields:
+- apiVersion: apps/v1
+  fieldsType: FieldsV1
+  fieldsV1:
+    f:metadata:
+      f:annotations:
+        f:provider-name: {}
+  manager: test-controller
+  operation: Apply
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;可见provider-name的manager是test-controller。当使用另外一个manager对该字段更新时：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+	&quot;apiVersion&quot;: &quot;apps/v1&quot;,
+	&quot;kind&quot;: Deployment,
+	&quot;metadata&quot;:{
+		&quot;annotations&quot;: {
+			&quot;provider-name&quot;: &quot;my-provider-update&quot;
+		}
+	}
+}`)
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.ApplyPatchType, jsonPatch, metav1.PatchOptions{
+	FieldManager: &quot;another-controller&quot;,
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Apiserver 返回错误&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply failed with 1 conflict: conflict with &quot;test-controller&quot;: .metadata.annotations.provider-name&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;optimistic-lock-1&quot;&gt;Optimistic Lock&lt;/h5&gt;
+&lt;p&gt;Kubernetes Client 在Server side apply patch功能中支持乐观锁，但是需要在patch文件中指明resourceversion，例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+	&quot;apiVersion&quot;: &quot;apps/v1&quot;,
+	&quot;kind&quot;: Deployment,
+	&quot;metadata&quot;:{
+		&quot;annotations&quot;: {
+			&quot;provider-name&quot;: &quot;my-provider&quot;
+		},
+		&quot;resourceVersion&quot;: &quot;1501414&quot;
+	}
+}
+`)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;关于Client Side Apply Patch的使用，可以参考：&lt;a href=&quot;https://kubernetes.io/docs/reference/using-api/server-side-apply/&quot;&gt;server-side-apply&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;strategic-merge-patch&quot;&gt;Strategic Merge Patch&lt;/h3&gt;
+
+&lt;p&gt;trategic Merge Patch并没有一个通用的 RFC 标准，而是Kubernetes单独定义的Patch行为，不过相比Json/Json Merge Patch而言却更为强大的。它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/strategic-merge-patch+json&lt;/code&gt;用于标识此类Patch。&lt;/p&gt;
+
+&lt;p&gt;Strategic Merge Patch的行为会由Json字段上的标签决定，例如根据其Patch策略替换或合并列表。Patch策略由代码中字段标签中的patchStrategy值指定。比如PodSpec结构体的Containers字段有一个值为merge的patchStrategy:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type PodSpec struct {
+  ...
+  Containers []Container `json:&quot;containers&quot; patchStrategy:&quot;merge&quot; patchMergeKey:&quot;name&quot; ...`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;具体使用方式同Json merge patch类似，只不过其merge行为由patchStrategy控制：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+  &quot;spec&quot;: {
+    &quot;template&quot;: {
+      &quot;spec&quot;:{
+        &quot;containers&quot;: [
+          {
+          	&quot;name&quot;: &quot;patch-demo-ctr-2&quot;,
+          	&quot;image&quot;: &quot;redis&quot;
+          }
+        ]        
+      }
+    }
+  }
+}`)
+...
+deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.StrategicMergePatchType, jsonPatch, metav1.PatchOptions{})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;optimistic-lock-2&quot;&gt;Optimistic Lock&lt;/h4&gt;
+&lt;p&gt;Kubernetes Client在Strategic merge patch功能中支持乐观锁，但是需要在patch文件中指明resourceversion，例如：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
+	&quot;metadata&quot;:{
+		&quot;resourceVersion&quot;: &quot;1501414&quot;
+	},
+	&quot;spec&quot;: {
+		&quot;template&quot;: {
+			&quot;spec&quot;:{
+				&quot;containers&quot;: [
+					{
+						&quot;name&quot;: &quot;patch-demo-ctr-2&quot;,
+						&quot;image&quot;: &quot;redis&quot;
+					}
+				]        
+			}
+		}
+	}
+}
+`)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;关于patchStrategy的使用，可以参考：&lt;a href=&quot;https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/&quot;&gt;update-api-object-kubectl-patch&lt;/a&gt;&lt;/p&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Kubernetes" /><category term="client-go" /><summary type="html">Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。</summary></entry><entry><title type="html">Container Storage Interface（CSI)</title><link href="http://localhost:4000/2021/10/29/CSI.html" rel="alternate" type="text/html" title="Container Storage Interface（CSI)" /><published>2021-10-29T00:00:00+08:00</published><updated>2021-10-29T00:00:00+08:00</updated><id>http://localhost:4000/2021/10/29/CSI</id><content type="html" xml:base="http://localhost:4000/2021/10/29/CSI.html">&lt;p&gt;CSI是一套存储产品通用的RPC接口。对于容器编排平台(CO)，支持CSI接口就意味可以支持多种存储厂商/类型；对于存储厂商，支持CSI接口就可以支持多平台，减少研发投入的同时扩宽市场。
 &lt;!--more--&gt;&lt;/p&gt;
 
 &lt;p&gt;在正式介绍CSI之前，先对文中出现的一些专有名字或者缩写做说明。其含义如下表:&lt;/p&gt;
@@ -2275,473 +2744,4 @@ message NodeExpandVolumeResponse {
   &lt;li&gt;不一致备份：文件或磁盘数据的备份，不在同一时间点产生。&lt;/li&gt;
   &lt;li&gt;崩溃一致性备份：云服务器中文件或磁盘数据的备份，在同一时间点产生，但不会静默数据库等应用系统、不会备份内存数据，不保证应用系统备份的一致性。&lt;/li&gt;
   &lt;li&gt;应用一致性备份：文件/磁盘数据在同一时间点，并静默数据库刷新内存数据，保证应用系统备份的一致性。&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Storage" /><category term="DataProtection" /><summary type="html">数据保护的本质就是对当前数据进行备份，防止设备损坏或者其他各种原因导致数据丢失/不可访问，降低对于业务的影响。一旦发生问题，可以将备份的数据重新恢复到生产环境上，降低业务损失。</summary></entry><entry><title type="html">Kubernetes Patch and Update 机制</title><link href="http://localhost:4000/2020/09/01/patch.html" rel="alternate" type="text/html" title="Kubernetes Patch and Update 机制" /><published>2020-09-01T00:00:00+08:00</published><updated>2020-09-01T00:00:00+08:00</updated><id>http://localhost:4000/2020/09/01/patch</id><content type="html" xml:base="http://localhost:4000/2020/09/01/patch.html">&lt;p&gt;Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;kubernetes-update-机制&quot;&gt;Kubernetes Update 机制&lt;/h2&gt;
-
-&lt;p&gt;在kubernetes中，每个资源都有一个&lt;a href=&quot;https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions&quot;&gt;resourceversion&lt;/a&gt;，针对该资源的每次修改都会导致resourceversion的变化。借助resourceversion，Kubernetes Apiserver 采用了类似乐观锁的方式实现Update机制。&lt;/p&gt;
-
-&lt;p&gt;当要对某个资源做Update操作时，需要带上该资源的resourceversion，Apiserver会检查请求中的resourceversion是否与server端保存的最新resourceversion一致：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;如果相同，则接受Update请求并改变server端该资源的的resourceversion&lt;/li&gt;
-  &lt;li&gt;如果不相同，则返回有冲突的错误，此时由客户端决定接下去的步骤，例如是将错误直接返回给用户还是获取最新的版本然后重新发起Update请求。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Kubernetes Client中使用Update：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// Init kubernetes client here
-k8sClient.Get(context.TODO(), types.NamespacedName{
-	Namespace: &quot;default&quot;,
-	Name:      &quot;my-sample&quot;,
-}, object)
-
-// Make changes to the objec here
-k8sClient.Update(context.TODO(), object)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;kubernetes-patch-机制&quot;&gt;Kubernetes Patch 机制&lt;/h2&gt;
-
-&lt;p&gt;Update需要传输整个object到Apiserver，使用的是PUT方法。而Patch只需要传输变化的部分给Apiserver，Kubernetes 支持的Patch方式一共有四种：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;json patch&lt;/li&gt;
-  &lt;li&gt;json merge patch&lt;/li&gt;
-  &lt;li&gt;strategic merge patch&lt;/li&gt;
-  &lt;li&gt;apply patch
-    &lt;ul&gt;
-      &lt;li&gt;client-side apply patch&lt;/li&gt;
-      &lt;li&gt;server-side apply patch&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;json-patch&quot;&gt;Json Patch&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://datatracker.ietf.org/doc/html/rfc6902&quot;&gt;RFC6902&lt;/a&gt;定义了一种用于表示一系列对于目标Json操作的Json结构，它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/json-patch+json&lt;/code&gt; 用于标识此类Patch。&lt;/p&gt;
-
-&lt;p&gt;Json patch是一系列json对象组成的列表，每一个json对象表示一个对目标json文件的操作，例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[
-    { &quot;op&quot;: &quot;test&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: &quot;foo&quot; },
-    { &quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/a/b/c&quot; },
-    { &quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: [ &quot;foo&quot;, &quot;bar&quot; ] },
-    { &quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: 42 },
-    { &quot;op&quot;: &quot;move&quot;, &quot;from&quot;: &quot;/a/b/c&quot;, &quot;path&quot;: &quot;/a/b/d&quot; },
-    { &quot;op&quot;: &quot;copy&quot;, &quot;from&quot;: &quot;/a/b/d&quot;, &quot;path&quot;: &quot;/a/b/e&quot; }
-]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;操作按照它们在数组中出现的顺序依次生效。序列中的每个操作都应用于目标文档，生成的文档成为下一个操作的目标，直到成功应用所有操作或直到遇到错误条件。&lt;/p&gt;
-
-&lt;p&gt;可以使用的操作包括：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;add&lt;/li&gt;
-  &lt;li&gt;remove&lt;/li&gt;
-  &lt;li&gt;replace&lt;/li&gt;
-  &lt;li&gt;move&lt;/li&gt;
-  &lt;li&gt;copy&lt;/li&gt;
-  &lt;li&gt;test&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;由于Json patch中只包含一系列的操作而没有version字段，所以Apiserver没办法对Json patch施加乐观锁。&lt;/p&gt;
-
-&lt;p&gt;为了方便演示Kubernetes Client的Patch功能，可以预先定义：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type JsonPatch []PatchOperation
-type PatchOperation struct {
-	Op    string      `json:&quot;op&quot;`
-	Path  string      `json:&quot;path&quot;`
-	From  string      `json:&quot;from,omitempty&quot;`
-	Value interface{} `json:&quot;value,omitempty&quot;`
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;add&quot;&gt;add&lt;/h4&gt;
-
-&lt;p&gt;Add操作的作用：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;如果path是一个array的index，则value会插入到array中的相应位置，当前及其后元素的位置向后顺延。如果需要添加元素的位置&amp;gt;len(arrays)，则会报错。&lt;/li&gt;
-  &lt;li&gt;如果path是一个不存在的object member，则新member会被加入。&lt;/li&gt;
-  &lt;li&gt;如果path是一个已经存在的object member，则该member的值会被改变。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;此操作的目的是添加元素到现有的对象和数组，其目标位置可能不存在。通常这会触发错误使用指针的报错，但Json patch中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;会忽略该错误并添加指定的值。但是，对象本身或包含它的数组必须要存在。例如，目标位置为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/a/b&lt;/code&gt;的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作作用于此文档：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;a&quot;: { &quot;foo&quot;: 1 } }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;尽管&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;中不存在member &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b&lt;/code&gt;，但这并不会导致错误，因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;存在，member &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;b&lt;/code&gt;将被添加到其值中。&lt;/p&gt;
-
-&lt;p&gt;但如果作用于下面的这个json文档，会导致错误的发生：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;q&quot;: { &quot;bar&quot;: 2 } }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a&lt;/code&gt;不存在。&lt;/p&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Add操作：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
-	PatchOperation{
-		Op:    &quot;add&quot;,
-		Path:  &quot;/metadata/annotations/provider-name&quot;,
-		Value: &quot;my-provider&quot;,
-	},
-}
-patchByte, err := json.Marshal(jsonPatch)
-clientset, err := kubernetes.NewForConfig(ctrl.GetConfigOrDie())
-
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;remove&quot;&gt;remove&lt;/h4&gt;
-
-&lt;p&gt;Remove操作会移除目标位置的元素。目标位置必须存在才能使操作成功。例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;remove&quot;, &quot;path&quot;: &quot;/a/b/c&quot; }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;如果从数组中删除一个元素，则指定索引右面的任何元素都将向左移动一个位置。&lt;/p&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Remove操作：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
-	PatchOperation{
-		Op:    &quot;remove&quot;,
-		Path:  &quot;/metadata/annotations/provider-name&quot;,
-		Value: &quot;my-provider&quot;,
-	},
-}
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;replace&quot;&gt;replace&lt;/h4&gt;
-
-&lt;p&gt;Replace操作会用新值替换目标位置处的值。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;成员用来指定替换值。目标位置必须存在才能使操作成功。例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: 42 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Replace操作在功能上可以等效于对某个元素执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove&lt;/code&gt;操作，紧接着在与&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove&lt;/code&gt;操作相同的位置执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作。&lt;/p&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Remove操作：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
-	PatchOperation{
-		Op:    &quot;replace&quot;,
-		Path:  &quot;/metadata/annotations/provider-name&quot;,
-		Value: &quot;my-provider&quot;,
-	},
-}
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;move&quot;&gt;move&lt;/h4&gt;
-
-&lt;p&gt;Move操作移除指定位置的值并将其添加到目标位置。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;成员，该值引用目标文档中要从中移动值的位置。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置必须存在才能使操作成功。例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;move&quot;, &quot;from&quot;: &quot;/a/b/c&quot;, &quot;path&quot;: &quot;/a/b/d&quot; }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;此操作在功能上可以等效于对某个元素执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remove&lt;/code&gt;操作，紧接着在目标位置执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作。&lt;/p&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Move操作：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
-	PatchOperation{
-		Op:   &quot;move&quot;,
-		From: &quot;/metadata/annotations/provider-name&quot;,
-		Path: &quot;/metadata/labels/provider-name&quot;,
-	},
-}
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;copy&quot;&gt;copy&lt;/h4&gt;
-
-&lt;p&gt;Copy操作将指定位置的值复制到目标位置。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;成员，该值引用目标文档中要从中复制值的位置。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置必须存在才能使操作成功。例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;copy&quot;, &quot;from&quot;: &quot;/a/b/c&quot;, &quot;path&quot;: &quot;/a/b/e&quot; }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;此操作在功能上可以等效于对目标位置执行&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt;操作添加&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;from&lt;/code&gt;位置的值。&lt;/p&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Copy操作：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
-	PatchOperation{
-		Op:   &quot;copy&quot;,
-		Path: &quot;/metadata/annotations/provider-name&quot;,
-		From: &quot;/metadata/labels/provider-name&quot;,
-	},
-}
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;test&quot;&gt;test&lt;/h4&gt;
-
-&lt;p&gt;Test操作测试目标位置处的值是否等于指定值。操作对象必须包含一个&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;成员，该成员表示要与目标位置的值进行比较的值。目标位置的值和json类型必须等于&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt;中指定的值和json类型：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;string: 包含相同数量的Unicode字符并且逐字节相等.&lt;/li&gt;
-  &lt;li&gt;number: 值在数字上相等。&lt;/li&gt;
-  &lt;li&gt;arrays: 包含相同数量的值，并且每个值都可以被认为等于另一个数组中相应位置的值&lt;/li&gt;
-  &lt;li&gt;objects: 包含相同数量的成员，并且较它们的键和它们的值都相等。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{ &quot;op&quot;: &quot;test&quot;, &quot;path&quot;: &quot;/a/b/c&quot;, &quot;value&quot;: &quot;foo&quot; }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Patch对Deployment做Test操作：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := JsonPatch{
-	PatchOperation{
-		Op:    &quot;test&quot;,
-		Path:  &quot;/metadata/annotations/provider-name&quot;,
-		Value: &quot;my-provider&quot;,
-	},
-}
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.JSONPatchType, patchByte, metav1.PatchOptions{})
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;json-merge-patch&quot;&gt;Json Merge Patch&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://datatracker.ietf.org/doc/html/rfc7386&quot;&gt;RFC7386&lt;/a&gt;定义了JSON Merge Patch的格式和处理规则。它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;merge-patch+json&lt;/code&gt;用于标识此类Patch。&lt;/p&gt;
-
-&lt;p&gt;JSON Merge Patch文档描述了对目标 JSON 文档所做的更改，使用的语法与正在修改的文档非常相似。Merge Patch文档的接收者通过将所提供Patch的内容与目标文档的当前内容进行比较来确定所请求的确切更改集。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;如果提供的Patch包含未出现在目标中的成员，则会添加这些成员。&lt;/li&gt;
-  &lt;li&gt;如果目标确实包含该成员，则替换该值。&lt;/li&gt;
-  &lt;li&gt;Patch中的null被赋予特殊含义以指示删除目标中的现有值。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;例如, 原始json文件的内容如下：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: {
-        &quot;d&quot;: &quot;e&quot;,
-        &quot;f&quot;: &quot;g&quot;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;使用如下Merge Patch可以更改a的值并且删除元素f，其他元素保持不变:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
-    &quot;a&quot;:&quot;z&quot;,
-    &quot;c&quot;: {
-       &quot;f&quot;: null
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;该方法有几点需要注意:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;如果Patch内容不是对象，则将用整个Patch替换目标。这导致无法仅替换数组中的某些值。&lt;/li&gt;
-  &lt;li&gt;仅适用于不使用显式Null的JSON文档的修改。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Kubernetes Client中使用Json Merge Patch：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-	&quot;metadata&quot;:{
-		&quot;annotations&quot;: {
-			&quot;provider-name&quot;: &quot;my-provider&quot;
-		}
-	}
-}
-`)
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.MergePatchType, jsonPatch, metav1.PatchOptions{})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;optimistic-lock&quot;&gt;Optimistic Lock&lt;/h4&gt;
-&lt;p&gt;Kubernetes Client 在json merge patch功能中支持乐观锁，但是需要在patch文件中指明resourceversion，例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-	&quot;metadata&quot;:{
-		&quot;annotations&quot;: {
-			&quot;provider-name&quot;: &quot;my-provider&quot;
-		},
-		&quot;resourceVersion&quot;: &quot;1501414&quot;
-	}
-}
-`)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;只有Merge Patch中的resourceversion与Apiserver中最新的resourceversion相同时，patch才会成功。如果不相同，则返回错误&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Operation cannot be fulfilled on deployments.apps &quot;my-deployment&quot;: the object has been modified; please apply your changes to the latest version and try again&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;apply-patch&quot;&gt;Apply Patch&lt;/h3&gt;
-
-&lt;p&gt;Apply Patch是一种声明式的Patch方式，主要分为Server-side和Client-side两种方式。&lt;/p&gt;
-
-&lt;h4 id=&quot;client-side-apply-patch&quot;&gt;Client Side Apply Patch&lt;/h4&gt;
-
-&lt;p&gt;在使用kubectl apply命令时，默认会采用Client Side Apply Patch的方式，如果想切换至Server Side Apply Patch则需要指定&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--server-side=true&lt;/code&gt;。Client Side Apply Patch默认使用Strategic Merge Patch。&lt;/p&gt;
-
-&lt;h5 id=&quot;last-applied-configuration&quot;&gt;Last Applied Configuration&lt;/h5&gt;
-&lt;p&gt;kubectl apply 命令将配置文件的内容写入到&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl.kubernetes.io/last-applied-configuration&lt;/code&gt; annotaion中。 这些内容用来识别配置文件中已经移除的、因而也需要从Apiserver中保存的配置中删除的字段。 用来计算要删除或设置哪些字段的步骤如下：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;计算要删除的字段，即在 last-applied-configuration 中存在但在 配置文件中不再存在的字段。&lt;/li&gt;
-  &lt;li&gt;计算要添加或设置的字段，即在配置文件中存在但其取值与现时配置不同的字段。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;关于Client Side Apply Patch的使用，可以参考：&lt;a href=&quot;https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/&quot;&gt;declarative-config&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;server-side-apply-patch&quot;&gt;Server Side Apply Patch&lt;/h4&gt;
-
-&lt;p&gt;顾名思义，Server Side Apply Patch是在server端执行apply patch操作，它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/apply-patch+yaml&lt;/code&gt;用于标识此类Patch。&lt;/p&gt;
-
-&lt;h5 id=&quot;field-management&quot;&gt;Field Management&lt;/h5&gt;
-&lt;p&gt;相对于通过Client Side Apply Patch的last-applied，Server Side Apply Patch使用了一种更具声明式特点的方法： 它持续的跟踪用户的字段管理权，而不仅仅是最后一次的执行状态。这就意味着，需要向外暴露关于用哪一个字段管理器负责管理对象中的哪个字段的这类信息。&lt;/p&gt;
-
-&lt;p&gt;当使用Server Side Apply Patch尝试着去改变一个被其他人管理的字段，如果没有使用force参数的情况下会导致请求被拒绝。如果两个或以上的调用者均把同一个字段设置为相同值，他们将共享此字段的所有权。 后续任何改变共享字段值的尝试，不管由那个应用者发起，都会导致冲突。只需从配置文件中删除该字段即可放弃共享字段的所有权。字段管理的信息存储在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managedFields&lt;/code&gt;字段中，该字段是对象的 metadata 中的一部分。&lt;/p&gt;
-
-&lt;p&gt;Server Side Apply Patch创建的一个例子：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: test-cm
-  namespace: default
-  labels:
-    test-label: test
-  managedFields:
-  - manager: kubectl
-    operation: Apply
-    apiVersion: v1
-    time: &quot;2010-10-10T0:00:00Z&quot;
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          f:test-label: {}
-      f:data:
-        f:key: {}
-data:
-  key: some value
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h5 id=&quot;conflicts&quot;&gt;Conflicts&lt;/h5&gt;
-
-&lt;p&gt;当在执行 Apply 改变一个字段时，而恰巧该字段被其他用户声明过主权时，会导致冲突。这可以防止一个应用者不小心覆盖掉其他用户设置的值。冲突发生时，应用者有三种办法来解决它：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;覆盖前值，成为唯一的管理器：如果打算覆盖该值（或应用者是一个自动化部件，比如控制器），应用者应该设置参数 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;force&lt;/code&gt; 为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;，然后再发送一次请求。这将强制操作成功，改变字段的值，从所有其他管理器的 managedFields 条目中删除该字段。&lt;/li&gt;
-  &lt;li&gt;不覆盖前值，放弃管理权：如果应用者不再关注该字段的值，可以从配置文件中删掉该字段，再重新发送请求。&lt;/li&gt;
-  &lt;li&gt;不覆盖前值，成为共享的管理器：如果应用者仍然关注字段值，并不想覆盖它，他们可以在配置文件中把字段的值改为和服务器对象一样，再重新发送请求。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;需要注意的是：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;在冲突发生的时候，只有apply操作失败，而update 则不会。&lt;/li&gt;
-  &lt;li&gt;apply操作必须通过提供一个 fieldManager 查询参数来标识自身， 而此查询参数对于 update 操作则是可选的。&lt;/li&gt;
-  &lt;li&gt;当使用 apply 命令时，请求中的对象不能含有 managedFields字段。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&quot;manager&quot;&gt;Manager&lt;/h5&gt;
-
-&lt;p&gt;在apply操作中，必须指定fieldManager参数，该参数的值会赋值给managedFields.manager，同时也用来做冲突检查。对于其他操作managedFields.manager字段值通常是从user-agent中计算出来的。kubectl操作产生的manager字段为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h5 id=&quot;example&quot;&gt;Example&lt;/h5&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-	&quot;apiVersion&quot;: &quot;apps/v1&quot;,
-	&quot;kind&quot;: Deployment,
-	&quot;metadata&quot;:{
-		&quot;annotations&quot;: {
-			&quot;provider-name&quot;: &quot;my-provider&quot;
-		}
-	}
-}`)
-
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.ApplyPatchType, jsonPatch, metav1.PatchOptions{
-	FieldManager: &quot;test-controller&quot;,
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kc get deployment my-deployment -o yaml --show-managed-fields&lt;/code&gt; 查看&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;managedFields&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;managedFields:
-- apiVersion: apps/v1
-  fieldsType: FieldsV1
-  fieldsV1:
-    f:metadata:
-      f:annotations:
-        f:provider-name: {}
-  manager: test-controller
-  operation: Apply
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;可见provider-name的manager是test-controller。当使用另外一个manager对该字段更新时：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-	&quot;apiVersion&quot;: &quot;apps/v1&quot;,
-	&quot;kind&quot;: Deployment,
-	&quot;metadata&quot;:{
-		&quot;annotations&quot;: {
-			&quot;provider-name&quot;: &quot;my-provider-update&quot;
-		}
-	}
-}`)
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.ApplyPatchType, jsonPatch, metav1.PatchOptions{
-	FieldManager: &quot;another-controller&quot;,
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Apiserver 返回错误&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply failed with 1 conflict: conflict with &quot;test-controller&quot;: .metadata.annotations.provider-name&lt;/code&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;optimistic-lock-1&quot;&gt;Optimistic Lock&lt;/h5&gt;
-&lt;p&gt;Kubernetes Client 在Server side apply patch功能中支持乐观锁，但是需要在patch文件中指明resourceversion，例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-	&quot;apiVersion&quot;: &quot;apps/v1&quot;,
-	&quot;kind&quot;: Deployment,
-	&quot;metadata&quot;:{
-		&quot;annotations&quot;: {
-			&quot;provider-name&quot;: &quot;my-provider&quot;
-		},
-		&quot;resourceVersion&quot;: &quot;1501414&quot;
-	}
-}
-`)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;关于Client Side Apply Patch的使用，可以参考：&lt;a href=&quot;https://kubernetes.io/docs/reference/using-api/server-side-apply/&quot;&gt;server-side-apply&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;strategic-merge-patch&quot;&gt;Strategic Merge Patch&lt;/h3&gt;
-
-&lt;p&gt;trategic Merge Patch并没有一个通用的 RFC 标准，而是Kubernetes单独定义的Patch行为，不过相比Json/Json Merge Patch而言却更为强大的。它适用于HTTP PATCH方法。media type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/strategic-merge-patch+json&lt;/code&gt;用于标识此类Patch。&lt;/p&gt;
-
-&lt;p&gt;Strategic Merge Patch的行为会由Json字段上的标签决定，例如根据其Patch策略替换或合并列表。Patch策略由代码中字段标签中的patchStrategy值指定。比如PodSpec结构体的Containers字段有一个值为merge的patchStrategy:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type PodSpec struct {
-  ...
-  Containers []Container `json:&quot;containers&quot; patchStrategy:&quot;merge&quot; patchMergeKey:&quot;name&quot; ...`
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;具体使用方式同Json merge patch类似，只不过其merge行为由patchStrategy控制：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-  &quot;spec&quot;: {
-    &quot;template&quot;: {
-      &quot;spec&quot;:{
-        &quot;containers&quot;: [
-          {
-          	&quot;name&quot;: &quot;patch-demo-ctr-2&quot;,
-          	&quot;image&quot;: &quot;redis&quot;
-          }
-        ]        
-      }
-    }
-  }
-}`)
-...
-deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(context.TODO(), &quot;my-deployment&quot;, types.StrategicMergePatchType, jsonPatch, metav1.PatchOptions{})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;optimistic-lock-2&quot;&gt;Optimistic Lock&lt;/h4&gt;
-&lt;p&gt;Kubernetes Client在Strategic merge patch功能中支持乐观锁，但是需要在patch文件中指明resourceversion，例如：&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jsonPatch := []byte(`{
-	&quot;metadata&quot;:{
-		&quot;resourceVersion&quot;: &quot;1501414&quot;
-	},
-	&quot;spec&quot;: {
-		&quot;template&quot;: {
-			&quot;spec&quot;:{
-				&quot;containers&quot;: [
-					{
-						&quot;name&quot;: &quot;patch-demo-ctr-2&quot;,
-						&quot;image&quot;: &quot;redis&quot;
-					}
-				]        
-			}
-		}
-	}
-}
-`)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;关于patchStrategy的使用，可以参考：&lt;a href=&quot;https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/&quot;&gt;update-api-object-kubectl-patch&lt;/a&gt;&lt;/p&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Kubernetes" /><category term="client-go" /><summary type="html">Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Storage" /><category term="DataProtection" /><summary type="html">数据保护的本质就是对当前数据进行备份，防止设备损坏或者其他各种原因导致数据丢失/不可访问，降低对于业务的影响。一旦发生问题，可以将备份的数据重新恢复到生产环境上，降低业务损失。</summary></entry></feed>

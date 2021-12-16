@@ -18,7 +18,7 @@
 ##############################
 text_skin: dark # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: tomorrow-night-eighties # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
-url     : youhwsh.github.io
+url     : youhangwang.github.io
 baseurl : /
 title   : Johan Blog
 description: > # this means to ignore newlines until "Language & timezone"
@@ -38,12 +38,12 @@ author:
   url       : youhangwang.github.io
   avatar    : # path or url of avatar image (square)
   email     : youhangwang@foxmail.com
-  github    : youhwsh
+  github    : youhangwang
 
 
 ## => GitHub Repository (if the site is hosted by GitHub)
 ##############################
-repository: youhwsh/youhangwang.github.io
+repository: youhangwang/youhangwang.github.io
 repository_tree: master
 
 
