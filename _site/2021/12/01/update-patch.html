@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Kubernetes Patch and Update 机制 - Johan Blog</title>
 
 <meta name="description" content="Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。">
-<link rel="canonical" href="http://localhost:4000/2021/12/01/patch.html"><link rel="alternate" type="application/rss+xml" title="Johan Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
+<link rel="canonical" href="http://localhost:4000/2021/12/01/update-patch.html"><link rel="alternate" type="application/rss+xml" title="Johan Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#fc4d50"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#ffc40d"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -294,7 +294,7 @@
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/Article"><div class="article__header">
 <header><h1>Kubernetes Patch and Update 机制</h1></header><span class="split-space"> </span>
-          <a class="edit-on-github" title="在 Github 上修改" href="https://github.com/youhangwang/youhangwang.github.io/tree/master/_posts/2021-12-01-patch.md">
+          <a class="edit-on-github" title="在 Github 上修改" href="https://github.com/youhangwang/youhangwang.github.io/tree/master/_posts/2021-12-01-update-patch.md">
             <i class="far fa-edit"></i></a>
 </div>
 <meta itemprop="headline" content="Kubernetes Patch and Update 机制">
@@ -809,9 +809,14 @@ deployment, err := clientset.AppsV1().Deployments(apiv1.NamespaceDefault).Patch(
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous">
+<div class="article__section-navigator clearfix">
+<div class="previous">
 <span>上篇</span><a href="/2021/10/29/CSI.html">Container Storage Interface（CSI)</a>
-</div></div>
+</div>
+<div class="next">
+<span>下篇</span><a href="/2021/12/16/webhook-local-run.html">本地运行 Kubernetes Webhook</a>
+</div>
+</div>
 </div>
 
 </div>

@@ -1,5 +1,105 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2021-12-16T15:18:47+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Johan Blog</title><subtitle>Johan Blog
-</subtitle><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><entry><title type="html">Kubernetes Patch and Update 机制</title><link href="http://localhost:4000/2021/12/01/patch.html" rel="alternate" type="text/html" title="Kubernetes Patch and Update 机制" /><published>2021-12-01T00:00:00+08:00</published><updated>2021-12-01T00:00:00+08:00</updated><id>http://localhost:4000/2021/12/01/patch</id><content type="html" xml:base="http://localhost:4000/2021/12/01/patch.html">&lt;p&gt;Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2021-12-19T11:41:06+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Johan Blog</title><subtitle>Johan Blog
+</subtitle><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><entry><title type="html">本地运行 Kubernetes Webhook</title><link href="http://localhost:4000/2021/12/16/webhook-local-run.html" rel="alternate" type="text/html" title="本地运行 Kubernetes Webhook" /><published>2021-12-16T00:00:00+08:00</published><updated>2021-12-16T00:00:00+08:00</updated><id>http://localhost:4000/2021/12/16/webhook-local-run</id><content type="html" xml:base="http://localhost:4000/2021/12/16/webhook-local-run.html">&lt;p&gt;Kubernetes提供了动态Webhook机制，它是一种用于接收准入请求并对其进行处理的HTTP回调机制。主要包括两种类型：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;validation webhook&lt;/li&gt;
+  &lt;li&gt;mutation webhook&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;其中Mutation Webhook会先于Validation Webhook调用，目的是保证Validation Webhook能够对资源的所有修改都进行验证。为了保证Apiserver到Webhook的网络安全，Apiserver使用HTTPS协议同webhook通信。
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;如果读者开发过Operator，那么一定有过这样的使用经验：本地运行controller读取config文件同远端的Kube Apiserver通信，这样可以直接在本地修改代码并实时运行进行debug。&lt;/p&gt;
+
+&lt;p&gt;不同于Controller到Apiserver之间的网络连接，webhook到Apiserver的连接是由Apiserver发起的，所以如果想让Webhook像Controller一样能够本地运行方便debug，则要求Apiserver可以主动向webhook server发起网络请求。&lt;/p&gt;
+
+&lt;p&gt;本地运行Webhook需要完成以下步骤：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;使用Cert-Manager在集群中创建Certficate&lt;/li&gt;
+  &lt;li&gt;将创建好的Cert Copy到本地，方便本地运行的Webhook使用该证书&lt;/li&gt;
+  &lt;li&gt;本地运行Webhook&lt;/li&gt;
+  &lt;li&gt;在Cluster中创建ValidatingWebhookConfiguration或者Mutatingwebhookconfigurations&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;上述步骤与正常使用Webhook的配置并无本质上的区别，但是细节上有一些不同。&lt;/p&gt;
+
+&lt;h2 id=&quot;创建certificate&quot;&gt;创建Certificate&lt;/h2&gt;
+
+&lt;p&gt;正常使用Webhook时，Cert都是针对该Webhook Service DNS创建的。但是在本地run webhook时，需要使用本机IP。&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: k8s-webhook-local-run-serving-cert
+  namespace: k8s-webhook-local-run-system
+spec:
+  ipAddresses:
+  - &amp;lt;local ip address&amp;gt;
+  issuerRef:
+    kind: Issuer
+    name: k8s-webhook-local-run-selfsigned-issuer
+  secretName: webhook-server-cert
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果使用的Cluster是在Mac OS上使用KinD创建的，Docker会为本地IP自动创建一个DNS &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;host.docker.internal&lt;/code&gt;。也可以使用该DNS创建Cert：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: k8s-webhook-local-run-serving-cert
+  namespace: k8s-webhook-local-run-system
+spec:
+  dnsNames:
+  - host.docker.internal
+  issuerRef:
+    kind: Issuer
+    name: k8s-webhook-local-run-selfsigned-issuer
+  secretName: webhook-server-cert
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;从集群中复制cert到本地&quot;&gt;从集群中复制Cert到本地&lt;/h2&gt;
+
+&lt;p&gt;当Cert-Manager将证书创建成功时，会生成一个Secret保存相关文件。找到Secret，将其内容以文件的形式复制到本地。&lt;/p&gt;
+
+&lt;h2 id=&quot;本地运行webhook&quot;&gt;本地运行Webhook&lt;/h2&gt;
+
+&lt;p&gt;本地运行Webhook，请注意：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;推荐使用HTTPS端口443&lt;/li&gt;
+  &lt;li&gt;证书地址配置为上一步中复制Cert的地址&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;创建validatingwebhookconfiguration或者mutatingwebhookconfigurations&quot;&gt;创建ValidatingWebhookConfiguration或者Mutatingwebhookconfigurations&lt;/h2&gt;
+
+&lt;p&gt;ValidatingWebhookConfiguration和Mutatingwebhookconfigurations的配置类似，本文只以其中一种为例：&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: &amp;lt;Cert-Namespace&amp;gt;/&amp;lt;Cert-Name&amp;gt;
+  name: k8s-webhook-local-run-validating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    url: https://&amp;lt;IP-Address-Or-DNS-In-Cert&amp;gt;/validate-webapp-my-domain-v1-guestbook
+  failurePolicy: Fail
+  name: vguestbook.kb.io
+  rules:
+  - apiGroups:
+    - webapp.my.domain
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - guestbooks
+  sideEffects: None
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中annotations.cert-manager.io/inject-ca-from的值为证书的namespace/name，该项的作用是使Apiserver承认Cert使用的CA。clientConfig.url为本地运行webhook的URL。&lt;/p&gt;
+
+&lt;p&gt;一旦完成上述配置，则Kubernetes集群中Apiserver便可以调用Webhook相关URL。&lt;/p&gt;</content><author><name>Johan Wang</name><email>youhangwang@foxmail.com</email></author><category term="Kubernetes" /><category term="Webhook" /><summary type="html">Kubernetes提供了动态Webhook机制，它是一种用于接收准入请求并对其进行处理的HTTP回调机制。主要包括两种类型： validation webhook mutation webhook 其中Mutation Webhook会先于Validation Webhook调用，目的是保证Validation Webhook能够对资源的所有修改都进行验证。为了保证Apiserver到Webhook的网络安全，Apiserver使用HTTPS协议同webhook通信。</summary></entry><entry><title type="html">Kubernetes Patch and Update 机制</title><link href="http://localhost:4000/2021/12/01/update-patch.html" rel="alternate" type="text/html" title="Kubernetes Patch and Update 机制" /><published>2021-12-01T00:00:00+08:00</published><updated>2021-12-01T00:00:00+08:00</updated><id>http://localhost:4000/2021/12/01/update-patch</id><content type="html" xml:base="http://localhost:4000/2021/12/01/update-patch.html">&lt;p&gt;Kubernetes提供了两种更新资源的的机制: update和patch。本文将会介绍这这种方式的具体使用方法，区别和原理。
 &lt;!--more--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;kubernetes-update-机制&quot;&gt;Kubernetes Update 机制&lt;/h2&gt;

@@ -9,8 +9,12 @@
 <lastmod>2021-10-29T00:00:00+08:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/2021/12/01/patch.html</loc>
+<loc>http://localhost:4000/2021/12/01/update-patch.html</loc>
 <lastmod>2021-12-01T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2021/12/16/webhook-local-run.html</loc>
+<lastmod>2021-12-16T00:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/about/</loc>
