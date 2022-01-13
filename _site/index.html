@@ -280,6 +280,37 @@
 
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>主页</h1></header><meta itemprop="headline" content="主页"><meta itemprop="author" content="Johan Wang"/><div class="js-article-content"><div class="layout--articles"><div class="article-list items items--divided"><article class="item" itemscope itemtype="http://schema.org/BlogPosting"><div class="item__content">
+          <header><a href="/2022/01/12/K8s-CSI.html"><h2 itemprop="headline" class="item__header">Container Storage Interface（CSI) In Kubernetes</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">CSI是一套通用的RPC接口，可以将Block和File System暴露给Kubernetes等容器编排系统(CO)上运行的容器化工作负载。通过使用CSI，第三方存储提供商可以编写和部署插件，在Kubernetes中公开新的存储系统，而无需接触Kubernetes的核心代码。</div><p><a href="/2022/01/12/K8s-CSI.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=ContainerStorage">ContainerStorage</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=Kubernetes">Kubernetes</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=CSI">CSI</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2022年 01月12日</span>
+            </li></ul></div><meta itemprop="author" content="Johan Wang"/><meta itemprop="datePublished" content="2022-01-12T00:00:00+08:00">
+    <meta itemprop="keywords" content="ContainerStorage,Kubernetes,CSI"></div>
+      </article><article class="item" itemscope itemtype="http://schema.org/BlogPosting"><div class="item__content">
+          <header><a href="/2022/01/11/grpc.html"><h2 itemprop="headline" class="item__header">gRPC简介</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">Overview
+
+官方文档中给出的定义是：gRPC是一个现代化的，开源的，能够在任意地方运行的远程服务调用框架，它可以使服务端和客户端的应用进行透明的通信，可以很方便的构建相互关联的系统。gRPC是gRPC Remote Procedure Calls的缩写。
+
+在gRPC框架中，客户端应用程序可以像调用本地对象的方法一样直接调用不同机器上的服务端应用程序的方法。gRPC基于定义服务的思想，指定可以被远程调用的方法及其参数和返回类型。在服务端实现这个接口并运行一个gRPC server来处理客户端调用。客户端有一个Stub（在某些语言中称为client），它提供与服务端相同的方法。
+
+
+
+为什么gRPC比其他基于HTTP/2的binary blob更好？
+gRPC也是一组librar...</div><p><a href="/2022/01/11/grpc.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=gRPC">gRPC</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2022年 01月11日</span>
+            </li></ul></div><meta itemprop="author" content="Johan Wang"/><meta itemprop="datePublished" content="2022-01-11T00:00:00+08:00">
+    <meta itemprop="keywords" content="gRPC"></div>
+      </article><article class="item" itemscope itemtype="http://schema.org/BlogPosting"><div class="item__content">
           <header><a href="/2022/01/05/plugin-registration.html"><h2 itemprop="headline" class="item__header">Kubelet Plugin Registration Service</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">可扩展性是Kubernetes一直所遵循的设计哲学。Kubelet在实现上使用Plugin模式在无需修改核心代码的前提下实现功能扩展。</div><p><a href="/2022/01/05/plugin-registration.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
@@ -343,6 +374,17 @@
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2021年 09月29日</span>
             </li></ul></div><meta itemprop="author" content="Johan Wang"/><meta itemprop="datePublished" content="2021-09-29T00:00:00+08:00">
     <meta itemprop="keywords" content="Storage,DataProtection"></div>
+      </article><article class="item" itemscope itemtype="http://schema.org/BlogPosting"><div class="item__content">
+          <header><a href="/2019/03/30/golang-rpc-package.html"><h2 itemprop="headline" class="item__header">golang rpc package分析</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">​最近，由于微服务概念的流行又将RPC这一概念重新带回开发者的视野中，相比构建于HTTP协议之上的RESTful API来讲，RPC通常会构建于tcp协议之上。</div><p><a href="/2019/03/30/golang-rpc-package.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=golang">golang</a>
+            </li><li>
+              <a class="button button--secondary button--pill button--sm"
+                href="/archive.html?tag=rpc">rpc</a>
+            </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2019年 03月30日</span>
+            </li></ul></div><meta itemprop="author" content="Johan Wang"/><meta itemprop="datePublished" content="2019-03-30T00:00:00+08:00">
+    <meta itemprop="keywords" content="golang,rpc"></div>
       </article></div>
 </div><div class="layout--home"></div>
 <script>/*(function () {
