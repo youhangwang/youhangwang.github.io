@@ -542,5 +542,114 @@ contexts:
 
 
 ## Openshift API
+
+用户若要与 OpenShift Container Platform 交互，必须先进行集群的身份验证。身份验证层识别与OpenShift API请求关联的用户。然后，授权层使用有关请求用户的信息来确定是否允许该请求。
+
+### User
+
+OpenShift中的User是可以向OpenShift API发出请求的实体。由于Kubernetes 目前没有代表一个普通用户的对象，OpenShift使用 `User` Object代表操作者，通过向它们或所在的组添加角色为其授予系统中的权限。通常，这代表与 OpenShift Container Platform 交互的开发人员或管理员的帐户。
+
+用户必须通过某种形式的身份验证才能访问OpenShift。无身份验证或身份验证无效的 API 请求会被看作为由 anonymous 系统用户发出的请求。经过身份验证后，策略决定用户被授权执行的操作。
+
+### Group
+
+用户可以分配到一个或多个组中，每个组代表特定的用户集合。在管理授权策略时，可使用组同时为多个用户授予权限，例如允许访问一个项目中的多个对象，而不必单独授予用户权限。
+
+除了明确定义的组外，还有系统组或虚拟组，它们由集群自动置备。
+
 ### Authenticating
+OpenShift Container Platform采用两种方式做身份验证：
+- [OAuth access tokens](#openid-connect-tokens)
+  - 使用`<namespace_route>/oauth/authorize`和`<namespace_route>/oauth/token`从 OpenShift OAuth服务器获取。
+  - 作为 Authorization: Bearer…​ 标头形式发送
+- [X.509 证书](#x509证书)
+
+任何具有无效访问令牌或无效证书的请求都会被身份验证层以 401 错误形式拒绝。
+
+如果没有出示访问令牌或证书，身份验证层会将 system:anonymous 虚拟用户和 system:unauthenticated 虚拟组分配给请求。这使得授权层能够决定匿名用户可以发出哪些（如有）请求。
+
+master 包含内置的 OAuth 服务器。用户获取 OAuth 访问令牌来对自身进行 API 身份验证。有人请求新的 OAuth 令牌时，OAuth 服务器使用配置的身份提供程序来确定提出请求的人的身份。然后，它会确定该身份所映射到的`User`，为该用户创建一个访问令牌，再返回要使用的令牌。
+
+#### OAuth token requests
+每个获取 OAuth 令牌的请求都必须指定要接收和使用令牌的 OAuth Client。启动 OpenShift Container Platform API 时会自动创建以下 OAuth 客户端：
+- openshift-browser-client：使用可处理交互式登录的用户代理，在`<namespace_route>/oauth/token/request`请求令牌
+- openshift-challenging-client: 使用可处理 WWW-Authenticate 质询的用户代理来请求令牌。
+
+所有获取OAuth令牌的请求都包括对`<namespace_route>/oauth/authorize`的请求。大部分身份验证方案都会在这个端点前放置一个身份验证代理，或者配置为针对IdP验证Credentials。对`<namespace_route>/oauth/authorize`的请求可能来自不能显示交互式登录页面的用户代理，如CLI。因此，除了交互式登录流程外，OpenShift Container Platform 也支持使用 WWW-Authenticate 质询进行验证。
+
+#### 配置OAuth Server
+OAuth Client在Openshift中通过Object `OAuth` 表示，例如：
+```
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  tokenConfig:
+    accessTokenMaxAgeSeconds: 172800 
+    accessTokenInactivityTimeout: 400s
+```
+
+集群中运行的任何应用程序都可以向 https://openshift.default.svc/.well-known/oauth-authorization-server 发出 GET 请求来获取以下信息：
+
+```
+{
+  "issuer": "https://<namespace_route>", 
+  "authorization_endpoint": "https://<namespace_route>/oauth/authorize", 
+  "token_endpoint": "https://<namespace_route>/oauth/token", 
+  "scopes_supported": [ 
+    "user:full",
+    "user:info",
+    "user:check-access",
+    "user:list-scoped-projects",
+    "user:list-projects"
+  ],
+  "response_types_supported": [ 
+    "code",
+    "token"
+  ],
+  "grant_types_supported": [ 
+    "authorization_code",
+    "implicit"
+  ],
+  "code_challenge_methods_supported": [ 
+    "plain",
+    "S256"
+  ]
+}
+```
+#### 配置OAuth Client
+
+Openshift 使用Object `OAuthClient` 管理Oauth Client，例如：
+```
+kind: OAuthClient
+apiVersion: oauth.openshift.io/v1
+metadata:
+ name: demo 
+secret: "..." 
+redirectURIs:
+ - "http://www.example.com/" 
+grantMethod: prompt 
+accessTokenInactivityTimeoutSeconds: 600
+```
+
+#### 配置身份提供程序（IdP）
+默认情况下，集群中只有 kubeadmin 用户。要指定身份提供程序，您必须创建一个自定义资源（CR） 来描述该身份提供程序并把它添加到集群中。例如：
+```
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+  - name: my_identity_provider 
+    mappingMethod: claim 
+    type: HTPasswd
+    htpasswd:
+      fileData:
+        name: htpass-secret 
+```
+有关IdP的详细配置，可参考[文档](https://docs.openshift.com/container-platform/4.7/authentication/understanding-identity-provider.html)
+
 ### Authorization
+Openshift的授权使用[RBAC](#rbac)，可参考前文。
