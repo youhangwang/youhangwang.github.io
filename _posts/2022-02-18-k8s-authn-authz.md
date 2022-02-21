@@ -7,6 +7,7 @@ tags: Openshift Kubernetes Authn Authz
 可以通过使用 kubectl、client-go 或 REST 请求来访问 Kubernetes API。Kubernetes包含两种账户：
 - 代表真实用户的账户：普通账户
 - Service账户：Service Account
+<!--more-->
 
 普通账户和Service Account都可以实现访问API的认证和授权。API request会经过多个阶段的访问控制才会被API Server处理，其中包含认证、授权以及准入控制（Admission Control）等。如下图所示：
 
