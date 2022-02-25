@@ -1,6 +1,6 @@
 ---
 title: 浏览器的同源策略
-tags: SameOriginPolicy
+tags: SameOriginPolicy Security
 --- 
 
 同源策略用于限制一个origin加载的文档或者脚本如何能与另一个origin的资源进行交互。它能阻隔潜在的恶意文档，减少被攻击的媒介。例如，它可以防止一个恶意网站通过运行JS脚本从另一个邮件服务（用户已经登陆）或者公司内网中读取数据，并将该数据发送给攻击者。<!--more-->
