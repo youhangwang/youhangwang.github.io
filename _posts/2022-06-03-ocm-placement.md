@@ -6,7 +6,8 @@ tags: OCM Placement
 OCM中有两类Placement API：
 - PlacementRule
 - Placement
-  
+<!--more-->
+
 其中PlacmentRule出现的时间比较早，被应用到GRC/App/Observability等组件中。但是其并没有定义在OCM 的API repo中，为了扩展其通用性，提出了一个类似于PlacementRule的新API：Placement。同时会有一个通用的Controller消费该API，用以从多个ManagedClusterSet中选择某几个ManagedCluster，并将结果保存在placement decisions中。
 
 Placement API可以被其他的controller使用，以决定将manifest部署在哪些Cluster中。
