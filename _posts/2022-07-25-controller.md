@@ -751,4 +751,4 @@ func (cm *controllerManager) startLeaderElectionRunnables() error {
 ```
 启动runnables中的Controller。
 
-![arch]((../../../assets/images/posts/controller-manager.png)
+![arch](../../../assets/images/posts/controller-manager.png)
