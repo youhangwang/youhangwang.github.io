@@ -58,3 +58,4 @@ VolumeSnapshotContent 上的 DeletionPolicy 将与用于创建 VolumeSnapshot �
 当 Velero 备份到期时，VolumeSnapshot 对象将被删除，VolumeSnapshotContent 对象将更新为具有 Delete 的 DeletionPolicy，以释放存储系统上的空间。
 
 
+![csi-snapshot](../../../assets/images/posts/csi-snapshot.drawio.png)
