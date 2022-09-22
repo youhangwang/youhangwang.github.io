@@ -135,6 +135,23 @@ Pool至少设置以下参数：
 
 通过使用Cluster Map 和 CRUSH 算法，Client在读取或写入特定Object时可以准确地计算需要使用哪个 OSD。
 
+#### 为什么需要placement group
+
+通过Replication的方法保护数据主要有三种形式：
+- Disk 级别的replication，这种情况下一旦有磁盘失效
+  - 需要spare disk
+  - 恢复的时间受限于单个磁盘的吞吐量
+  - 多磁盘失效时，丢失数据的概率不大
+- PG级别的replication，这种情况下一旦有磁盘失效
+  - 其他磁盘还有PG的备份
+  - 恢复可以并发
+  - 多磁盘失效时，可能会丢失一些数据
+- Object级别的replication
+  - 需要大量资源记录object的位置
+  - 恢复可以借助大量的并发
+  - 多磁盘失效时，很有可能会丢失一些数据
+
+Placement Group是一种折中方案。
 ### Calculating PG IDs 
 
 当 Ceph Client 连接到 Ceph Monitor时，它会获取最新的Cluster Map副本。通过Cluster Map，Client可以了解集群中的所有Monitor、OSD 和元数据服务器。但是，它对Object位置一无所知。Object的位置是通过计算得到的。
@@ -183,5 +200,8 @@ Ceph Storage Cluster至少存储Object的两个副本（即大小 = 2），这�
 ![ceph-erasure-code-reading](../../../assets/images/posts/ceph-erasure-code-reading.webp)
 
 
+## Summary
+
+![ceph-flow](../../../assets/images/posts/ceph-flow.drawio.png)
 
 
