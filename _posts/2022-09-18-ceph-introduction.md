@@ -167,3 +167,21 @@ Ceph Storage Cluster至少存储Object的两个副本（即大小 = 2），这�
 ![ceph-rebalanceing](../../../assets/images/posts/ceph-rebalanceing.webp)
 
 
+## 纠删码
+纠删码 Pool 将每个对象存储为 K+M 个块。它分为K个数据块和M个编码块。该Pool被配置为具有 K+M 的size，以便每个块都存储在Acting Set中的一个 OSD 中。块的等级被存储为对象的属性。
+
+例如，可以创建一个纠删码 pool以使用五个 OSD (K+M = 5) 并承受其中两个的丢失 (M = 2)。
+
+### Reading and Writing Encoded Chunks
+
+当包含 `ABCDEFGHI` 的Object `NYAN` 被写入Pool时，纠删编码函数将内容分成三个数据块：第一个包含 ABC，第二个 DEF 和最后一个 GHI。如果内容长度不是 `K` 的倍数，内容将被填充。该函数还创建两个编码块：第四个使用 YXY，第五个使用 QGC。每个块都存储在Acting Set中的一个 OSD 中。这些块存储在具有相同名称 (NYAN) 但驻留在不同 OSD 上的对象中。必须保留创建块的顺序，并将其存储为对象的属性(shard_t)。块 1 包含 ABC 并存储在 OSD5 上，而块 4 包含 YXY 并存储在 OSD3 上。
+
+![ceph-erasure-code-writing](../../../assets/images/posts/ceph-erasure-code-writing.webp)
+
+当从纠删码 Pool 中读取object `NYAN` 时，解码函数读取三个块：包含 ABC 的块 1、包含 GHI 的块 3 和包含 YXY 的块 4。然后，它重建对象 ABCDEFGHI 的原始内容。
+
+![ceph-erasure-code-reading](../../../assets/images/posts/ceph-erasure-code-reading.webp)
+
+
+
+
