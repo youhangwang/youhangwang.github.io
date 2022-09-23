@@ -164,7 +164,7 @@ Placement Group是一种折中方案。
 - Ceph 根据Pool名称获取Pool ID（例如，“liverpool” = 4）
 - Ceph 将Pool ID 和 PG ID 连接到一起（例如，4.58）。
 
-计算Object位置比通过聊天会话的形式执行Object位置查询要快得多。 CRUSH 算法允许Client计算Object应该存储在哪里，并使Client能够联系主 OSD 以存储或获取Object。
+计算Object位置比通过聊天会话的形式执行Object位置查询要快得多。 CRUSH(Controlled Replication Under Scalable Hashing) 算法允许Client计算Object应该存储在哪里，并使Client能够联系主 OSD 以存储或获取Object。
 
 ### Peering and Sets
 

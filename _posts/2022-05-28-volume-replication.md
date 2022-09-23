@@ -8,7 +8,7 @@ tags: CSI VolumeReplication
 <!--more-->
 
 该规范为存储提供商 (SP)提供了接口的定义和实现VolumeReplication兼容插件的最低操作和打包建议。还有插件必须提供的接口。
-![volume-replication-arch]((../../../assets/images/posts/volume-replication-arch.png)
+![volume-replication-arch](../../../assets/images/posts/volume-replication-arch.png)
 
 ## RPC Interface
 
