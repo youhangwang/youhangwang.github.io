@@ -466,6 +466,7 @@ type Builder struct {
 
 ForInput定义了Reconciled的Object类型:
 
+```
 type ForInput struct {
 	object           client.Object
 	predicates       []predicate.Predicate
@@ -490,10 +491,12 @@ func (blder *Builder) For(object client.Object, opts ...ForOption) *Builder {
 	blder.forInput = input
 	return blder
 }
+```
 
 ### OwnsInput
 OwnsInput定义了需要将其Owner进行Recocile的Object
 
+```
 // OwnsInput represents the information set by Owns method.
 type OwnsInput struct {
 	object           client.Object
@@ -513,6 +516,8 @@ func (blder *Builder) Owns(object client.Object, opts ...OwnsOption) *Builder {
 	blder.ownsInput = append(blder.ownsInput, input)
 	return blder
 }
+
+```
 
 ### WatchesInput
 
