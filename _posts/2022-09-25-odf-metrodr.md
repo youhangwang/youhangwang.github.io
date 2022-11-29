@@ -1,6 +1,6 @@
 ---
 title: ODF Metro Disaster Recovery
-tags: ODFMetroDR
+tags: ODF MetroDR
 ---
 
 本文的目的是详细说明Metro DR的步骤和命令，MetroDR能够将应用程序从一个 OpenShift Container Platform (OCP) 集群failover到另一个集群，然后再将同一应用程序failback到原始主集群。在这种情况下，将使用 Red Hat Advanced Cluster Management 或 RHACM 创建或导入 OCP 集群，并且 OCP 集群之间的距离限制小于 10 毫秒 RTT 延迟。

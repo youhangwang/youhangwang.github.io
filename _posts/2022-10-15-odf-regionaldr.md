@@ -1,6 +1,6 @@
 ---
 title: ODF Regional Disaster Recovery
-tags: ODFRegionalDR
+tags: ODF RegionalDR
 ---
 
 本文的目的是详细说明Regional DR的步骤和命令，Regional DR能够将应用程序从一个 OpenShift Container Platform (OCP) 集群failover到另一个集群，然后再将同一应用程序failback到primary集群。在这种情况下，将使用 Red Hat Advanced Cluster Management 或 RHACM 创建或导入 OCP 集群。
