@@ -5,6 +5,8 @@ tags: ODF RegionalDR
 
 本文的目的是详细说明Regional DR的步骤和命令，Regional DR能够将应用程序从一个 OpenShift Container Platform (OCP) 集群failover到另一个集群，然后再将同一应用程序failback到primary集群。在这种情况下，将使用 Red Hat Advanced Cluster Management 或 RHACM 创建或导入 OCP 集群。
 
+<!--more-->
+
 请注意，本文使用的 OpenShift Data Foundation (ODF) 版本是 v4.11， RHACM的版本是 v2.5。除了这两个称为托管集群的集群之外，目前还需要第三个 OCP 集群，即高级集群管理 (ACM) Hub cluster。
 
 一般情况下，执行Regional DR的具体步骤包括：

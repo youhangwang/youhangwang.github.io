@@ -5,6 +5,8 @@ tags: ODF MetroDR
 
 本文的目的是详细说明Metro DR的步骤和命令，MetroDR能够将应用程序从一个 OpenShift Container Platform (OCP) 集群failover到另一个集群，然后再将同一应用程序failback到原始主集群。在这种情况下，将使用 Red Hat Advanced Cluster Management 或 RHACM 创建或导入 OCP 集群，并且 OCP 集群之间的距离限制小于 10 毫秒 RTT 延迟。
 
+<!--more-->
+
 应用程序的持久存储将由外部的两个 Stretched Red Hat Ceph 存储 (RHCS) 集群提供。在站点中断的情况下，还需要在第三个Location（不同于部署 OCP 集群的位置）部署一个具有存储监控服务的仲裁节点来为 RHCS 集群建立仲裁。第三个位置没有距离限制，从存储集群连接到 OCP 实例可以有 100+ RTT 延迟。
 
 请注意，本文使用的 OpenShift Data Foundation (ODF) 版本是 v4.11， RHACM的版本是 v2.5。除了这两个称为托管集群的集群之外，目前还需要第三个 OCP 集群，即高级集群管理 (ACM) Hub cluster。
