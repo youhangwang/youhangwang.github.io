@@ -80,7 +80,7 @@ const payload: MirrorPeerKind = {
           metadata: { generateName: 'mirror-peer-' },
           spec: {
             manageS3: true,
-            type: state.-,
+            type: state.replication,
             schedulingIntervals:
               state.replication === REPLICATION_TYPE.ASYNC
                 ? [state.syncTime]
@@ -264,3 +264,34 @@ const getDRPlacementControlKindObj = (
   },
 });
 ```
+```
+type DRPlacementControlSpec struct {
+	// PlacementRef is the reference to the PlacementRule used by DRPC
+	PlacementRef v1.ObjectReference `json:"placementRef"`
+
+	// DRPolicyRef is the reference to the DRPolicy participating in the DR replication for this DRPC
+	DRPolicyRef v1.ObjectReference `json:"drPolicyRef"`
+
+	// PreferredCluster is the cluster name that the user preferred to run the application on
+	PreferredCluster string `json:"preferredCluster,omitempty"`
+
+	// FailoverCluster is the cluster name that the user wants to failover the application to.
+	// If not sepcified, then the DRPC will select the surviving cluster from the DRPolicy
+	FailoverCluster string `json:"failoverCluster,omitempty"`
+
+	// Label selector to identify all the PVCs that need DR protection.
+	// This selector is assumed to be the same for all subscriptions that
+	// need DR protection. It will be passed in to the VRG when it is created
+	PVCSelector metav1.LabelSelector `json:"pvcSelector"`
+
+	// Action is either Failover or Relocate operation
+	Action DRAction `json:"action,omitempty"`
+
+	// +optional
+	KubeObjectProtection *KubeObjectProtectionSpec `json:"kubeObjectProtection,omitempty"`
+}
+```
+
+## Summary
+
+![Summary](../../../assets/images/posts/odr-ui.drawio.png)
