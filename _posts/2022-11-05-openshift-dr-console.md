@@ -294,4 +294,4 @@ type DRPlacementControlSpec struct {
 
 ## Summary
 
-![Summary](../../../assets/images/posts/odr-ui.drawio.png)
+![Summary](../../../assets/images/posts/odr.drawio.png)
