@@ -1338,3 +1338,4 @@ func (r *MirrorPeerReconciler) createVolumeReplicationClass(ctx context.Context,
 ## Summary
 
 ![Summary](../../../assets/images/posts/odr.drawio.png)
+![Action Summary](../../../assets/images/posts/odr-action.png)

@@ -295,3 +295,4 @@ type DRPlacementControlSpec struct {
 ## Summary
 
 ![Summary](../../../assets/images/posts/odr.drawio.png)
+![Action Summary](../../../assets/images/posts/odr-action.png)

@@ -1,0 +1,424 @@
+<mxfile host="65bd71144e">
+    <diagram id="jIINveWOwKFRFlbjj-LH" name="Page-1">
+        <mxGraphModel dx="1366" dy="711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-39" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#CC0000;arcSize=6;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="110" width="1940" height="1540" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="530" width="1100" height="610" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="1160" y="282.5" width="800" height="227.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-8" value="" style="group;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="920" y="310" width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-4" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="JTE-FAuTm2KnXjMH-0vw-8" vertex="1">
+                    <mxGeometry width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-6" value="&lt;div&gt;Name: From UI&lt;/div&gt;&lt;div&gt;type DRPolicySpec struct {&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; SchedulingInterval: 0 Or input in UI&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cc0000&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; ReplicationClassSelector&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cc0000&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; VolumeSnapshotClassSelector&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; DRClusters : Clusters Selected In UI&lt;/span&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="JTE-FAuTm2KnXjMH-0vw-8" vertex="1">
+                    <mxGeometry x="10" y="25" width="220" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-7" value="&lt;font color=&quot;#000000&quot;&gt;DRPolicy&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="JTE-FAuTm2KnXjMH-0vw-8" vertex="1">
+                    <mxGeometry width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-23" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1175" y="310" width="760" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-24" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="JTE-FAuTm2KnXjMH-0vw-23" vertex="1">
+                    <mxGeometry x="-10" width="270" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-25" value="&lt;font color=&quot;#0000cc&quot;&gt;SchedulerName: add scheduleName `ramen`&amp;nbsp;&lt;/font&gt;&lt;br&gt;ClusterReplicas:&lt;br&gt;GenericPlacementFields&lt;br&gt;ClusterConditions&lt;br&gt;ResourceHint&lt;br&gt;Policies" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="JTE-FAuTm2KnXjMH-0vw-23" vertex="1">
+                    <mxGeometry y="30" width="270" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-26" value="&lt;font color=&quot;#000000&quot;&gt;PlacementRule: application Namepsace&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="JTE-FAuTm2KnXjMH-0vw-23" vertex="1">
+                    <mxGeometry x="-10" width="240" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-43" value="&lt;font color=&quot;#000000&quot;&gt;application namespace&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="JTE-FAuTm2KnXjMH-0vw-23" vertex="1">
+                    <mxGeometry x="-15" y="170" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-29" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1470" y="310" width="490" height="207.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-30" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="JTE-FAuTm2KnXjMH-0vw-29" vertex="1">
+                    <mxGeometry x="5.36" width="464.64" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-31" value="&lt;div&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;Name: &amp;lt;placement-rule-name&amp;gt;-drpc&lt;br&gt;type DRPlacementControlSpec struct {&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&amp;nbsp; PlacementRef : From PlacementRule&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; DRPolicyRef : From UI specified DRPolicy&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; PreferredCluster: From PlacementRule.decisions and in DRPolicy.Spec.DrClusters&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &lt;/font&gt;&lt;font color=&quot;#cc0000&quot;&gt;FailoverCluster&lt;/font&gt;&lt;font color=&quot;#0000cc&quot;&gt;&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; PVCSelector: From UI or empty if select multi-app&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &lt;/font&gt;&lt;font color=&quot;#cc0000&quot;&gt;Action&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#0000cc&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &lt;/font&gt;&lt;font color=&quot;#cc0000&quot;&gt;KubeObjectProtection&lt;/font&gt;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="JTE-FAuTm2KnXjMH-0vw-29" vertex="1">
+                    <mxGeometry x="10.001358159912378" y="20" width="470" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-32" value="&lt;font color=&quot;#000000&quot;&gt;DRPlacementControl: application Namepsace&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="JTE-FAuTm2KnXjMH-0vw-29" vertex="1">
+                    <mxGeometry x="0.0028571303395406784" width="270" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-40" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Hub Cluster&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="1" vertex="1">
+                    <mxGeometry x="1800" y="120" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1050" y="1260" width="650" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-47" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;ManagedCluster2 Namespace&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="1" vertex="1">
+                    <mxGeometry x="1050" y="1260" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1600" y="550" width="490" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-86" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Ramen Hub Operator&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1770" y="560" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-95" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1030" y="670" width="400" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-92" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="JTE-FAuTm2KnXjMH-0vw-95" vertex="1">
+                    <mxGeometry x="0.35999999999989996" width="399.64" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-93" value="Secret&lt;span style=&quot;color: rgb(204, 0, 102); font-family: Helvetica; font-size: 12px; text-align: left;&quot;&gt;&amp;nbsp;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-95" vertex="1">
+                    <mxGeometry x="0.35999999999989996" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-94" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;generate from &amp;lt;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: Helvetica; font-size: 12px;&quot;&gt;s3profile-peerref&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: Helvetica; font-size: 12px;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Label:&amp;nbsp;&lt;/span&gt;&lt;font style=&quot;background-color: initial; font-size: 11px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;multicluster.odf.openshift.io/created-by mirrorpeersecret&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-size: 12px; background-color: initial;&quot;&gt;Data:&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; AWS_ACCESS_KEY_ID: from secret in managed cluster namespace&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; AWS_SECRET_ACCESS_KEY: from secret in managed cluster namepsace&lt;/span&gt;&lt;/div&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-95" vertex="1">
+                    <mxGeometry y="20" width="400" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-97" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1030" y="820" width="410" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-98" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="JTE-FAuTm2KnXjMH-0vw-97" vertex="1">
+                    <mxGeometry x="0.36" y="-13" width="409.64" height="203" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-100" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-family: Helvetica; background-color: initial; font-size: 12px;&quot;&gt;ramen-hub-operator-config&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Data:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;/span&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; ramen_manager_config.yaml:&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; - profiles&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; &amp;nbsp; - S3ProfileName:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; string(data[utils.S3ProfileName]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3Bucket:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;string(data[utils.S3BucketName]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3Region:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;string(data[utils.S3Region]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3CompatibleEndpoint: string(data[utils.S3Endpoint]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3SecretRef：指向刚才创建的secret&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;DrClusterOperator:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;DeploymentAutomationEnabled: true&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;S3SecretDistributionEnabled: true&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;&lt;/div&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-97" vertex="1">
+                    <mxGeometry x="20" y="-0.004285714285714448" width="330" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-99" value="Configmap" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-97" vertex="1">
+                    <mxGeometry x="0.35999999999989996" y="-20" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-101" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontFamily=Verdana;fontSize=11;fontColor=#000000;exitX=0.487;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="JTE-FAuTm2KnXjMH-0vw-98" target="JTE-FAuTm2KnXjMH-0vw-92" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1180" y="680" as="sourcePoint"/>
+                        <mxPoint x="1230" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-102" value="&lt;div style=&quot;text-align: left;&quot;&gt;reference&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1250" y="780" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-128" value="" style="group;strokeColor=#00CC00;fillColor=#00CC00;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1060" y="1310" width="310.0044262295082" height="230.0018487239604" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-129" value="&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot; face=&quot;Helvetica&quot;&gt;&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="JTE-FAuTm2KnXjMH-0vw-128" vertex="1">
+                    <mxGeometry width="310" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-130" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Secret&lt;br&gt;&lt;br&gt;Name: &lt;font face=&quot;Helvetica&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;lt;generate form peerref&amp;gt;&lt;/span&gt;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px; background-color: initial; text-align: left;&quot;&gt;Label:&amp;nbsp;&lt;/span&gt;&lt;font style=&quot;font-family: Helvetica; font-size: 12px; background-color: initial; text-align: left;&quot; face=&quot;Helvetica&quot;&gt;multicluster.odf.openshift.io/secret-typet: green&lt;/font&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px; color: rgb(204, 0, 102); text-align: left;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Data:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;/span&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;text-align: center;&quot; face=&quot;Helvetica&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: Verdana; font-size: 11px;&quot;&gt;&amp;nbsp; &amp;nbsp;- namespace(storage cluster namespace)&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;&lt;div style=&quot;font-family: Verdana;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;- storage-cluster-name&lt;/div&gt;&lt;div style=&quot;font-family: Verdana;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;- secret-origin: S3Origin | RookOrigin&lt;/div&gt;&lt;div style=&quot;font-family: Verdana;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;- fsid if secret-origin==RookOrigin&lt;/div&gt;&lt;div style=&quot;font-family: Verdana;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;- secret-data:&lt;/div&gt;&lt;div style=&quot;font-family: Verdana;&quot;&gt;&lt;div&gt;&amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp;-&amp;nbsp; fsid&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;- &quot;client_id&quot;:&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;- &quot;key&quot;:&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;- &quot;mon_host&quot;:&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;- &quot;namespace&quot;:&amp;nbsp;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-128" vertex="1">
+                    <mxGeometry x="0.004426229508226243" y="5.001848723960393" width="310" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-202" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#CC0000;arcSize=6;" parent="1" vertex="1">
+                    <mxGeometry x="1705" y="1690" width="530" height="930" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-205" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Managed Cluster 2&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="1" vertex="1">
+                    <mxGeometry x="1823" y="1693.5" width="230" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-232" value="" style="group;fillColor=none;container=0;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1603" y="1748" width="330" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-236" value="" style="group;fillColor=none;container=0;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="700" y="1970.5" width="330" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-271" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&lt;font face=&quot;Menlo, Monaco, Courier New, monospace&quot;&gt;DRPolicyReconciler&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1628" y="615" width="182" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-272" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&lt;font face=&quot;Menlo, Monaco, Courier New, monospace&quot;&gt;DRClusterReconciler&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1860" y="670" width="182" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-273" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&lt;font face=&quot;Menlo, Monaco, Courier New, monospace&quot;&gt;DRPlacementControlReconciler&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1830" y="615" width="250" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-275" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF00FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF0000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.338;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="JTE-FAuTm2KnXjMH-0vw-271" target="JTE-FAuTm2KnXjMH-0vw-94" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2196.9999999999995" y="645" as="sourcePoint"/>
+                        <mxPoint x="2182.1052631578946" y="380" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1719" y="717"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-276" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF00FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF0000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="JTE-FAuTm2KnXjMH-0vw-271" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1728.9999999999995" y="670" as="sourcePoint"/>
+                        <mxPoint x="1440" y="881" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1719" y="881"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-279" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;1. watch configmap ramen-hub-operator-config&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;2. wath secret in current namespace&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;3. check if all drclusters were created&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;4. check if there is conflict policty to use a same cluster but it's metrodr policy&lt;br&gt;5. add label `cluster.open-cluster-management.io/backup=resource` and&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;finalizer `drpolicies.ramendr.openshift.io/ramen`&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;6. if&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;color: rgb(255, 0, 255); background-color: initial;&quot;&gt;DrClusterOperator.DeploymentAutomationEnabled`&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;color: rgb(255, 0, 255); background-color: initial;&quot;&gt;and `DrClusterOperator.S3SecretDistributionEnabled are true in configmap:&lt;br&gt;deploy secret according to S3SecretRef in dr clusters&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1720" y="950" width="430" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-280" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;3. watch drpolicy in hub cluster&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1624" y="585" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-292" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF00FF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=409.64;entryDy=30;entryPerimeter=0;" parent="1" source="JTE-FAuTm2KnXjMH-0vw-272" target="JTE-FAuTm2KnXjMH-0vw-98" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1530" y="940" as="sourcePoint"/>
+                        <mxPoint x="1580" y="890" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1950" y="840"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-293" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;1. Watch configmap `ramen-hub-operator-config`&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1750" y="840" width="280" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-294" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="2525" y="651" width="205" height="79" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-296" value="DRCluster" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2520" y="651" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-297" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF00FF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="JTE-FAuTm2KnXjMH-0vw-272" target="JTE-FAuTm2KnXjMH-0vw-294" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1961" y="725" as="sourcePoint"/>
+                        <mxPoint x="1449.999999999999" y="847" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2130" y="693"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-298" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 255); background-color: initial;&quot;&gt;2. Watch DRClusters&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2340" y="665" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-299" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1735" y="1760" width="465" height="640" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-300" value="DR cluster namespace" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1855" y="1770" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-301" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF00FF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="JTE-FAuTm2KnXjMH-0vw-302" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2042.000000000001" y="692" as="sourcePoint"/>
+                        <mxPoint x="2250" y="2780" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2310" y="690"/>
+                            <mxPoint x="2311" y="2050"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-302" value="Ramen DR Cluster" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Verdana;fontSize=11;fontColor=#CC0066;" parent="1" vertex="1">
+                    <mxGeometry x="1765" y="1940" width="360" height="215" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-303" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;3. Deploy Ramen Cluster Operator and config by using MW with subscription&lt;br&gt;&lt;/span&gt;4. Deploy volsync Operator by creating the managedclusteraddon in cluster namesapce&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;5. Validate CIDR in DRClusters&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;6. validata S3profile can be connected or not in DRCLuster&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;7. Create networkFence CRD accroding to the fenced in dr cluster&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;&amp;nbsp;in managed cluster by using the MW&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2312.5" y="910" width="490" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-307" value="" style="group;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1943" y="2460" width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-308" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="JTE-FAuTm2KnXjMH-0vw-307" vertex="1">
+                    <mxGeometry width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-309" value="&lt;div&gt;Name: network-fence-&amp;lt;clustername&amp;gt;&lt;/div&gt;&lt;div&gt;type Spec struct {&lt;/div&gt;&lt;div&gt;CIDR:&lt;br&gt;FenceState:&lt;br&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="JTE-FAuTm2KnXjMH-0vw-307" vertex="1">
+                    <mxGeometry x="10" y="30" width="220" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-310" value="&lt;font color=&quot;#000000&quot;&gt;NetworkFence&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="JTE-FAuTm2KnXjMH-0vw-307" vertex="1">
+                    <mxGeometry width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-312" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#0000FF;entryX=0.995;entryY=0.59;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="JTE-FAuTm2KnXjMH-0vw-309" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2310" y="2050" as="sourcePoint"/>
+                        <mxPoint x="2070" y="2180" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2310" y="2550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-289" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="1753" y="1820" width="400" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-290" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Secret&lt;br&gt;Name:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: Helvetica; font-size: 12px;&quot;&gt;s3profile-&amp;lt;generate from peerref&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;text-align: center; font-family: Helvetica; font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Label:&amp;nbsp;&lt;/span&gt;&lt;font style=&quot;background-color: initial; font-size: 11px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;multicluster.odf.openshift.io/created-by mirrorpeersecret&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;&lt;font style=&quot;text-align: center;&quot; face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-size: 12px; background-color: initial;&quot;&gt;Data:&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; AWS_ACCESS_KEY_ID: from secret in managed cluster namespace&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; AWS_SECRET_ACCESS_KEY: from secret in managed cluster namepsace&lt;/span&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1753" y="1820" width="400" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-291" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#FF00FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF0000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1719" y="670" as="sourcePoint"/>
+                        <mxPoint x="1760" y="2516" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1720" y="1690"/>
+                            <mxPoint x="1720" y="2516"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-313" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1765" y="2190" width="410" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-314" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="JTE-FAuTm2KnXjMH-0vw-313" vertex="1">
+                    <mxGeometry x="0.36" y="-13" width="409.64" height="203" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-315" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-family: Helvetica; background-color: initial; font-size: 12px;&quot;&gt;ramen-dr-cluster-operator-config&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial; font-family: Helvetica; font-size: 12px;&quot;&gt;Data:&lt;/span&gt;&lt;/div&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; ramen_manager_config.yaml:&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; - profiles&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; &amp;nbsp; - S3ProfileName:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; string(data[utils.S3ProfileName]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3Bucket:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;string(data[utils.S3BucketName]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3Region:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;string(data[utils.S3Region]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3CompatibleEndpoint: string(data[utils.S3Endpoint]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3SecretRef：指向刚才创建的secret&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;DrClusterOperator:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;DeploymentAutomationEnabled: true&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;S3SecretDistributionEnabled: true&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;&lt;/div&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-313" vertex="1">
+                    <mxGeometry x="20" y="-0.004285714285714448" width="330" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-316" value="Configmap" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="JTE-FAuTm2KnXjMH-0vw-313" vertex="1">
+                    <mxGeometry x="0.35999999999989996" y="-20" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-317" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#0000FF;entryX=0;entryY=0;entryDx=409.64;entryDy=116.49999999999999;entryPerimeter=0;" parent="1" target="JTE-FAuTm2KnXjMH-0vw-314" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2310" y="2290" as="sourcePoint"/>
+                        <mxPoint x="1766.8999999999996" y="2559" as="targetPoint"/>
+                        <Array as="points"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-305" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#0000FF;strokeWidth=3;fontFamily=Verdana;fontSize=11;fontColor=#FF00FF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2042.000000000001" y="695" as="sourcePoint"/>
+                        <mxPoint x="1370.0044262295082" y="1426.2938216133625" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2310" y="692"/>
+                            <mxPoint x="2310" y="1422"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-3" value="&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot; face=&quot;Helvetica&quot;&gt;&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="1408" y="1320" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-4" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ManifestWork(Update)&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1400.0044262295082" y="1316.0018487239604" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-6" value="&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot; face=&quot;Helvetica&quot;&gt;&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="1410" y="1460" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-5" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;ManagedClusterView(Update)&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bdiv%20style%3D%26quot%3Btext-align%3A%20left%3B%26quot%3B%26gt%3B%26lt%3Bspan%20style%3D%26quot%3Bbackground-color%3A%20initial%3B%26quot%3B%26gt%3BLabel%3A%26amp%3Bnbsp%3B%26lt%3Bbr%26gt%3B%26lt%3B%2Fspan%26gt%3B%26lt%3B%2Fdiv%26gt%3B%26lt%3Bdiv%20style%3D%26quot%3Btext-align%3A%20left%3B%26quot%3B%26gt%3B%26lt%3Bspan%20style%3D%26quot%3Bbackground-color%3A%20initial%3B%26quot%3B%26gt%3B%26amp%3Bnbsp%3B%20drpc-name%26lt%3Bbr%26gt%3B%26amp%3Bnbsp%3B%20drpc-namespace%26lt%3Bbr%26gt%3B%26lt%3B%2Fspan%26gt%3B%26lt%3B%2Fdiv%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3Bautosize%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3BfontSize%3D11%3BfontFamily%3DVerdana%3BfontColor%3D%23000000%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%221373.0044262295082%22%20y%3D%221297.0018487239604%22%20width%3D%22120%22%20height%3D%2250%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1408.0044262295082" y="1460.0018487239604" width="190" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-7" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Label:&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; drpc-name&lt;br&gt;&amp;nbsp; drpc-namespace&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1408.0044262295082" y="1340.0018487239604" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-8" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Label:&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; drpc-name&lt;br&gt;&amp;nbsp; drpc-namespace&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1410.0044262295082" y="1490.0018487239604" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-9" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#CC0000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=3;entryX=0;entryY=0;entryDx=220;entryDy=30;entryPerimeter=0;" parent="1" source="JTE-FAuTm2KnXjMH-0vw-273" target="93BHG_AdDVz6fMP83n-i-3" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2160" y="800" as="sourcePoint"/>
+                        <mxPoint x="2170" y="970" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2170" y="638"/>
+                            <mxPoint x="2170" y="1350"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-10" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#CC0000;strokeWidth=3;entryX=0;entryY=0;entryDx=210;entryDy=30;entryPerimeter=0;" parent="1" target="93BHG_AdDVz6fMP83n-i-6" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2170" y="1350" as="sourcePoint"/>
+                        <mxPoint x="1638" y="1360" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2170" y="1490"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="93BHG_AdDVz6fMP83n-i-11" value="&lt;div style=&quot;text-align: left;&quot;&gt;2. Watch Placementrule wilth annotation drpc-name and namespace&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;3. Watch Placementrule wilth annotation drpc-name and namespace&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;4. Watch MW with annotation&amp;nbsp;drpc-name and namespace&lt;br&gt;5. Watch ManageClusterView with annotation&amp;nbsp;drpc-name and namespace&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2180" y="1145" width="410" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-5" value="" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#CC0000;arcSize=6;" parent="1" vertex="1">
+                    <mxGeometry x="1110" y="1700" width="530" height="930" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-7" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Managed Cluster 1&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="1" vertex="1">
+                    <mxGeometry x="1228" y="1703.5" width="230" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1140" y="1930" width="465" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-13" value="DR cluster namespace" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1260" y="1930" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-14" value="Ramen DR Cluster" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Verdana;fontSize=11;fontColor=#CC0066;" parent="1" vertex="1">
+                    <mxGeometry x="1390" y="2095" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-15" value="" style="group;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1348" y="2470" width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-16" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="llSKNkeEvA0bQt_csg1x-15" vertex="1">
+                    <mxGeometry width="230" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-17" value="&lt;div&gt;Name: network-fence-&amp;lt;clustername&amp;gt;&lt;/div&gt;&lt;div&gt;type Spec struct {&lt;/div&gt;&lt;div&gt;CIDR:&lt;br&gt;FenceState:&lt;br&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="llSKNkeEvA0bQt_csg1x-15" vertex="1">
+                    <mxGeometry x="10" y="30" width="220" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-18" value="&lt;font color=&quot;#000000&quot;&gt;NetworkFence&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#CC0000;" parent="llSKNkeEvA0bQt_csg1x-15" vertex="1">
+                    <mxGeometry width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-19" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="1158" y="1980" width="400" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-20" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Secret&lt;br&gt;Name:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: Helvetica; font-size: 12px;&quot;&gt;s3profile-&amp;lt;generate from peerref&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;text-align: center; font-family: Helvetica; font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Label:&amp;nbsp;&lt;/span&gt;&lt;font style=&quot;background-color: initial; font-size: 11px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;multicluster.odf.openshift.io/created-by mirrorpeersecret&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;&lt;font style=&quot;text-align: center;&quot; face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-size: 12px; background-color: initial;&quot;&gt;Data:&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; AWS_ACCESS_KEY_ID: from secret in managed cluster namespace&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; AWS_SECRET_ACCESS_KEY: from secret in managed cluster namepsace&lt;/span&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1158" y="1980" width="400" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-21" value="" style="group" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="1170" y="2200" width="410" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-22" value="" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;" parent="llSKNkeEvA0bQt_csg1x-21" vertex="1">
+                    <mxGeometry x="0.36" y="-13" width="409.64" height="203" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-23" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Name:&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-family: Helvetica; background-color: initial; font-size: 12px;&quot;&gt;ramen-dr-cluster-operator-config&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial; font-family: Helvetica; font-size: 12px;&quot;&gt;Data:&lt;/span&gt;&lt;/div&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; ramen_manager_config.yaml:&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; - profiles&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; &amp;nbsp; - S3ProfileName:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; string(data[utils.S3ProfileName]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3Bucket:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;string(data[utils.S3BucketName]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3Region:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;string(data[utils.S3Region]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3CompatibleEndpoint: string(data[utils.S3Endpoint]),&lt;/div&gt;&lt;div style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; - S3SecretRef：指向刚才创建的secret&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;DrClusterOperator:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;DeploymentAutomationEnabled: true&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 12px;&quot;&gt;S3SecretDistributionEnabled: true&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;&lt;/div&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="llSKNkeEvA0bQt_csg1x-21" vertex="1">
+                    <mxGeometry x="20" y="-0.004285714285714448" width="330" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-24" value="Configmap" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="llSKNkeEvA0bQt_csg1x-21" vertex="1">
+                    <mxGeometry x="0.35999999999989996" y="-20" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-26" value="ProtectedVolumeReplicationGroupList Reconciler" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1835" y="1960" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-27" value="VolumeReplicationGroup Reconciler" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1845" y="2080" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-28" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#CC0000;strokeWidth=3;entryX=0.979;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="JTE-FAuTm2KnXjMH-0vw-31" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2170" y="640" as="sourcePoint"/>
+                        <mxPoint x="1638" y="1351" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2170" y="410"/>
+                            <mxPoint x="2060" y="410"/>
+                            <mxPoint x="1960" y="410"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-29" value="&lt;div style=&quot;text-align: left;&quot;&gt;1. Watch DRPlacementControl&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1980" y="381.25" width="190" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-30" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#CC0000;strokeWidth=3;entryX=0.563;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="JTE-FAuTm2KnXjMH-0vw-26" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2170" y="430" as="sourcePoint"/>
+                        <mxPoint x="1390" y="200" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2170" y="200"/>
+                            <mxPoint x="2060" y="200"/>
+                            <mxPoint x="1960" y="200"/>
+                            <mxPoint x="1300" y="200"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-31" value="&lt;div style=&quot;text-align: left;&quot;&gt;6, get placement for placementrule according to the PlacementRuleRef&amp;nbsp;&lt;br&gt;7, get DRPolicy according to the DRPolicyRef&amp;nbsp;&lt;br&gt;8. Get DRClusters according to the DR Clusters in DRPolicy&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1440" y="210" width="400" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-32" value="" style="endArrow=classic;html=1;rounded=0;fontColor=#CC0000;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1477" y="199.5" as="sourcePoint"/>
+                        <mxPoint x="1035" y="310" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1477" y="199.5"/>
+                            <mxPoint x="1367" y="199.5"/>
+                            <mxPoint x="1035" y="200"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-34" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2305" y="600" width="20" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="JTE-FAuTm2KnXjMH-0vw-283" value="Name: clusterName&lt;br&gt;spec:&lt;br&gt;&amp;nbsp; Region: fsid&lt;br&gt;&amp;nbsp; S3ProfileName: from secret-data" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontFamily=Verdana;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2531" y="666" width="210" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-35" value="&lt;div style=&quot;text-align: left;&quot;&gt;9. if&amp;nbsp;RunInitialDeployment&lt;br&gt;9.1 get home cluster name and namespace from drpc.PreferredCluster&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;9.2 check if vrg was alrady deploy in the home cluster.&lt;br&gt;9.2.1 if no,&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;check if vrg was alrady deployed in othter clusters:&lt;br&gt;9.2.1.1 if so, update the prefered cluster in status&lt;br&gt;9.2..1.2 if no, go ro 9.3&lt;br&gt;9.2.2 if so, return&lt;br&gt;9.3 create vrg&lt;br&gt;9.4 update user placement rule&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2222.5" y="150" width="400" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-36" value="&lt;div style=&quot;text-align: left;&quot;&gt;10. if&amp;nbsp;RunFailover&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;10.1 get failovercluster in drpc.spec&lt;br&gt;10.2 check if primary vrg was created in the failover cluster and placement descision was failover cluster&lt;br&gt;10.2.1 if so, return true&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;10.2.1.1 check cluster data ready and data ready in vrg and return done&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;10.2.2 if not, return false&lt;br&gt;10.2.2.1 get current home cluster&lt;br&gt;10.2.2.2 如果是metrodr，则检查fence状态&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;10.2.2.3 获取failover cluster，并在failover cluster中创建primary的vrg，并等待pv restored。返回完成&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2219.5" y="288" width="580" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="llSKNkeEvA0bQt_csg1x-37" value="&lt;div style=&quot;text-align: left;&quot;&gt;11.&amp;nbsp;RunRelocate&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;11.1 check if preferred cluster is empty&lt;br&gt;11.2 get home cluster by checking the primary vrg&lt;br&gt;11.3 if home cluster is not empty and preferred cluster has primary vrg, return done&lt;br&gt;11.4 if home cluster is not empty and perferred cluster != home cluster and home cluster is fenced, return err&lt;br&gt;11.5 if peer cluster&amp;nbsp;ConditionPeerReady is false, return false&lt;br&gt;11.6 enable all cluster vrg is secondary&lt;br&gt;11.5 create primary vrg in prefered cluster&lt;br&gt;11.6 cleanup secondary vrgs&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="2219.5" y="430" width="600" height="140" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
