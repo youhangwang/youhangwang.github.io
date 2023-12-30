@@ -6,7 +6,6 @@ tags: Noobaa Openshift MCG
 NooBaa 是一种适用于混合和多云环境的对象数据服务。 NooBaa 在 kubernetes 上运行，向集群内部和外部的客户端提供 S3 对象存储服务（以及支持 Bucket 触发的 Lambda 函数），使用集群内部或外部的存储资源，通过灵活的放置策略来自动化数据使用。
 
 <!--more-->
-
 Noobaaa服务主要分为两部分：
 - Noobaa Core
 - Noobaa Operator
