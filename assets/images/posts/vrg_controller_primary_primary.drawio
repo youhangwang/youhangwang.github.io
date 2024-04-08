@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net" modified="2024-04-01T10:13:30.985Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="c1Htmg86XAmEZ1OY-DUe" version="24.1.0" type="device">
+  <diagram name="Page-1" id="Q4vXJlO9niQhnewD6HPh">
+    <mxGraphModel dx="1183" dy="719" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-4" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="320" y="500" width="950" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-5" value="VRG_Controller" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="890" y="500" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-39" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-20" target="tZp8eonRlOqNcPzEyTe8-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="450" as="sourcePoint" />
+            <mxPoint x="410" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-20" value="" style="whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="510" width="480" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-22" value="&lt;span style=&quot;text-wrap: wrap;&quot;&gt;VRGInstance&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;container=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="520" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-32" value="s3StoreAccessors" style="rounded=0;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="650" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-27" value="volSyncPVCs" style="whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="570" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-28" value="volRepPVCs" style="whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="600" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-2" value="" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="720" width="400" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-3" value="VRG" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="504.5" y="720" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-14" value="&lt;div&gt;&amp;nbsp; spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pvcSelector:&lt;br&gt;&amp;nbsp; &amp;nbsp;&amp;nbsp;replicationState: Primary&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;&amp;nbsp;async:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; sync:&lt;br&gt;&amp;nbsp; &amp;nbsp; action:&lt;br&gt;&amp;nbsp; &amp;nbsp; s3Profiles:&lt;br&gt;&amp;nbsp; &amp;nbsp; volSync:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; rdSpec:&lt;br&gt;&amp;nbsp; &amp;nbsp; prepareForFinalSync&lt;br&gt;&amp;nbsp; &amp;nbsp; runFinalSync&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="363" y="765" width="170" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-38" value="Finalizer:volumereplicationgroups.ramendr.openshift.io/vrg-protection" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="357.75" y="750" width="390" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-59" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-32">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="800" as="sourcePoint" />
+            <mxPoint x="680" y="440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="680" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-60" value="minio" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="617.75" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-61" value="minio" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="627.75" y="370" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-62" value="Upload vrg to each s3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="524.5" y="450" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-63" value="&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - reconcileVolsyncAsPrimary&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - 如果len(v.volSyncPVCs) == 0，设置finalSyncPrepared为true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - 删除残留的RD resoruce&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; （带有label `volumereplicationgroups-owner: vrgname`, 却不在v.instance.Spec.VolSync.RDSpec， 并且不包含label `volsync.backube/do-not-delete: true`）&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - 为每一个pvc创建replicationsource: reconcilePVCAsVolSyncPrimary:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - 如果pvc 不在 v.instance.Status.ProtectedPVCs， 则添加&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - 如果prepFinalSync或者copyMethodDirect，向pvc添加annotation `apps.open-cluster-management.io/do-not-delete`, 并设置vrg 为 owner&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - ReconcileRS （包含一个workaround），如果spec.runFinalSync 为true，则需检查pod是否还在背pod使用，如果没有pod使用，则创建或修改RS为手动模式，并检查手动模式是否完成&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - set ReplicationSourceSetup ready&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - vrgObjectProtect&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; - upload vrg to minio for each s3profile&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - 如果vrg.Spec.PrepareForFinalSync为true，更新vrg.Status.PrepareForFinalSyncComplete = finalSyncPrepared.volSync&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1050" width="1030" height="190" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

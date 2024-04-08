@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" modified="2024-04-01T08:45:53.175Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="I8Hci1AWNZQPx8lW36UN" version="24.1.0" type="device">
+  <diagram name="Page-1" id="Q4vXJlO9niQhnewD6HPh">
+    <mxGraphModel dx="828" dy="503" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-4" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="320" y="500" width="1200" height="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-5" value="VRG_Controller" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="820" y="440" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-39" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-20" target="tZp8eonRlOqNcPzEyTe8-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="450" as="sourcePoint" />
+            <mxPoint x="410" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-40" value="&lt;b&gt;1. RESTORE CLUSTER DATA&lt;/b&gt;&lt;div&gt;1.1 Check if Restore is needed:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - no need if prepareForFinalSync or&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;runFinalSync is ture, and&amp;nbsp;&lt;/span&gt;&lt;b style=&quot;color: rgb(255, 51, 51);&quot;&gt;Set. clusterDataReady if all pvcs restore successfully&lt;/b&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - no need if clusterDataReady if true&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff3333&quot;&gt;&lt;b&gt;1.2 If there is no RDSpec in spec.volySync, no pvc to restore (Init deployment)&lt;br&gt;&lt;/b&gt;&lt;/font&gt;1.3 Foreach RDSpec in volsync to restore PVC&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 1 Get latest image from RD&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 2 Get volumeshapshot from image and and label `volsync.backup/do-not-delete: true`&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 3 if copyMehod is direct, get the pvc directly and&lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt; if the action is failover, need to restore pvc to the image&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 4 else restore pvc from snapshot&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 5 add ocm annotation to pvc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 6 add vrg owner reference to pvc&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff3333&quot;&gt;&lt;b&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; 7 Update v.instance.Status.ProtectedPVCs with the pvc in RD&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff3333&quot;&gt;&lt;b&gt;1.4 Set. clusterDataReady if all pvcs restore successfully&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="740" y="1140" width="680" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-20" value="" style="whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="510" width="480" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-22" value="&lt;span style=&quot;text-wrap: wrap;&quot;&gt;VRGInstance&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;container=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="520" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-32" value="s3StoreAccessors" style="rounded=0;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="650" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-27" value="volSyncPVCs" style="whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="570" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-28" value="volRepPVCs" style="whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="600" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-2" value="" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="720" width="400" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-3" value="VRG" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="504.5" y="720" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-14" value="&lt;div&gt;&amp;nbsp; spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pvcSelector:&lt;br&gt;&amp;nbsp; &amp;nbsp;&amp;nbsp;replicationState: Primary&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;&amp;nbsp;async:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; sync:&lt;br&gt;&amp;nbsp; &amp;nbsp; action:&lt;br&gt;&amp;nbsp; &amp;nbsp; s3Profiles:&lt;br&gt;&amp;nbsp; &amp;nbsp; volSync:&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; rdSpec:&lt;br&gt;&amp;nbsp; &amp;nbsp; prepareForFinalSync&lt;br&gt;&amp;nbsp; &amp;nbsp; runFinalSync&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="363" y="765" width="170" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-38" value="Finalizer:volumereplicationgroups.ramendr.openshift.io/vrg-protection" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="357.75" y="750" width="390" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-42" value="" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="640" width="500" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-43" value="&lt;div&gt;&amp;nbsp; spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; rsyncTLS:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - ReadWriteMany&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; capacity: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; copyMethod: Snapshot&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; keySecret: deployment-cephfs-drpc-vs-secret&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; serviceType: ClusterIP&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; storageClassName: ocs-storagecluster-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; volumeSnapshotClassName: cephfs-snapclass&lt;/div&gt;&lt;div&gt;&amp;nbsp; status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; conditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-03-28T07:37:27Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: Synchronization in-progress&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: SyncInProgress&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: Synchronizing&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; lastSyncDuration: 16h19m24.953154665s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; lastSyncStartTime: &quot;2024-03-28T07:37:27Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; lastSyncTime: &quot;2024-03-28T07:37:26Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; latestImage:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; apiGroup: snapshot.storage.k8s.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; kind: VolumeSnapshot&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; name: volsync-busybox-pvc-dst-20240328073716&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; latestMoverStatus:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; logs: |-&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 2024/03/28 07:35:47 [10372] sent 1120 bytes&amp;nbsp; received 205 bytes&amp;nbsp; total size 125601&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 2024/03/28 07:35:47 [48099] sent 24 bytes&amp;nbsp; received 80 bytes&amp;nbsp; total size 125601&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 2024/03/28 07:35:47 [48103] sent 40 bytes&amp;nbsp; received 4560 bytes&amp;nbsp; total size 4469&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; result: Successful&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; rsyncTLS:&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; address: 10.110.155.112&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="970" y="670" width="500" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-44" value="RD" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="980" y="640" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-45" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.002;exitY=0.424;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.995;entryY=0.61;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-42" target="tZp8eonRlOqNcPzEyTe8-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="900" as="sourcePoint" />
+            <mxPoint x="830" y="850" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-46" value="" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="1230" width="340" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-47" value="VolumeSnapshotImage" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="430" y="1230" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-48" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volsync.backube/do-not-delete: &quot;true&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: volsync-busybox-pvc-dst-20240327053954&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; source:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; persistentVolumeClaimName: volsync-busybox-pvc-dst&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeSnapshotClassName: cephfs-snapclass&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; boundVolumeSnapshotContentName: 4&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTime: &quot;2024-03-27T05:39:57Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; readyToUse: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; restoreSize: 1Gi&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="395" y="1270" width="330" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-49" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.603;exitY=0.002;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.62;entryY=0.99;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-46" target="tZp8eonRlOqNcPzEyTe8-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="961" y="995" as="sourcePoint" />
+            <mxPoint x="758" y="876" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-50" value="" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1254" y="1350" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-51" value="PVC" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1330" y="1355" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-52" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.003;exitY=0.659;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-46" target="tZp8eonRlOqNcPzEyTe8-50">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="740" y="1410" as="sourcePoint" />
+            <mxPoint x="608" y="968" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-53" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.816;exitY=1.001;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0;entryDx=105;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="tZp8eonRlOqNcPzEyTe8-42" target="tZp8eonRlOqNcPzEyTe8-50">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="961" y="995" as="sourcePoint" />
+            <mxPoint x="758" y="876" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-55" value="1.3.1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="840" y="835" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-56" value="1.3.2" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1070" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-57" value="1.3.4" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="1380" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tZp8eonRlOqNcPzEyTe8-58" value="1.3.3" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="1260" width="50" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
