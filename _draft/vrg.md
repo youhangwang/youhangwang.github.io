@@ -112,3 +112,11 @@ Labels
     - updateVRGConditionsAndStatus(TODO)
       - updateVRGConditions： VRGConditionTypeDataReady， VRGConditionTypeClusterDataProtected and VRGConditionDataProtected
       - updateVRGStatus
+
+
+ClusterDataReady： PVC restored
+DataReady：processAsPrimary or processAsSecondary completed
+
+
+DataProtected: pvc protected by volsync. if rsStatus != nil && rsStatus.LastSyncTime != nil && !rsStatus.LastSyncTime.IsZero()
+ClusterDataProtected: For VolSync, clusterDataProtectedCondition is the same as dataProtectedCondition - so copy it
