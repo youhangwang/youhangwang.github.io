@@ -1,9 +1,12 @@
-<mxfile host="app.diagrams.net" modified="2024-04-09T06:58:08.392Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="tACDHjXkuJ8qmJ98XBpC" version="24.2.3" type="device">
+<mxfile host="app.diagrams.net" modified="2024-04-10T11:15:39.709Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="h1yP9h7ag73ezoU2RksF" version="24.2.3" type="device">
   <diagram name="Page-1" id="86SuVy9WTyQsxM9a-52B">
-    <mxGraphModel dx="2284" dy="761" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2284" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="USMI7Q7_mw-rd7ZtQF0Z-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbf5e5;strokeColor=none;" parent="1" vertex="1">
+          <mxGeometry x="-150" y="90" width="1719" height="523" as="geometry" />
+        </mxCell>
         <mxCell id="Rm11WEUQjzfcoIPD6hnw-137" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="930" y="350" width="170" height="100" as="geometry" />
         </mxCell>
@@ -209,11 +212,11 @@
         <mxCell id="lgeEIdDXTUcrqthMoiCP-13" value="18" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="1" vertex="1">
           <mxGeometry x="760" y="262" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-26" value="Foreach RD in VRG, restore PVC from latest image" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="883" y="808" width="300" height="30" as="geometry" />
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-26" value="&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;Foreach RD in VRG, get the existing application PVC&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="880" y="832" width="320" height="30" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-27" value="6" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="871" y="813" width="20" height="20" as="geometry" />
+          <mxGeometry x="866" y="835" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-28" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.099;exitY=0.002;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitPerimeter=0;" parent="1" source="Rm11WEUQjzfcoIPD6hnw-143" target="Rm11WEUQjzfcoIPD6hnw-114" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -267,17 +270,14 @@
         <mxCell id="lgeEIdDXTUcrqthMoiCP-47" value="&lt;span style=&quot;text-align: center;&quot;&gt;Set ClusterDataReady to true&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="930" y="760" width="180" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-48" value="&lt;span style=&quot;text-align: center;&quot;&gt;Clean RD in dr2&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="900" y="938" width="110" height="30" as="geometry" />
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-48" value="&lt;span style=&quot;text-align: center;&quot;&gt;&lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;Clean RD in dr2&lt;/font&gt;&lt;/b&gt;&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="904.63" y="893" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-50" value="9" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="880" y="943" width="20" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-51" value="create rs for each pvc" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="921.25" y="998" width="140" height="30" as="geometry" />
+          <mxGeometry x="880" y="898" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-52" value="10" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="900" y="1005" width="20" height="20" as="geometry" />
+          <mxGeometry x="899.63" y="953" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="Rm11WEUQjzfcoIPD6hnw-96" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="Rm11WEUQjzfcoIPD6hnw-143" target="lgeEIdDXTUcrqthMoiCP-53" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -291,25 +291,6 @@
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-59" value="11" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
           <mxGeometry x="900" y="1235" width="20" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="Rm11WEUQjzfcoIPD6hnw-159" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.002;exitY=0.383;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;jumpStyle=arc;" parent="1" source="Rm11WEUQjzfcoIPD6hnw-143" target="Rm11WEUQjzfcoIPD6hnw-155" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="720" as="sourcePoint" />
-            <mxPoint x="710" y="670" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="950" y="910" />
-              <mxPoint x="950" y="850" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="Rm11WEUQjzfcoIPD6hnw-160" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;jumpStyle=arc;" parent="1" target="Rm11WEUQjzfcoIPD6hnw-157" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="950" y="880" as="sourcePoint" />
-            <mxPoint x="850" y="945" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="950" y="880" />
-            </Array>
-          </mxGeometry>
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-60" value="14" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
           <mxGeometry x="636" y="750" width="20" height="20" as="geometry" />
@@ -326,43 +307,38 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-71" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-139" target="lgeEIdDXTUcrqthMoiCP-69" edge="1">
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-71" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-125" target="lgeEIdDXTUcrqthMoiCP-69" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="-332" y="1141" as="sourcePoint" />
             <mxPoint x="-316" y="1431" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="130" y="1070" />
-              <mxPoint x="130" y="1100" />
+              <mxPoint x="-50" y="980" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-72" value="create pvcs for each RD" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="88" y="1034" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-73" value="&lt;font color=&quot;#000000&quot;&gt;23&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFF00;strokeColor=#FFFF00;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-73" value="&lt;font color=&quot;#000000&quot;&gt;25&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFF00;strokeColor=#FFFF00;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
           <mxGeometry x="62" y="1040" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-78" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-139" target="lgeEIdDXTUcrqthMoiCP-74" edge="1">
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-78" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-139" target="lgeEIdDXTUcrqthMoiCP-74" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="-301" y="1141" as="sourcePoint" />
             <mxPoint x="-617" y="1111" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-42" y="1014" />
-              <mxPoint x="140" y="1014" />
+              <mxPoint x="60" y="1070" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-79" value="Create snapshot for pvcs at the end of each sync" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-10" y="976" width="280" height="30" as="geometry" />
+          <mxGeometry y="946" width="280" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-80" value="&lt;font color=&quot;#000000&quot;&gt;25&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFF00;strokeColor=#FFFF00;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="-31" y="980" width="20" height="20" as="geometry" />
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-80" value="21" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="-29" y="951.5" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-81" value="Create RD for each pvc in the vrg RD spec" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="32" y="776.5" width="250" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="lgeEIdDXTUcrqthMoiCP-82" value="21" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="20" y="781.5" width="20" height="20" as="geometry" />
+        <mxCell id="lgeEIdDXTUcrqthMoiCP-82" value="22" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="-29" y="781.5" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-83" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="Rm11WEUQjzfcoIPD6hnw-25" target="U8NHltKQ1rlB9dk0PbJg-125" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -431,15 +407,14 @@
             <mxPoint x="390" y="900" as="targetPoint" />
             <Array as="points">
               <mxPoint x="50" y="892" />
-              <mxPoint x="50" y="933" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="7EZj1E4iVwjMQ1HdiyoD-33" value="create ServiceExport for each RD" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="82" y="888" width="200" height="30" as="geometry" />
+          <mxGeometry x="82" y="863" width="200" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7EZj1E4iVwjMQ1HdiyoD-35" value="22" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="60" y="893" width="20" height="20" as="geometry" />
+        <mxCell id="7EZj1E4iVwjMQ1HdiyoD-35" value="23" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="56" y="868" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="7EZj1E4iVwjMQ1HdiyoD-37" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="1" source="7EZj1E4iVwjMQ1HdiyoD-13" target="lgeEIdDXTUcrqthMoiCP-69" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -491,7 +466,7 @@
         <mxCell id="veBxBjSQn2mPK6RRM8u_-8" value="2.5" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="1" vertex="1">
           <mxGeometry x="-70" y="347" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="veBxBjSQn2mPK6RRM8u_-9" value="2.8" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="1" vertex="1">
+        <mxCell id="veBxBjSQn2mPK6RRM8u_-9" value="2.7" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="1" vertex="1">
           <mxGeometry x="415" y="290" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="veBxBjSQn2mPK6RRM8u_-10" value="&lt;font color=&quot;#ff3333&quot;&gt;&lt;b&gt;Ensure all VRGs are secondary&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font color=&quot;#ff3333&quot;&gt;&lt;b&gt;Ensure all VRG dataprotected == true&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
@@ -581,20 +556,20 @@
         <mxCell id="lgeEIdDXTUcrqthMoiCP-23" value="&lt;div&gt;apiVersion: snapshot.storage.k8s.io/v1&lt;/div&gt;&lt;div&gt;kind: VolumeSnapshot&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-07T13:03:12Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - snapshot.storage.kubernetes.io/volumesnapshot-as-source-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; - snapshot.storage.kubernetes.io/volumesnapshot-bound-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; generation: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volsync.backube/do-not-delete: &quot;true&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: volsync-busybox-pvc-dst-20240407130312&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeReplicationGroup&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: deployment-cephfs-drpc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: 791016dd-8119-465f-a663-dace34bbfb57&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;182167&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: 7bc79e87-22a1-4ec2-92a8-3a8577f6d322&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; source:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; persistentVolumeClaimName: volsync-busybox-pvc-dst&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeSnapshotClassName: cephfs-snapclass&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; boundVolumeSnapshotContentName: snapcontent-7bc79e87-22a1-4ec2-92a8-3a8577f6d322&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTime: &quot;2024-04-07T13:03:14Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; readyToUse: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; restoreSize: 1Gi&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="lgeEIdDXTUcrqthMoiCP-22" vertex="1">
           <mxGeometry y="30" width="400" height="450" as="geometry" />
         </mxCell>
-        <mxCell id="Rm11WEUQjzfcoIPD6hnw-157" value="PVC2 restore from RD" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
+        <mxCell id="Rm11WEUQjzfcoIPD6hnw-157" value="Application PVC2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
           <mxGeometry x="662.37" y="865" width="165" height="30" as="geometry">
             <mxRectangle x="662.37" y="865" width="580" height="680" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Rm11WEUQjzfcoIPD6hnw-158" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;kind: PersistentVolumeClaim&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/hosting-subscription: deployment-cephfs/subscription&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/reconcile-option: merge&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bind-completed: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bound-by-controller: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.beta.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-07T13:03:31Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - kubernetes.io/pvc-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; - snapshot.storage.kubernetes.io/pvc-as-source-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app.kubernetes.io/part-of: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; appname: busybox&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: busybox-another-pvc&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;853937&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: a6584b57-215d-4c62-ba60-239de76afb39&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteOnce&lt;/div&gt;&lt;div&gt;&amp;nbsp; dataSource:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiGroup: snapshot.storage.k8s.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeSnapshot&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: volsync-busybox-another-pvc-dst-20240407130240&lt;/div&gt;&lt;div&gt;&amp;nbsp; dataSourceRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiGroup: snapshot.storage.k8s.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeSnapshot&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: volsync-busybox-another-pvc-dst-20240407130240&lt;/div&gt;&lt;div&gt;&amp;nbsp; resources:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; requests:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; storageClassName: ocs-storagecluster-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeMode: Filesystem&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeName: pvc-a6584b57-215d-4c62-ba60-239de76afb39&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteOnce&lt;/div&gt;&lt;div&gt;&amp;nbsp; capacity:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; phase: Bound&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Rm11WEUQjzfcoIPD6hnw-157" vertex="1">
+        <mxCell id="Rm11WEUQjzfcoIPD6hnw-158" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;kind: PersistentVolumeClaim&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/do-not-delete: &quot;true&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/hosting-subscription: deployment-cephfs/subscription&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/reconcile-option: merge&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bind-completed: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bound-by-controller: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.beta.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-10T08:43:44Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - kubernetes.io/pvc-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app.kubernetes.io/part-of: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; appname: busybox&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: busybox-another-pvc&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeReplicationGroup&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: deployment-cephfs-drpc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: 2af24774-9421-4e17-8e22-71d9442f6fae&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;72504&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: 64e81b55-8f8b-43da-bc04-4717f1905953&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteOnce&lt;/div&gt;&lt;div&gt;&amp;nbsp; resources:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; requests:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; storageClassName: ocs-storagecluster-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeMode: Filesystem&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeName: pvc-64e81b55-8f8b-43da-bc04-4717f1905953&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteOnce&lt;/div&gt;&lt;div&gt;&amp;nbsp; capacity:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; phase: Bound&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Rm11WEUQjzfcoIPD6hnw-157" vertex="1">
           <mxGeometry y="30" width="580" height="650" as="geometry" />
         </mxCell>
-        <mxCell id="Rm11WEUQjzfcoIPD6hnw-155" value="PVC1 restore from RD" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
+        <mxCell id="Rm11WEUQjzfcoIPD6hnw-155" value="Applicaltion PVC1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
           <mxGeometry x="662.38" y="835" width="165" height="30" as="geometry">
             <mxRectangle x="662.38" y="835" width="580" height="670" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Rm11WEUQjzfcoIPD6hnw-156" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;kind: PersistentVolumeClaim&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/hosting-subscription: deployment-cephfs/subscription&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/reconcile-option: merge&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bind-completed: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bound-by-controller: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.beta.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-07T13:03:31Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - kubernetes.io/pvc-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app.kubernetes.io/part-of: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; appname: busybox&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: busybox-pvc&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;853972&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: ede552d1-a827-4c0c-860e-f14514bde028&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteMany&lt;/div&gt;&lt;div&gt;&amp;nbsp; dataSource:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiGroup: snapshot.storage.k8s.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeSnapshot&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: volsync-busybox-pvc-dst-20240407130312&lt;/div&gt;&lt;div&gt;&amp;nbsp; dataSourceRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiGroup: snapshot.storage.k8s.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeSnapshot&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: volsync-busybox-pvc-dst-20240407130312&lt;/div&gt;&lt;div&gt;&amp;nbsp; resources:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; requests:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; storageClassName: ocs-storagecluster-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeMode: Filesystem&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeName: pvc-ede552d1-a827-4c0c-860e-f14514bde028&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteMany&lt;/div&gt;&lt;div&gt;&amp;nbsp; capacity:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; phase: Bound&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Rm11WEUQjzfcoIPD6hnw-155" vertex="1">
+        <mxCell id="Rm11WEUQjzfcoIPD6hnw-156" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;kind: PersistentVolumeClaim&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/do-not-delete: &quot;true&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/hosting-subscription: deployment-cephfs/subscription&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apps.open-cluster-management.io/reconcile-option: merge&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bind-completed: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; pv.kubernetes.io/bound-by-controller: &quot;yes&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.beta.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volume.kubernetes.io/storage-provisioner: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-10T08:43:43Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - kubernetes.io/pvc-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app.kubernetes.io/part-of: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; appname: busybox&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: busybox-pvc&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: VolumeReplicationGroup&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: deployment-cephfs-drpc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: 2af24774-9421-4e17-8e22-71d9442f6fae&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;72487&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: 61e06aa4-86e5-45c7-b52e-661d9041a8f8&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteMany&lt;/div&gt;&lt;div&gt;&amp;nbsp; resources:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; requests:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; storageClassName: ocs-storagecluster-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeMode: Filesystem&lt;/div&gt;&lt;div&gt;&amp;nbsp; volumeName: pvc-61e06aa4-86e5-45c7-b52e-661d9041a8f8&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; accessModes:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - ReadWriteMany&lt;/div&gt;&lt;div&gt;&amp;nbsp; capacity:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; storage: 1Gi&lt;/div&gt;&lt;div&gt;&amp;nbsp; phase: Bound&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Rm11WEUQjzfcoIPD6hnw-155" vertex="1">
           <mxGeometry y="30" width="580" height="640" as="geometry" />
         </mxCell>
         <mxCell id="Rm11WEUQjzfcoIPD6hnw-17" value="Deployment" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -617,7 +592,7 @@
           <mxGeometry y="30" width="1470" height="310" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-69" value="PVC2 from RD" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="321" y="1100" width="120" height="30" as="geometry">
+          <mxGeometry x="321" y="976" width="120" height="30" as="geometry">
             <mxRectangle x="321" y="1094" width="380" height="620" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -625,7 +600,7 @@
           <mxGeometry y="30" width="380" height="590" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-67" value="PVC1 from RD" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="320.9999999999999" y="1070" width="120" height="30" as="geometry">
+          <mxGeometry x="320.9999999999999" y="946" width="120" height="30" as="geometry">
             <mxRectangle x="320.9999999999999" y="1070" width="400" height="650" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -633,7 +608,7 @@
           <mxGeometry y="30" width="400" height="620" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-76" value="PVC2 Snapshot" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="320" y="1014" width="120" height="30" as="geometry">
+          <mxGeometry x="321" y="1070" width="120" height="30" as="geometry">
             <mxRectangle x="320" y="1014" width="380" height="470" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -641,7 +616,7 @@
           <mxGeometry y="30" width="380" height="440" as="geometry" />
         </mxCell>
         <mxCell id="lgeEIdDXTUcrqthMoiCP-74" value="PVC1 Snapshot" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="319.9999999999999" y="984" width="120" height="30" as="geometry">
+          <mxGeometry x="320.9999999999999" y="1040" width="120" height="30" as="geometry">
             <mxRectangle x="319.9999999999999" y="984" width="400" height="480" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -649,7 +624,7 @@
           <mxGeometry y="30" width="400" height="450" as="geometry" />
         </mxCell>
         <mxCell id="7EZj1E4iVwjMQ1HdiyoD-28" value="ServiceExporter PVC2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="321" y="933" width="120" height="30" as="geometry">
+          <mxGeometry x="321" y="888" width="120" height="30" as="geometry">
             <mxRectangle x="321" y="933" width="380" height="410" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -657,7 +632,7 @@
           <mxGeometry y="30" width="380" height="380" as="geometry" />
         </mxCell>
         <mxCell id="7EZj1E4iVwjMQ1HdiyoD-30" value="ServiceExporter PVC1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="321" y="903" width="120" height="30" as="geometry">
+          <mxGeometry x="321" y="858" width="120" height="30" as="geometry">
             <mxRectangle x="321" y="903" width="380" height="410" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -736,12 +711,6 @@
         <mxCell id="Rm11WEUQjzfcoIPD6hnw-11" value="&lt;div&gt;apiVersion: cluster.open-cluster-management.io/v1beta1&lt;/div&gt;&lt;div&gt;kind: Placement&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; cluster.open-cluster-management.io/experimental-scheduling-disable: &quot;true&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drplacementcontrol.ramendr.openshift.io/drpc-name: deployment-cephfs-drpc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drplacementcontrol.ramendr.openshift.io/drpc-namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; finalizers:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; - drpc.ramendr.openshift.io/finalizer&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; labels:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: placement&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;spec:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; clusterSets:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - default&lt;/div&gt;&lt;div&gt;&amp;nbsp; numberOfClusters: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; prioritizerPolicy:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; mode: Additive&lt;/div&gt;&lt;div&gt;&amp;nbsp; spreadPolicy: {}&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; conditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - lastTransitionTime: &quot;2024-04-03T03:17:46Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; message: Placement configurations check pass&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; reason: Succeedconfigured&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; status: &quot;False&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; type: PlacementMisconfigured&lt;/div&gt;&lt;div&gt;&amp;nbsp; - lastTransitionTime: &quot;2024-04-03T03:17:46Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; message: All cluster decisions scheduled&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; reason: AllDecisionsScheduled&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; type: PlacementSatisfied&lt;/div&gt;&lt;div&gt;&amp;nbsp; decisionGroups:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - clusterCount: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; decisionGroupIndex: 0&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; decisionGroupName: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; decisions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - placement-decision-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; numberOfSelectedClusters: 1&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Rm11WEUQjzfcoIPD6hnw-10" vertex="1">
           <mxGeometry y="30" width="580" height="580" as="geometry" />
         </mxCell>
-        <mxCell id="VNJTDKqtXL_-1OEdlJid-4" value="2.7" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#0000CC;strokeColor=#0000CC;fontColor=#ffffff;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="-94" y="773.5" width="20" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="VNJTDKqtXL_-1OEdlJid-5" value="&lt;div&gt;&lt;font color=&quot;#ff3333&quot;&gt;&lt;b&gt;Delete PVCs&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-64" y="769" width="90" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="VNJTDKqtXL_-1OEdlJid-13" value="" style="group;strokeWidth=2;" parent="1" vertex="1" connectable="0">
           <mxGeometry x="320" y="450" width="250" height="30" as="geometry" />
         </mxCell>
@@ -767,6 +736,21 @@
         </mxCell>
         <mxCell id="Rm11WEUQjzfcoIPD6hnw-5" value="&lt;div&gt;apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;kind: DRPlacementControl&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drplacementcontrol.ramendr.openshift.io/app-namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drplacementcontrol.ramendr.openshift.io/last-app-deployment-cluster: dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubectl.kubernetes.io/last-applied-configuration: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; {&quot;apiVersion&quot;:&quot;ramendr.openshift.io/v1alpha1&quot;,&quot;kind&quot;:&quot;DRPlacementControl&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;labels&quot;:{&quot;app&quot;:&quot;deployment-cephfs&quot;},&quot;name&quot;:&quot;deployment-cephfs-drpc&quot;,&quot;namespace&quot;:&quot;deployment-cephfs&quot;},&quot;spec&quot;:{&quot;drPolicyRef&quot;:{&quot;name&quot;:&quot;dr-policy&quot;},&quot;placementRef&quot;:{&quot;kind&quot;:&quot;Placement&quot;,&quot;name&quot;:&quot;placement&quot;},&quot;preferredCluster&quot;:&quot;dr1&quot;,&quot;pvcSelector&quot;:{&quot;matchLabels&quot;:{&quot;appname&quot;:&quot;busybox&quot;}}}}&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-09T06:44:16Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - drpc.ramendr.openshift.io/finalizer&lt;/div&gt;&lt;div&gt;&amp;nbsp; generation: 2&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; app: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; cluster.open-cluster-management.io/backup: ramen&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: deployment-cephfs-drpc&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: cluster.open-cluster-management.io/v1beta1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; blockOwnerDeletion: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; controller: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: Placement&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: placement&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: b3aa51be-e10a-46e1-9f37-83f9817b85df&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;10875&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: d310a523-206f-4770-bce1-03bd735eb2fe&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#ff3333&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;&amp;nbsp; action: Relocate&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&amp;nbsp; drPolicyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: dr-policy&lt;/div&gt;&lt;div&gt;&amp;nbsp; placementRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: Placement&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: placement&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font color=&quot;#ff3333&quot; style=&quot;font-size: 14px;&quot;&gt;&amp;nbsp; preferredCluster: dr2&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&amp;nbsp; pvcSelector:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; matchLabels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; appname: busybox&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; actionDuration: 2m51.562461662s&lt;/div&gt;&lt;div&gt;&amp;nbsp; actionStartTime: &quot;2024-04-09T06:48:30Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; conditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - lastTransitionTime: &quot;2024-04-09T06:50:52Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; message: Completed&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; observedGeneration: 2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; reason: Relocated&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; type: Available&lt;/div&gt;&lt;div&gt;&amp;nbsp; - lastTransitionTime: &quot;2024-04-09T06:51:21Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; message: Ready&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; observedGeneration: 2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; reason: Success&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; type: PeerReady&lt;/div&gt;&lt;div&gt;&amp;nbsp; lastGroupSyncDuration: 52.957534052s&lt;/div&gt;&lt;div&gt;&amp;nbsp; lastGroupSyncTime: &quot;2024-04-09T06:53:09Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; lastUpdateTime: &quot;2024-04-09T06:54:22Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; phase: Relocated&lt;/div&gt;&lt;div&gt;&amp;nbsp; preferredDecision:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; clusterName: dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; clusterNamespace: dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; progression: Completed&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceConditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; conditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-09T06:52:18Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: All VolSync PVCs are ready&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 4&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: Ready&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: DataReady&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-09T06:53:12Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: All VolSync PVCs are protected&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 4&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: DataProtected&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: DataProtected&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-09T06:50:53Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: Nothing to restore&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 4&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: Restored&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: ClusterDataReady&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-09T06:53:12Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: All VolSync PVCs are protected&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 4&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: DataProtected&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: ClusterDataProtected&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; resourceMeta:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; generation: 4&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; kind: VolumeReplicationGroup&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; name: deployment-cephfs-drpc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: deployment-cephfs&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; protectedpvcs:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - busybox-another-pvc&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - busybox-pvc&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Rm11WEUQjzfcoIPD6hnw-4" vertex="1">
           <mxGeometry y="30" width="580" height="1460" as="geometry" />
+        </mxCell>
+        <mxCell id="3xyKE5TlZ6iGZbmx15bU-2" value="Create rs for each pvc&lt;br&gt;&lt;b&gt;NOTE&lt;/b&gt;: Create a readonly SC&amp;nbsp;&lt;br&gt;and use this SC in RS&lt;br&gt;if storageClass.Provisioner !=&amp;nbsp;&lt;div&gt;v.defaultCephFSCSIDriverName&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="922" y="946" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Rm11WEUQjzfcoIPD6hnw-159" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;jumpStyle=arc;" parent="1" target="Rm11WEUQjzfcoIPD6hnw-155" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1110" y="865" as="sourcePoint" />
+            <mxPoint x="710" y="670" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="950" y="865" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3xyKE5TlZ6iGZbmx15bU-3" value="&lt;div&gt;Make sure there is no pod use the application PVCs&lt;/div&gt;Then create RD for each RD Spec in the vrg" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-3" y="771.5" width="300" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -150,7 +150,6 @@
             - runFinalSync
                - 如果vrg.Status.FinalSyncComplete为false，接下去执行
                - updateVRGToRunFinalSync：更改vrg.Spec.PrepareForFinalSync = false，vrg.Spec.RunFinalSync  = true
-               - cleanupAfterRSFinalSync: delete pvc
             - setProgression： FinalSyncComplete
       - relocate： relocate(preferredCluster, preferredClusterNamespace, rmn.Relocating)
          - setDRState：Relocating

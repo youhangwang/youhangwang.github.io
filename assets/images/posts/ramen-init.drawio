@@ -1,20 +1,23 @@
-<mxfile host="app.diagrams.net" modified="2024-04-03T12:05:31.322Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="yjgOiBM61fw6LZaC7sKk" version="24.2.1" type="device">
+<mxfile host="app.diagrams.net" modified="2024-04-10T10:42:37.927Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="kf2oX2JbRYyDv85mflXw" version="24.2.3" type="device">
   <diagram name="Page-1" id="86SuVy9WTyQsxM9a-52B">
-    <mxGraphModel dx="1793" dy="1021" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1242" dy="1886" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="KmiPW5X77ZpDxvjI0BXj-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbf5e5;strokeColor=none;" parent="1" vertex="1">
+          <mxGeometry x="10" y="-10" width="1060" height="630" as="geometry" />
+        </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-134" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=11;" parent="1" vertex="1">
-          <mxGeometry x="936" y="193" width="210" height="95" as="geometry" />
+          <mxGeometry x="820" y="124" width="210" height="95" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-118" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=11;" parent="1" vertex="1">
-          <mxGeometry x="936" y="365.5" width="210" height="95" as="geometry" />
+          <mxGeometry x="820" y="365.5" width="210" height="95" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-98" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#ead1d1;gradientColor=none;" parent="1" vertex="1">
-          <mxGeometry x="10" y="616" width="550" height="347" as="geometry" />
+          <mxGeometry x="10" y="613" width="550" height="347" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-96" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#e0f9fb;gradientColor=none;" parent="1" vertex="1">
-          <mxGeometry x="560" y="613" width="496" height="350" as="geometry" />
+          <mxGeometry x="560" y="613" width="510" height="350" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-87" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=11;" parent="1" vertex="1">
           <mxGeometry x="25.5" y="483" width="830" height="95" as="geometry" />
@@ -24,14 +27,15 @@
             <mxPoint x="768" y="233" as="sourcePoint" />
             <mxPoint x="818" y="183" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="668" y="88" />
+              <mxPoint x="620" y="88" />
+              <mxPoint x="620" y="28" />
               <mxPoint x="668" y="28" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-32" value="refer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="U8NHltKQ1rlB9dk0PbJg-25" vertex="1" connectable="0">
           <mxGeometry x="-0.3951" relative="1" as="geometry">
-            <mxPoint x="-7" as="offset" />
+            <mxPoint x="-17" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-3" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#6666FF;strokeWidth=3;" parent="1" edge="1">
@@ -57,20 +61,12 @@
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-14" value="&lt;div&gt;- apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; kind: DRCluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; metadata:&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; finalizers:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - drclusters.ramendr.openshift.io/ramen&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; &amp;nbsp; labels:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; cluster.open-cluster-management.io/backup: ramen&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: dr2&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; spec:&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; region: east&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; conditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-03T03:24:17Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: Cluster Clean&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: Clean&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;False&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: Fenced&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-03T03:24:17Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: Cluster Clean&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: Clean&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: Clean&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - lastTransitionTime: &quot;2024-04-03T03:49:19Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; message: Validated the cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; observedGeneration: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; reason: Succeeded&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; status: &quot;True&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; type: Validated&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; phase: Available&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-13" vertex="1">
           <mxGeometry y="30" width="380" height="470" as="geometry" />
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-7" value="Configmap: ramen-hub-operator-config" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="308" y="73" width="265" height="30" as="geometry">
-            <mxRectangle x="550" y="110" width="390" height="850" as="alternateBounds" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-8" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; ramen_manager_config.yaml: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: RamenConfig&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; health:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; healthProbeBindAddress: :8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; metrics:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bindAddress: 127.0.0.1:9289&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; webhook:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; port: 9443&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; leaderElection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaderElect: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceName: hub.ramendr.openshift.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ramenControllerType: dr-hub&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; maxConcurrentReconciles: 50&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drClusterOperator:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; deploymentAutomationEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretDistributionEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; channelName: alpha&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; packageName: ramen-dr-cluster-operator&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceName: ramen-catalog&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceNamespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubeObjectProtection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceName: velero&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volSync:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; disabled: false&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3StoreProfiles:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3ProfileName: minio-on-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.116:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-west-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.147:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-east-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;kind: ConfigMap&lt;/div&gt;&lt;div&gt;metadata:&amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; cluster.open-cluster-management.io/backup: resource&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-hub-operator-config&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-7" vertex="1">
-          <mxGeometry y="30" width="390" height="820" as="geometry" />
-        </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-26" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" parent="1" target="U8NHltKQ1rlB9dk0PbJg-23" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="668" y="83" as="sourcePoint" />
-            <mxPoint x="818" y="183" as="targetPoint" />
+            <mxPoint x="619.89" y="83" as="sourcePoint" />
+            <mxPoint x="769.89" y="183" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="668" y="148" />
+              <mxPoint x="619.89" y="148" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -116,7 +112,7 @@
           <mxGeometry x="463" y="413" width="210" height="40" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-60" value="s3secret-dr1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="265" y="672" width="110" height="30" as="geometry">
+          <mxGeometry x="295" y="675" width="110" height="30" as="geometry">
             <mxRectangle x="900" y="50" width="280" height="200" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -124,7 +120,7 @@
           <mxGeometry y="30" width="280" height="170" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-64" value="s3secret-dr2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="265" y="762" width="110" height="30" as="geometry">
+          <mxGeometry x="295" y="762" width="110" height="30" as="geometry">
             <mxRectangle x="95" y="820" width="290" height="200" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -132,7 +128,7 @@
           <mxGeometry y="30" width="290" height="170" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-66" value="s3secret-dr1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="645" y="672" width="110" height="30" as="geometry">
+          <mxGeometry x="580" y="672" width="110" height="30" as="geometry">
             <mxRectangle x="645" y="730" width="280" height="200" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -140,14 +136,14 @@
           <mxGeometry y="30" width="280" height="170" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-68" value="s3secret-dr2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="645" y="762" width="110" height="30" as="geometry">
+          <mxGeometry x="580" y="762" width="110" height="30" as="geometry">
             <mxRectangle x="645" y="820" width="290" height="200" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-69" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; AWS_ACCESS_KEY_ID: bWluaW8=&lt;/div&gt;&lt;div&gt;&amp;nbsp; AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=&lt;/div&gt;&lt;div&gt;kind: Secret&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; finalizers:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - drpolicies.ramendr.openshift.io/policy-protection&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;type: Opaque&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-68" vertex="1">
           <mxGeometry y="30" width="290" height="170" as="geometry" />
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-71" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.955;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" target="U8NHltKQ1rlB9dk0PbJg-60" edge="1" source="U8NHltKQ1rlB9dk0PbJg-87">
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-71" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.989;entryY=0.4;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-87" target="U8NHltKQ1rlB9dk0PbJg-60" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="270" y="583" as="sourcePoint" />
             <mxPoint x="210" y="798" as="targetPoint" />
@@ -158,7 +154,7 @@
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-72" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="U8NHltKQ1rlB9dk0PbJg-66" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="380" y="687" as="sourcePoint" />
+            <mxPoint x="420" y="687" as="sourcePoint" />
             <mxPoint x="540" y="432" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
@@ -240,7 +236,7 @@
           <mxGeometry x="380" y="243" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-23" value="s3secret-dr2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="718" y="133" width="110" height="30" as="geometry">
+          <mxGeometry x="669.89" y="133" width="110" height="30" as="geometry">
             <mxRectangle x="718" y="80" width="290" height="200" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -248,7 +244,7 @@
           <mxGeometry y="30" width="290" height="170" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-19" value="s3secret-dr1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="718" y="13" width="110" height="30" as="geometry">
+          <mxGeometry x="669.89" y="13" width="110" height="30" as="geometry">
             <mxRectangle x="718" y="-40" width="280" height="200" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -259,7 +255,7 @@
           <mxGeometry x="165" y="243" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-91" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#3333FF;strokeColor=#3333FF;fontColor=#ffffff;" parent="1" vertex="1">
-          <mxGeometry x="756" y="357" width="20" height="20" as="geometry" />
+          <mxGeometry x="703" y="331.25" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-93" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="1" vertex="1">
           <mxGeometry x="441" y="417" width="20" height="20" as="geometry" />
@@ -271,16 +267,17 @@
           <mxGeometry x="543" y="244" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-105" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="30" y="647" width="210" height="120" as="geometry" />
+          <mxGeometry x="60" y="647" width="210" height="120" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-106" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="800" y="672" width="210" height="120" as="geometry" />
+          <mxGeometry x="735" y="672" width="210" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-108" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-118" target="U8NHltKQ1rlB9dk0PbJg-106" edge="1">
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-108" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-118" target="U8NHltKQ1rlB9dk0PbJg-106" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="950" y="323" as="sourcePoint" />
             <mxPoint x="450" y="573" as="targetPoint" />
             <Array as="points">
+              <mxPoint x="1040" y="413" />
               <mxPoint x="1040" y="513" />
               <mxPoint x="1040" y="732" />
             </Array>
@@ -292,12 +289,12 @@
             <mxPoint x="450" y="462" as="targetPoint" />
             <Array as="points">
               <mxPoint x="1040" y="823" />
-              <mxPoint x="135" y="813" />
+              <mxPoint x="165" y="820" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-111" value="ramen-dr-cluster MW in dr1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="946" y="377" width="190" height="30" as="geometry">
+          <mxGeometry x="830" y="377" width="190" height="30" as="geometry">
             <mxRectangle x="860" y="180" width="450" height="6520" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -305,7 +302,7 @@
           <mxGeometry y="30" width="450" height="6490" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-115" value="ramen-dr-cluster MW in dr2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="946" y="417" width="190" height="30" as="geometry">
+          <mxGeometry x="830" y="417" width="190" height="30" as="geometry">
             <mxRectangle x="860" y="220" width="450" height="6520" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -317,35 +314,35 @@
             <mxPoint x="990" y="563" as="sourcePoint" />
             <mxPoint x="1040" y="513" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="750" y="282" />
-              <mxPoint x="750" y="413" />
+              <mxPoint x="700" y="282" />
+              <mxPoint x="700" y="413" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-120" value="RamenAgent" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="850" y="690" width="125" height="40" as="geometry" />
+          <mxGeometry x="785" y="690" width="125" height="40" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-121" value="Configmap:&amp;nbsp;&lt;div&gt;ramen-dr-cluster-operator-config&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="35" y="715" width="200" height="30" as="geometry">
-            <mxRectangle x="-20" y="1000" width="390" height="850" as="alternateBounds" />
+          <mxGeometry x="65" y="715" width="200" height="30" as="geometry">
+            <mxRectangle x="65" y="715" width="390" height="1230" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-122" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; ramen_manager_config.yaml: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drClusterOperator:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceName: ramen-catalog&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceNamespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; channelName: alpha&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; deploymentAutomationEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; packageName: ramen-dr-cluster-operator&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretDistributionEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; health:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; healthProbeBindAddress: :8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: RamenConfig&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubeObjectProtection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceName: velero&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; leaderElection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaderElect: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaseDuration: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; renewDeadline: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceLock: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceNamespace: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; retryPeriod: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; maxConcurrentReconciles: 50&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; metrics:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bindAddress: 127.0.0.1:9289&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; multiNamespace: {}&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ramenControllerType: dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3StoreProfiles:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.116:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-west-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.147:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-east-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volSync: {}&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; webhook:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; port: 9443&lt;/div&gt;&lt;div&gt;kind: ConfigMap&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubectl.kubernetes.io/last-applied-configuration: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:{&quot;ramen_manager_config.yaml&quot;:&quot;apiVersion: ramendr.openshift.io/v1alpha1\nkind: RamenConfig\nhealth:\n&amp;nbsp; healthProbeBindAddress: :8081\nmetrics:\n&amp;nbsp; bindAddress: 127.0.0.1:9289\nwebhook:\n&amp;nbsp; port: 9443\nleaderElection:\n&amp;nbsp; leaderElect: true\n&amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io\nramenControllerType: dr-cluster\nmaxConcurrentReconciles: 50\nvolSync:\n&amp;nbsp; destinationCopyMethod: Direct\n&quot;},&quot;kind&quot;:&quot;ConfigMap&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;ramen-dr-cluster-operator-config&quot;,&quot;namespace&quot;:&quot;ramen-system&quot;}}&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-03T03:04:25Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-dr-cluster-operator-config&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: work.open-cluster-management.io/v1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: AppliedManifestWork&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: 8b4a44398ddb4f2707e665034e4abba63f5a1d7dec9b2f9dce8c9d4cd1fade06-ramen-dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: d03cacba-e2a9-44f2-a214-231d30c1759d&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;27702&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: 08f98e00-1a90-4201-9d44-dd2812ab4b0f&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-121" vertex="1">
-          <mxGeometry y="30" width="390" height="820" as="geometry" />
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-122" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; ramen_manager_config.yaml: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drClusterOperator:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceName: ramen-catalog&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceNamespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; channelName: alpha&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; deploymentAutomationEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; packageName: ramen-dr-cluster-operator&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretDistributionEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; health:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; healthProbeBindAddress: :8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: RamenConfig&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubeObjectProtection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceName: velero&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; leaderElection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaderElect: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaseDuration: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; renewDeadline: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceLock: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceNamespace: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; retryPeriod: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; maxConcurrentReconciles: 50&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; metrics:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bindAddress: 127.0.0.1:9289&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; multiNamespace: {}&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ramenControllerType: dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3StoreProfiles:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.47:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-west-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.56:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-east-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volSync:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; cephFSCSIDriverName: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; destinationCopyMethod: Direct&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; webhook:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; port: 9443&lt;/div&gt;&lt;div&gt;kind: ConfigMap&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubectl.kubernetes.io/last-applied-configuration: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:{&quot;ramen_manager_config.yaml&quot;:&quot;apiVersion: ramendr.openshift.io/v1alpha1\nkind: RamenConfig\nhealth:\n&amp;nbsp; healthProbeBindAddress: :8081\nmetrics:\n&amp;nbsp; bindAddress: 127.0.0.1:9289\nwebhook:\n&amp;nbsp; port: 9443\nleaderElection:\n&amp;nbsp; leaderElect: true\n&amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io\nramenControllerType: dr-cluster\nmaxConcurrentReconciles: 50\nvolSync:\n&amp;nbsp; destinationCopyMethod: Direct\n&quot;},&quot;kind&quot;:&quot;ConfigMap&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;ramen-dr-cluster-operator-config&quot;,&quot;namespace&quot;:&quot;ramen-system&quot;}}&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-10T08:40:33Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-dr-cluster-operator-config&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: work.open-cluster-management.io/v1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: AppliedManifestWork&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: be1f36e2f626483b805177d6857eeac1982a549a7bee2a295e91d6164b729385-ramen-dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: ecbbf310-fa86-4aca-b1ba-72f537112072&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;10794&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: d8fe9921-fc22-4dd1-a8d0-7d56b742b7a5&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-121" vertex="1">
+          <mxGeometry y="30" width="390" height="1200" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-123" value="Configmap:&amp;nbsp;&lt;div&gt;ramen-dr-cluster-operator-config&lt;/div&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="815" y="745" width="180" height="30" as="geometry">
-            <mxRectangle x="650" y="1000" width="390" height="850" as="alternateBounds" />
+          <mxGeometry x="750" y="745" width="180" height="30" as="geometry">
+            <mxRectangle x="750" y="745" width="390" height="850" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-124" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; ramen_manager_config.yaml: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drClusterOperator:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceName: ramen-catalog&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceNamespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; channelName: alpha&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; deploymentAutomationEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; packageName: ramen-dr-cluster-operator&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretDistributionEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; health:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; healthProbeBindAddress: :8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: RamenConfig&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubeObjectProtection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceName: velero&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; leaderElection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaderElect: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaseDuration: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; renewDeadline: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceLock: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceNamespace: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; retryPeriod: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; maxConcurrentReconciles: 50&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; metrics:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bindAddress: 127.0.0.1:9289&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; multiNamespace: {}&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ramenControllerType: dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3StoreProfiles:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.116:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-west-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.147:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-east-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volSync: {}&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; webhook:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; port: 9443&lt;/div&gt;&lt;div&gt;kind: ConfigMap&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubectl.kubernetes.io/last-applied-configuration: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:{&quot;ramen_manager_config.yaml&quot;:&quot;apiVersion: ramendr.openshift.io/v1alpha1\nkind: RamenConfig\nhealth:\n&amp;nbsp; healthProbeBindAddress: :8081\nmetrics:\n&amp;nbsp; bindAddress: 127.0.0.1:9289\nwebhook:\n&amp;nbsp; port: 9443\nleaderElection:\n&amp;nbsp; leaderElect: true\n&amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io\nramenControllerType: dr-cluster\nmaxConcurrentReconciles: 50\nvolSync:\n&amp;nbsp; destinationCopyMethod: Direct\n&quot;},&quot;kind&quot;:&quot;ConfigMap&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;ramen-dr-cluster-operator-config&quot;,&quot;namespace&quot;:&quot;ramen-system&quot;}}&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-03T03:04:37Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-dr-cluster-operator-config&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: work.open-cluster-management.io/v1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: AppliedManifestWork&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: 8b4a44398ddb4f2707e665034e4abba63f5a1d7dec9b2f9dce8c9d4cd1fade06-ramen-dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: 5a732ebf-6f8e-4ba7-96fb-647577efff49&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;26992&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: e5426fab-d9fa-439f-a352-e5834daeb7f7&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-123" vertex="1">
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-124" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; ramen_manager_config.yaml: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drClusterOperator:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceName: ramen-catalog&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceNamespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; channelName: alpha&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; deploymentAutomationEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; packageName: ramen-dr-cluster-operator&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretDistributionEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; health:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; healthProbeBindAddress: :8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: RamenConfig&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubeObjectProtection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceName: velero&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; leaderElection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaderElect: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaseDuration: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; renewDeadline: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceLock: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceNamespace: &quot;&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; retryPeriod: 0s&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; maxConcurrentReconciles: 50&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; metrics:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bindAddress: 127.0.0.1:9289&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; multiNamespace: {}&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ramenControllerType: dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3StoreProfiles:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.47:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-west-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.56:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-east-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volSync:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; cephFSCSIDriverName: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; destinationCopyMethod: Direct&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; webhook:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; port: 9443&lt;/div&gt;&lt;div&gt;kind: ConfigMap&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubectl.kubernetes.io/last-applied-configuration: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:{&quot;ramen_manager_config.yaml&quot;:&quot;apiVersion: ramendr.openshift.io/v1alpha1\nkind: RamenConfig\nhealth:\n&amp;nbsp; healthProbeBindAddress: :8081\nmetrics:\n&amp;nbsp; bindAddress: 127.0.0.1:9289\nwebhook:\n&amp;nbsp; port: 9443\nleaderElection:\n&amp;nbsp; leaderElect: true\n&amp;nbsp; resourceName: dr-cluster.ramendr.openshift.io\nramenControllerType: dr-cluster\nmaxConcurrentReconciles: 50\nvolSync:\n&amp;nbsp; destinationCopyMethod: Direct\n&quot;},&quot;kind&quot;:&quot;ConfigMap&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;name&quot;:&quot;ramen-dr-cluster-operator-config&quot;,&quot;namespace&quot;:&quot;ramen-system&quot;}}&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-10T08:40:33Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-dr-cluster-operator-config&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; ownerReferences:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - apiVersion: work.open-cluster-management.io/v1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: AppliedManifestWork&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; name: be1f36e2f626483b805177d6857eeac1982a549a7bee2a295e91d6164b729385-ramen-dr-cluster&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; uid: ecbbf310-fa86-4aca-b1ba-72f537112072&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;10794&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: d8fe9921-fc22-4dd1-a8d0-7d56b742b7a5&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-123" vertex="1">
           <mxGeometry y="30" width="390" height="820" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-125" value="RamenAgent" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="70" y="662" width="125" height="40" as="geometry" />
+          <mxGeometry x="100" y="662" width="125" height="40" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-126" value="Deploy RamenAgent Objects&amp;nbsp;&lt;div&gt;based on MW for DRClusters&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="770" y="347" width="180" height="40" as="geometry" />
+          <mxGeometry x="723" y="318.75" width="180" height="40" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#6666FF;strokeWidth=3;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -354,7 +351,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-128" value="volsync MCA in dr1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="946" y="202" width="190" height="30" as="geometry">
+          <mxGeometry x="830" y="133" width="190" height="30" as="geometry">
             <mxRectangle x="1056" y="300" width="450" height="290" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -362,30 +359,30 @@
           <mxGeometry y="30" width="450" height="260" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-132" value="volsync MCA in dr2" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
-          <mxGeometry x="946" y="247" width="190" height="30" as="geometry">
+          <mxGeometry x="830" y="178" width="190" height="30" as="geometry">
             <mxRectangle x="1056" y="345" width="450" height="310" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-133" value="&lt;div&gt;apiVersion: addon.open-cluster-management.io/v1alpha1&lt;/div&gt;&lt;div&gt;kind: ManagedClusterAddOn&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-03T03:24:16Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; generation: 1&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: volsync&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;16208&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: d48b6bdc-e859-4d44-9aef-9711428620f3&lt;/div&gt;&lt;div&gt;spec:&lt;/div&gt;&lt;div&gt;&amp;nbsp; installNamespace: open-cluster-management-agent-addon&lt;/div&gt;&lt;div&gt;status:&lt;/div&gt;&lt;div&gt;&amp;nbsp; conditions:&lt;/div&gt;&lt;div&gt;&amp;nbsp; - lastTransitionTime: &quot;2024-04-03T03:24:30Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; message: The status of volsync add-on is unknown.&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; reason: ManagedClusterAddOnLeaseNotFound&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; status: Unknown&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; type: Available&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-132" vertex="1">
           <mxGeometry y="30" width="450" height="280" as="geometry" />
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-135" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-99" edge="1">
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-135" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.548;entryY=0.975;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-99" target="U8NHltKQ1rlB9dk0PbJg-134" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="886" y="283" as="sourcePoint" />
             <mxPoint x="936" y="233" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="750" y="257" />
-              <mxPoint x="750" y="233" />
+              <mxPoint x="690" y="257" />
+              <mxPoint x="935" y="257" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-136" value="Deploy volsync&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;based&amp;nbsp;&lt;/span&gt;&lt;div&gt;on MCA for DRClusters&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="770" y="233" width="150" height="40" as="geometry" />
+          <mxGeometry x="805" y="254" width="150" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="U8NHltKQ1rlB9dk0PbJg-137" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-137" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="440" y="683" as="sourcePoint" />
-            <mxPoint x="645" y="776.5" as="targetPoint" />
+            <mxPoint x="580" y="777" as="targetPoint" />
             <Array as="points">
               <mxPoint x="440" y="776" />
             </Array>
@@ -398,36 +395,36 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-139" value="Volsync" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="70.5" y="854" width="125" height="40" as="geometry" />
+          <mxGeometry x="100.5" y="854" width="125" height="40" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-140" value="Volsync" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="658.5" y="864" width="125" height="40" as="geometry" />
+          <mxGeometry x="593.5" y="861" width="125" height="40" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-141" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.995;exitY=0.411;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-134" target="U8NHltKQ1rlB9dk0PbJg-140" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1201" y="471" as="sourcePoint" />
             <mxPoint x="1170" y="853" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1200" y="232" />
-              <mxPoint x="1200" y="884" />
+              <mxPoint x="1050" y="163" />
+              <mxPoint x="1050" y="881" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-142" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" target="U8NHltKQ1rlB9dk0PbJg-139" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="1200" y="884" as="sourcePoint" />
+            <mxPoint x="1050" y="880" as="sourcePoint" />
             <mxPoint x="520" y="664" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1200" y="913" />
-              <mxPoint x="133" y="913" />
+              <mxPoint x="1050" y="910" />
+              <mxPoint x="163" y="913" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-145" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#3333FF;strokeColor=#3333FF;fontColor=#ffffff;" parent="1" vertex="1">
-          <mxGeometry x="483" y="357.5" width="20" height="20" as="geometry" />
+          <mxGeometry x="461" y="328.75" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-146" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#3333FF;strokeColor=#3333FF;fontColor=#ffffff;" parent="1" vertex="1">
-          <mxGeometry x="756" y="239" width="20" height="20" as="geometry" />
+          <mxGeometry x="785" y="264" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-147" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;jumpStyle=arc;" parent="1" source="U8NHltKQ1rlB9dk0PbJg-99" target="U8NHltKQ1rlB9dk0PbJg-13" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -448,7 +445,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-149" value="Validate CIDR in DRCluster Spec" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="495" y="353.5" width="200" height="30" as="geometry" />
+          <mxGeometry x="473" y="324.75" width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-154" value="Handle Fence" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="561" y="195" width="100" height="30" as="geometry" />
@@ -463,10 +460,18 @@
           <mxGeometry x="561" y="219" width="100" height="30" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-158" value="Validate S3Profile in DRCluster Spec" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="495" y="380" width="220" height="30" as="geometry" />
+          <mxGeometry x="473" y="351.25" width="220" height="30" as="geometry" />
         </mxCell>
         <mxCell id="U8NHltKQ1rlB9dk0PbJg-159" value="6" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#3333FF;strokeColor=#3333FF;fontColor=#ffffff;" parent="1" vertex="1">
-          <mxGeometry x="484" y="384.5" width="20" height="20" as="geometry" />
+          <mxGeometry x="462" y="355.75" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-7" value="Configmap: ramen-hub-operator-config" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" collapsed="1">
+          <mxGeometry x="308" y="73" width="265" height="30" as="geometry">
+            <mxRectangle x="308" y="73" width="390" height="1380" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="U8NHltKQ1rlB9dk0PbJg-8" value="&lt;div&gt;apiVersion: v1&lt;/div&gt;&lt;div&gt;data:&lt;/div&gt;&lt;div&gt;&amp;nbsp; ramen_manager_config.yaml: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; apiVersion: ramendr.openshift.io/v1alpha1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kind: RamenConfig&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; health:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; healthProbeBindAddress: :8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; metrics:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bindAddress: 127.0.0.1:9289&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; webhook:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; port: 9443&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; leaderElection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; leaderElect: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; resourceName: hub.ramendr.openshift.io&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ramenControllerType: dr-hub&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; maxConcurrentReconciles: 50&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; drClusterOperator:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; deploymentAutomationEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretDistributionEnabled: true&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; channelName: alpha&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; packageName: ramen-dr-cluster-operator&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; namespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceName: ramen-catalog&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; catalogSourceNamespaceName: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubeObjectProtection:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceName: velero&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; volSync:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; disabled: false&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; cephFSCSIDriverName: rook-ceph.cephfs.csi.ceph.com&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; destinationCopyMethod: Direct&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s3StoreProfiles:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3ProfileName: minio-on-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.47:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-west-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; - s3ProfileName: minio-on-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Bucket: bucket&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3CompatibleEndpoint: http://192.168.122.56:30000&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3Region: us-east-1&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; s3SecretRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; veleroNamespaceSecretKeyRef:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; key: cloud&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; name: cloud-credentials&lt;/div&gt;&lt;div&gt;kind: ConfigMap&lt;/div&gt;&lt;div&gt;metadata:&lt;/div&gt;&lt;div&gt;&amp;nbsp; annotations:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; kubectl.kubernetes.io/last-applied-configuration: |&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:{&quot;ramen_manager_config.yaml&quot;:&quot;apiVersion: ramendr.openshift.io/v1alpha1\nkind: RamenConfig\nhealth:\n&amp;nbsp; healthProbeBindAddress: :8081\nmetrics:\n&amp;nbsp; bindAddress: 127.0.0.1:9289\nwebhook:\n&amp;nbsp; port: 9443\nleaderElection:\n&amp;nbsp; leaderElect: true\n&amp;nbsp; resourceName: hub.ramendr.openshift.io\nramenControllerType: dr-hub\nmaxConcurrentReconciles: 50\ndrClusterOperator:\n&amp;nbsp; deploymentAutomationEnabled: true\n&amp;nbsp; s3SecretDistributionEnabled: true\n&amp;nbsp; channelName: alpha\n&amp;nbsp; packageName: ramen-dr-cluster-operator\n&amp;nbsp; namespaceName: ramen-system\n&amp;nbsp; catalogSourceName: ramen-catalog\n&amp;nbsp; catalogSourceNamespaceName: ramen-system\n&amp;nbsp; clusterServiceVersionName: ramen-dr-cluster-operator.v0.0.1\nkubeObjectProtection:\n&amp;nbsp; veleroNamespaceName: velero\nvolSync:\n&amp;nbsp; disabled: false\n&amp;nbsp; cephFSCSIDriverName: rook-ceph.cephfs.csi.ceph.com\n&amp;nbsp; destinationCopyMethod: Direct\ns3StoreProfiles:\n- s3ProfileName: minio-on-dr1\n&amp;nbsp; s3Bucket: bucket\n&amp;nbsp; s3CompatibleEndpoint: http://192.168.122.47:30000\n&amp;nbsp; s3Region: us-west-1\n&amp;nbsp; s3SecretRef:\n&amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr1\n&amp;nbsp; &amp;nbsp; namespace: ramen-system\n&amp;nbsp; veleroNamespaceSecretKeyRef:\n&amp;nbsp; &amp;nbsp; key: cloud\n&amp;nbsp; &amp;nbsp; name: cloud-credentials\n- s3ProfileName: minio-on-dr2\n&amp;nbsp; s3Bucket: bucket\n&amp;nbsp; s3CompatibleEndpoint: http://192.168.122.56:30000\n&amp;nbsp; s3Region: us-east-1\n&amp;nbsp; s3SecretRef:\n&amp;nbsp; &amp;nbsp; name: ramen-s3-secret-dr2\n&amp;nbsp; &amp;nbsp; namespace: ramen-system\n&amp;nbsp; veleroNamespaceSecretKeyRef:\n&amp;nbsp; &amp;nbsp; key: cloud\n&amp;nbsp; &amp;nbsp; name: cloud-credentials\n&quot;},&quot;kind&quot;:&quot;ConfigMap&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{},&quot;labels&quot;:{&quot;cluster.open-cluster-management.io/backup&quot;:&quot;resource&quot;},&quot;name&quot;:&quot;ramen-hub-operator-config&quot;,&quot;namespace&quot;:&quot;ramen-system&quot;}}&lt;/div&gt;&lt;div&gt;&amp;nbsp; creationTimestamp: &quot;2024-04-10T08:40:23Z&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; labels:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; cluster.open-cluster-management.io/backup: resource&lt;/div&gt;&lt;div&gt;&amp;nbsp; name: ramen-hub-operator-config&lt;/div&gt;&lt;div&gt;&amp;nbsp; namespace: ramen-system&lt;/div&gt;&lt;div&gt;&amp;nbsp; resourceVersion: &quot;7363&quot;&lt;/div&gt;&lt;div&gt;&amp;nbsp; uid: b7b0d3f6-239d-41b0-b8c6-1ca45249c46a&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="U8NHltKQ1rlB9dk0PbJg-7" vertex="1">
+          <mxGeometry y="30" width="390" height="1350" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

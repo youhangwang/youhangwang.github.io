@@ -77,7 +77,7 @@ Labels
           - EnsurePVCfromRD:
             - 从RD中获取Latest Image
             - 从latest image中获取volumesnapshot，并添加label `volsync.backube/do-not-delete: true`
-            - 如果是CopyMethodDirect，则获取PVC，如果是failover，则还需要将其rollback到last snapshot
+            - 如果ramen config是CopyMethodDirect，则获取PVC，如果是failover，则还需要将其rollback到last snapshot
               - 从latest snapshot中恢复read only pvc
               - 创建lrs和lrd用来恢复pvc到最新的snapshot
             - 如果不是，则直接从snapshot恢复pvc
@@ -92,7 +92,14 @@ Labels
         - 为每一个pvc创建replicationsource: reconcilePVCAsVolSyncPrimary:
           - 如果pvc 不在 v.instance.Status.ProtectedPVCs， 则添加
           - 如果prepFinalSync或者copyMethodDirect，向pvc添加annotation `apps.open-cluster-management.io/do-not-delete`, 并设置vrg 为 owner
-          - ReconcileRS （包含一个workaround），如果spec.runFinalSync 为true，则需检查pod是否还在背pod使用，如果没有pod使用，则创建或修改RS为手动模式，并检查手动模式是否完成
+          - ReconcileRS （包含一个workaround）
+            - DeleteRD
+              -  if ramenconfig IsCopyMethodDirect
+                 -  删除localRDandRS
+            - 如果spec.runFinalSync 为true，则需检查pod是否还在背pod使用，如果没有pod使用，则创建或修改RS为手动模式，并检查手动模式是否完成
+            - runFinalSync完成：
+              - ramenConfig IsCopyMethodDirect: do nothing, keep the pvc
+              - ramenConfig !IsCopyMethodDirect: cleanupAfterRSFinalSync: delete pvc
           - set ReplicationSourceSetup ready
         - 设置 finalSyncPrepared 为 true
       - vrgObjectProtect
@@ -106,6 +113,8 @@ Labels
         - 如果 v.instance.Spec.VolSync.RDSpec 没有设置, 则将v.instance.Status.ProtectedPVCs 中 protectedPVC.ProtectedByVolSync 为true的都移除
         - 重置 v.instance.Status.PrepareForFinalSyncComplete 和 v.instance.Status.FinalSyncComplete 为 false
         - 对于每一个 v.instance.Spec.VolSync.RDSpec， 调用 ReconcileRD 
+          - 如果ramen config ！IsCopyMethodDirect：无需准备pvc
+          - 如果ramen config IsCopyMethodDirect：pvc（rdSpec.ProtectedPVC.Name）如果不在，则创建，并移除掉ocm的annotation, 添加vrg为owner。
           - 创建或者更新RD
           - 创建ServiceExporter
       - reconcileVolRepsAsSecondary
