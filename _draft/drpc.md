@@ -72,10 +72,10 @@
                -  确保Placement decistion等于failover cluster
             -  setProgression： Cleaning Up
             -  ensureCleanupAndVolSyncReplicationSetup
-               -  clean RD spec in vrg mw in failover cluster
+               -  ResetVolSyncRDOnPrimary: clean RD spec in vrg mw in failover cluster
                -  EnsureCleanup
                   -  cleanupForVolSync: change vrg in other clusters to secondary
-                  -  (volrep only)cleanupSecondaries: delete vrgmw,vrg,mca for other clusters
+                  -  (volrep only)cleanupSecondaries: 先更改vrg到secondary，确保status已经更新为secondary，再delete vrgmw,vrg,mca for other clusters
                -  EnsureVolSyncReplicationSetup
                   -  setup vrg without rd spec
                   -  create secret and propagate
@@ -133,7 +133,7 @@
       - setStatusInitiating： 设置初始状态
       - 如果preferedCluster和curHomeCluster不相等，并且 readyToSwitchOver 为false，则requeue
          - 如果DR policy是Metro：
-         - 检查vrg的DataReady和ClusterDataProtected为true
+         - readyToSwitchOver: 检查vrg的DataReady和ClusterDataProtected为true
       - 如果drpc getLastDRState不是ralocating并且PeerReady Condition为false。 则requeue
       - 如果preferedCluster和curHomeCluster不相等，但是 readyToSwitchOver 为true
          - quiesceAndRunFinalSync(curHomeCluster)

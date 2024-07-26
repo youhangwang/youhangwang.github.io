@@ -70,7 +70,7 @@ Labels
   - 向 vrg 添加 finalizer `volumereplicationgroups.ramendr.openshift.io/vrg-protection`
   - 执行 processAsPrimary: 如果v.instance.Spec.ReplicationState 为 ramendrv1alpha1.Primary:
     - (分叉)pvcsDeselectedUnprotect ? (VolumeUnprotectionEnabledForAsyncVolSync)
-    - (分叉)如果需要恢复ClusterData：如果是Final sync或者有ClusterDataReady，则无需恢复ClusterData
+    - (分叉)clusterDataRestore: 如果需要恢复ClusterData：如果是Final sync或者有ClusterDataReady，则无需恢复ClusterData
       - restorePVsAndPVCsForVolSync： 对每一个v.instance.Spec.VolSync.RDSpec，恢复 pv/pvc from volsync
         - 如果len(v.instance.Spec.VolSync.RDSpec) 为 0，则表示没有pvc需要restore。初始部署时，满足此条件，无需执行restore
         - 对于每一个v.instance.Spec.VolSync.RDSpec：
@@ -84,6 +84,8 @@ Labels
             - 向PVC添加 rdSpec.ProtectedPVC.Annotations 中ocm相关的annotation
             - 向snapshot添加vrg的owner reference
           - 添加恢复的pvc到v.instance.Status.ProtectedPVCs
+      - restorePVsAndPVCsForVolRep:
+        - restorePVsAndPVCsFromS3: 按v.instance.Spec.S3Profiles顺序恢复PVC和PV。
       - ClusterDataReady 设置为true
     - reconcileAsPrimary(分叉)
       - reconcileVolsyncAsPrimary
@@ -102,6 +104,14 @@ Labels
               - ramenConfig !IsCopyMethodDirect: cleanupAfterRSFinalSync: delete pvc
           - set ReplicationSourceSetup ready
         - 设置 finalSyncPrepared 为 true
+      - reconcileVolRepsAsPrimary
+        - updateProtectedPVCs: 在volrep.PVCs上更新replicationClass和storageClass等信息
+        - preparePVCForVRProtection: add annotations and finalizer. 修改PVC policy为Retain
+        - processVRAsPrimary: 
+          - 如果是MDR，则更新status
+          - 如果是RDR，则创建或更新VR为Primary
+        - uploadPVandPVCtoS3Stores
+          - 上传PVC/PV到两个cluster上的S3 Service
       - vrgObjectProtect
         - upload vrg to minio for each s3profile
       - 如果vrg.Spec.PrepareForFinalSync为true，更新vrg.Status.PrepareForFinalSyncComplete = finalSyncPrepared.volSync
@@ -117,7 +127,16 @@ Labels
           - 如果ramen config IsCopyMethodDirect：pvc（rdSpec.ProtectedPVC.Name）如果不在，则创建，并移除掉ocm的annotation, 添加vrg为owner。
           - 创建或者更新RD
           - 创建ServiceExporter
-      - reconcileVolRepsAsSecondary
+      - reconcileVolRepsAsSecondary:
+        - updateProtectedPVCs: 在volrep.PVCs上更新replicationClass和storageClass等信息
+        - preparePVCForVRProtection: add annotations and finalizer. 修改PVC policy为Retain
+        - reconcileVRAsSecondary: 
+          - isPVCReadyForSecondary：
+            - If PVC is not being deleted, it is not ready for Secondary, unless action is failover
+            - PVC not in used
+          - processVRAsSecondary:
+            - 如果是MDR，则更新status
+            - 如果是RDR，则创建或更新VR为secondary
     - updateVRGConditionsAndStatus(TODO)
       - updateVRGConditions： VRGConditionTypeDataReady， VRGConditionTypeClusterDataProtected and VRGConditionDataProtected
       - updateVRGStatus
