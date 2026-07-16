@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-07-16T09:38:26.470Z",
+      "error_message": "Wrong reference: master should be main",
+      "file": "_config.yml",
+      "root_cause": "Used \"master\" instead of \"main\"",
+      "fix": "Changed master → main",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "yml"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T09:38:26.470Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-07-16T11:50:07.406Z",
+      "error_message": "Significant refactor of ",
+      "file": "CLAUDE.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 12→39 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T11:50:07.406Z"
+    }
+  ]
+}

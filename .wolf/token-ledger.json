@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "created_at": "2026-07-16T09:35:41.085Z",
+  "lifetime": {
+    "total_tokens_estimated": 27785,
+    "total_reads": 13,
+    "total_writes": 16,
+    "total_sessions": 4,
+    "anatomy_hits": 7,
+    "anatomy_misses": 6,
+    "repeated_reads_blocked": 0,
+    "estimated_savings_vs_bare_cli": 1400
+  },
+  "sessions": [
+    {
+      "id": "session-2026-07-16-1736",
+      "started": "2026-07-16T09:36:01.678Z",
+      "ended": "2026-07-16T09:37:37.982Z",
+      "reads": [],
+      "writes": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 1100,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 1100,
+        "reads_count": 0,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-07-16-1736",
+      "started": "2026-07-16T09:36:01.678Z",
+      "ended": "2026-07-16T09:38:28.808Z",
+      "reads": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 951,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 1100,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 6,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 951,
+        "output_tokens_estimated": 1106,
+        "reads_count": 1,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-07-16-1736",
+      "started": "2026-07-16T09:36:01.678Z",
+      "ended": "2026-07-16T11:14:44.171Z",
+      "reads": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 951,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 1100,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 6,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 951,
+        "output_tokens_estimated": 1106,
+        "reads_count": 1,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-07-16-1736",
+      "started": "2026-07-16T09:36:01.678Z",
+      "ended": "2026-07-16T11:22:57.828Z",
+      "reads": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 951,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/tmp/extracted/img_018.png",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/tmp/extracted/img_019.png",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 1100,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 6,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_posts/2026-07-16-build-a-container-image-from-scratch.md",
+          "tokens_estimated": 4430,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 951,
+        "output_tokens_estimated": 5536,
+        "reads_count": 3,
+        "writes_count": 3,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-07-16-1736",
+      "started": "2026-07-16T09:36:01.678Z",
+      "ended": "2026-07-16T11:50:28.119Z",
+      "reads": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 951,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/tmp/extracted/img_018.png",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/tmp/extracted/img_019.png",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 962,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 1100,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 6,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_posts/2026-07-16-build-a-container-image-from-scratch.md",
+          "tokens_estimated": 4430,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 593,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1913,
+        "output_tokens_estimated": 6129,
+        "reads_count": 4,
+        "writes_count": 4,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-07-16-1736",
+      "started": "2026-07-16T09:36:01.678Z",
+      "ended": "2026-07-16T11:51:29.653Z",
+      "reads": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 951,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/tmp/extracted/img_018.png",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/tmp/extracted/img_019.png",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 962,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 1100,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_config.yml",
+          "tokens_estimated": 6,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/_posts/2026-07-16-build-a-container-image-from-scratch.md",
+          "tokens_estimated": 4430,
+          "action": "create"
+        },
+        {
+          "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
+          "tokens_estimated": 593,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1913,
+        "output_tokens_estimated": 6129,
+        "reads_count": 4,
+        "writes_count": 4,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    }
+  ],
+  "daemon_usage": [],
+  "waste_flags": [],
+  "optimization_report": {
+    "last_generated": null,
+    "patterns": []
+  }
+}
