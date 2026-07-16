@@ -1,17 +1,17 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T11:50:07.398Z
-> Files: 319 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T12:27:06.199Z
+> Files: 320 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
 - `_config.yml` — Welcome to Jekyll! (~950 tok)
-- `.gitignore` — Git ignore rules (~6 tok)
+- `.gitignore` — Git ignore rules (~8 tok)
 - `404.html` (~7 tok)
 - `about.markdown` (~149 tok)
 - `archive.html` (~7 tok)
-- `CLAUDE.md` — CLAUDE.md (~1320 tok)
-- `Gemfile` — Ruby dependencies (~314 tok)
+- `CLAUDE.md` — CLAUDE.md (~1642 tok)
+- `Gemfile` — Ruby dependencies (~403 tok)
 - `index.html` (~15 tok)
 
 ## .claude/
@@ -236,6 +236,10 @@
 - `landing.html` (~1775 tok)
 - `none.html` (~4 tok)
 - `page.html` (~3094 tok)
+
+## _plugins/
+
+- `ruby3_compat.rb` — frozen_string_literal: true (~214 tok)
 
 ## _posts/
 

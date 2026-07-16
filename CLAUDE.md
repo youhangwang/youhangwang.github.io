@@ -34,14 +34,27 @@ echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" >> ~/.zshrc
 echo "chruby ruby-3.4.1" >> ~/.zshrc
 
 ruby -v   # should report 3.4.1+, NOT system 2.6
-gem install jekyll bundler
+```
+
+The toolchain is Ruby 3.4.1 + Jekyll 4.2.2 + `jekyll-text-theme` 2.2.6. Jekyll is pulled in via the `Gemfile` (no need for a bare `gem install jekyll`). Two Ruby 3.4 compat fixes are already baked into the repo — **do not remove them**:
+
+- The `Gemfile` lists `csv`, `base64`, `bigdecimal`, `logger`, `ostruct`, `singleton`, `benchmark` — Ruby 3.4 unbundled these from the stdlib and Jekyll 4.2.x still `require`s them; under `bundle exec` they must be in the Gemfile.
+- `_plugins/ruby3_compat.rb` restores `Object#tainted?`/`taint`/`untaint` as no-ops — Ruby 3.2+ removed them but `liquid-4.0.3` (pinned by jekyll 4.2.x) still calls `tainted?`.
+
+**China network (this machine):** `rubygems.org` is unreachable here. The `gem sources` mirror does **not** apply to bundler — `bundle install` reads the source from the `Gemfile`. Configure the bundler mirror once (stored in `.bundle/config`, keeps the Gemfile clean):
+
+```bash
+gem sources --remove https://rubygems.org/
+gem sources -a https://gems.ruby-china.com/
+bundle config set mirror.https://rubygems.org https://gems.ruby-china.com
 ```
 
 ### Running the site
 
-Always run Jekyll through `bundle exec` to pin the gem versions in `Gemfile.lock`:
+Always `source chruby && chruby ruby-3.4.1` first, then run Jekyll through `bundle exec` to pin the gem versions in `Gemfile.lock`:
 
 ```bash
+source "$(brew --prefix)/opt/chruby/share/chruby/chruby.sh" && chruby ruby-3.4.1
 bundle install                    # install Ruby deps (first time / after Gemfile change)
 bundle exec jekyll serve          # dev server at http://127.0.0.1:4000 with live reload
 bundle exec jekyll serve --drafts # include _draft/ posts in the dev server
@@ -50,7 +63,7 @@ bundle exec jekyll clean          # remove _site/, .jekyll-cache/, Sass cache
 bundle exec jekyll doctor         # report deprecations / config issues
 ```
 
-Useful flags (see [Build Command Options](https://jekyllrb.com/docs/configuration/options/)): `--config _alt.yml` (override/merge config), `-V` (verbose), `--incremental` (faster partial rebuilds), `--livereload` (explicit).
+Never run two `bundle install` concurrently on this repo — they deadlock on the bundler lock. Useful flags (see [Build Command Options](https://jekyllrb.com/docs/configuration/options/)): `--config _alt.yml` (override/merge config), `-V` (verbose), `--incremental` (faster partial rebuilds), `--livereload` (explicit).
 
 `_config.yml` is **not** hot-reloaded by `jekyll serve` — restart the server after editing it. There are no tests, linters, or build scripts beyond Jekyll. Deployment is automatic via GitHub Pages on push to the default branch — do not commit the generated `_site/` (it is ignored).
 

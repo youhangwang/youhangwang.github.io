@@ -8,6 +8,17 @@ source "https://rubygems.org"
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
 gem "jekyll", "~> 4.2.1"
+
+# Ruby 3.4 unbundled these stdlib libraries from the default set. Jekyll 4.2.x
+# still `require`s them directly, so under `bundle exec` (which restricts the
+# load path to Gemfile gems) they must be listed here. Harmless on older Ruby.
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+gem "logger"
+gem "ostruct"
+gem "singleton"
+gem "benchmark"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.5"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and

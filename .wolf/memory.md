@@ -34,3 +34,10 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+| 20:23 | Edited Gemfile | expanded (+11 lines) | ~96 |
+| 20:24 | Created _plugins/ruby3_compat.rb | — | ~214 |
+| 20:26 | Edited CLAUDE.md | modified network() | ~894 |
+| 20:25 | Fixed Jekyll toolchain on Ruby 3.4.1: switched gem+bundler source to ruby-china mirror (rubygems.org unreachable), added un-bundled stdlib gems to Gemfile (csv/base64/bigdecimal/logger/ostruct/singleton/benchmark), added _plugins/ruby3_compat.rb (tainted? shim for liquid 4.0.3). `bundle exec jekyll build` now succeeds; translated post renders with all 5 images. Updated CLAUDE.md, cerebrum.md, buglog.json (bug-003) | Gemfile, Gemfile.lock, _plugins/ruby3_compat.rb, .bundle/config, CLAUDE.md | ~6500 tok |
+| 20:27 | Edited .gitignore | 2→3 lines | ~8 |
+| 20:27 | Session end: 4 writes across 4 files (Gemfile, ruby3_compat.rb, CLAUDE.md, .gitignore) | 2 reads | ~1618 tok |
+| 20:52 | Session end: 4 writes across 4 files (Gemfile, ruby3_compat.rb, CLAUDE.md, .gitignore) | 2 reads | ~1618 tok |

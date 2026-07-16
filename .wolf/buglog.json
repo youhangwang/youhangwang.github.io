@@ -32,6 +32,44 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-16T11:50:07.406Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-07-16T12:25:00.000Z",
+      "error_message": "bundle exec jekyll build hung / failed on this machine: (1) gem install & bundle install stuck fetching from https://rubygems.org (unreachable in CN); (2) after mirror, `cannot load such file -- csv` (LoadError) under bundle exec; (3) `undefined method 'tainted?' for true` from liquid-4.0.3",
+      "file": "Gemfile, _plugins/ruby3_compat.rb, .bundle/config",
+      "root_cause": "rubygems.org unreachable from China (gem sources mirror does NOT apply to bundler); Ruby 3.4 unbundled csv/base64/bigdecimal/logger/ostruct/singleton/benchmark from stdlib so Jekyll 4.2.2 require'ing them fails under bundle exec; Ruby 3.2+ removed Object#tainted? which Liquid 4.0.3 (pinned by jekyll 4.2.x) still calls",
+      "fix": "(a) gem sources -> https://gems.ruby-china.com AND `bundle config set mirror.https://rubygems.org https://gems.ruby-china.com` (stored in .bundle/config, Gemfile stays clean); (b) added csv/base64/bigdecimal/logger/ostruct/singleton/benchmark to Gemfile; (c) added _plugins/ruby3_compat.rb shim restoring tainted?/taint/untaint as no-ops. Also: never run two bundle install concurrently (bundler lock deadlock).",
+      "tags": [
+        "jekyll",
+        "ruby3.4",
+        "bundler",
+        "mirror",
+        "china",
+        "liquid",
+        "tainted",
+        "csv",
+        "bundle-install"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T12:25:00.000Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-07-16T12:26:25.956Z",
+      "error_message": "Significant refactor of ",
+      "file": "CLAUDE.md",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 37→50 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T12:26:25.956Z"
     }
   ]
 }
