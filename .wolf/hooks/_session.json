@@ -1,57 +1,12 @@
 {
-  "session_id": "session-2026-07-18-1100",
-  "started": "2026-07-18T03:00:22.281Z",
-  "files_read": {
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Topology-Aware.md": {
-      "count": 1,
-      "tokens": 1648,
-      "first_read": "2026-07-18T03:02:11.302Z"
-    },
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-CPU-Allocator.md": {
-      "count": 1,
-      "tokens": 330,
-      "first_read": "2026-07-18T03:02:11.712Z"
-    },
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Container-Affinity-AntiAffinity.md": {
-      "count": 1,
-      "tokens": 1135,
-      "first_read": "2026-07-18T03:02:12.270Z"
-    },
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Dynamic-Pools-Policy.md": {
-      "count": 1,
-      "tokens": 860,
-      "first_read": "2026-07-18T03:02:12.834Z"
-    },
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Pod-Pool.md": {
-      "count": 1,
-      "tokens": 410,
-      "first_read": "2026-07-18T03:02:13.254Z"
-    },
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-RDT.md": {
-      "count": 1,
-      "tokens": 686,
-      "first_read": "2026-07-18T03:02:13.823Z"
-    },
-    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Static-Pools.md": {
-      "count": 1,
-      "tokens": 796,
-      "first_read": "2026-07-18T03:02:14.276Z"
-    }
-  },
-  "files_written": [
-    {
-      "file": "/Users/johan/youhwsh/youhangwang.github.io/_posts/2025-01-18-CRI-RM-Policy-Introduction.md",
-      "action": "create",
-      "tokens": 4913,
-      "at": "2026-07-18T03:04:49.581Z"
-    }
-  ],
-  "edit_counts": {
-    "_posts/2025-01-18-CRI-RM-Policy-Introduction.md": 1
-  },
-  "anatomy_hits": 7,
+  "session_id": "session-2026-07-18-1115",
+  "started": "2026-07-18T03:15:28.719Z",
+  "files_read": {},
+  "files_written": [],
+  "edit_counts": {},
+  "anatomy_hits": 0,
   "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 1
+  "stop_count": 0
 }
