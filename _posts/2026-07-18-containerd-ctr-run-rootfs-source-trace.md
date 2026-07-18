@@ -3,7 +3,7 @@ title: "containerd ctr run rootfs 准备与挂载机制——源码深度追踪"
 tags: containerd snapshot overlay container runtime source-code
 ---
 
-# containerd `ctr run` rootfs 准备与挂载机制
+# containerd ctr run rootfs 准备与挂载机制
 
 > 本文整理自对 containerd v2 源码的跟踪，回答四个递进问题：
 > 1. `ctr run` 时 containerd 如何准备 rootfs 并挂载？（完整调用链）
@@ -15,7 +15,7 @@ tags: containerd snapshot overlay container runtime source-code
 
 ---
 
-## 一、`ctr run` rootfs 准备与挂载的完整调用链
+## 一、ctr run rootfs 准备与挂载的完整调用链
 
 ### 总览
 

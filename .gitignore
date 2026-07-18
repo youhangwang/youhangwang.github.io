@@ -1,3 +1,6 @@
 .jekyll-cache
 _site
 .bundle
+tmp
+.vscode
+.DS_Store

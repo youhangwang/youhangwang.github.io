@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-16T12:27:06.199Z
-> Files: 320 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-18T03:04:49.573Z
+> Files: 321 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
@@ -285,6 +285,7 @@
 - `2023-07-15-rook.md` (~22 tok)
 - `2023-12-05-designing-data-intensive-application.md` (~36 tok)
 - `2024-11-29-CRI-RM-Introduction.md` — Introduction (~4798 tok)
+- `2025-01-18-CRI-RM-Policy-Introduction.md` — 一、概述 (~4299 tok)
 - `2025-11-21-kubernetes-api-gateway.md` — Introduction (~3623 tok)
 - `2026-07-16-build-a-container-image-from-scratch.md` — 从零构建容器镜像（译自 SUSE 博客，含 5 图 + reference） (~3877 tok)
 - `CRI-RM-Policy-Container-Affinity-AntiAffinity.md` — 引言 (~1135 tok)

@@ -1,53 +1,57 @@
 {
-  "session_id": "session-2026-07-16-2000",
-  "started": "2026-07-16T12:00:48.747Z",
+  "session_id": "session-2026-07-18-1100",
+  "started": "2026-07-18T03:00:22.281Z",
   "files_read": {
-    "/Users/johan/youhwsh/youhangwang.github.io/Gemfile": {
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Topology-Aware.md": {
       "count": 1,
-      "tokens": 314,
-      "first_read": "2026-07-16T12:23:07.656Z"
+      "tokens": 1648,
+      "first_read": "2026-07-18T03:02:11.302Z"
     },
-    "/Users/johan/youhwsh/youhangwang.github.io/.gitignore": {
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-CPU-Allocator.md": {
       "count": 1,
-      "tokens": 6,
-      "first_read": "2026-07-16T12:27:00.012Z"
+      "tokens": 330,
+      "first_read": "2026-07-18T03:02:11.712Z"
+    },
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Container-Affinity-AntiAffinity.md": {
+      "count": 1,
+      "tokens": 1135,
+      "first_read": "2026-07-18T03:02:12.270Z"
+    },
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Dynamic-Pools-Policy.md": {
+      "count": 1,
+      "tokens": 860,
+      "first_read": "2026-07-18T03:02:12.834Z"
+    },
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Pod-Pool.md": {
+      "count": 1,
+      "tokens": 410,
+      "first_read": "2026-07-18T03:02:13.254Z"
+    },
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-RDT.md": {
+      "count": 1,
+      "tokens": 686,
+      "first_read": "2026-07-18T03:02:13.823Z"
+    },
+    "/Users/johan/youhwsh/youhangwang.github.io/_posts/CRI-RM-Policy-Static-Pools.md": {
+      "count": 1,
+      "tokens": 796,
+      "first_read": "2026-07-18T03:02:14.276Z"
     }
   },
   "files_written": [
     {
-      "file": "/Users/johan/youhwsh/youhangwang.github.io/Gemfile",
-      "action": "edit",
-      "tokens": 103,
-      "at": "2026-07-16T12:23:14.542Z"
-    },
-    {
-      "file": "/Users/johan/youhwsh/youhangwang.github.io/_plugins/ruby3_compat.rb",
+      "file": "/Users/johan/youhwsh/youhangwang.github.io/_posts/2025-01-18-CRI-RM-Policy-Introduction.md",
       "action": "create",
-      "tokens": 229,
-      "at": "2026-07-16T12:24:43.319Z"
-    },
-    {
-      "file": "/Users/johan/youhwsh/youhangwang.github.io/CLAUDE.md",
-      "action": "edit",
-      "tokens": 958,
-      "at": "2026-07-16T12:26:25.955Z"
-    },
-    {
-      "file": "/Users/johan/youhwsh/youhangwang.github.io/.gitignore",
-      "action": "edit",
-      "tokens": 8,
-      "at": "2026-07-16T12:27:06.205Z"
+      "tokens": 4913,
+      "at": "2026-07-18T03:04:49.581Z"
     }
   ],
   "edit_counts": {
-    "Gemfile": 1,
-    "_plugins/ruby3_compat.rb": 1,
-    "CLAUDE.md": 1,
-    ".gitignore": 1
+    "_posts/2025-01-18-CRI-RM-Policy-Introduction.md": 1
   },
-  "anatomy_hits": 2,
+  "anatomy_hits": 7,
   "anatomy_misses": 0,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 8
+  "stop_count": 1
 }
